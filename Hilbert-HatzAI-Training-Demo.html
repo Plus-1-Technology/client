@@ -1,1 +1,605 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hilbert HatzAI Training Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f8f8;color:#222;display:flex;min-height:100vh}
+#sidebar{width:270px;min-width:270px;background:#3d1e8f;color:#fff;height:100vh;position:sticky;top:0;overflow-y:auto;padding:0 0 40px 0}
+#sidebar .logo{padding:22px 22px 10px;border-bottom:1px solid rgba(255,255,255,0.15);margin-bottom:10px}
+#sidebar .logo h1{font-size:1.05rem;font-weight:700;color:#fff}
+#sidebar .logo p{font-size:0.7rem;color:rgba(255,255,255,0.6);margin-top:3px}
+#sidebar .nav-section{padding:8px 14px 2px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.45);margin-top:8px}
+#sidebar a.nav-link{display:block;padding:7px 18px 7px 22px;color:rgba(255,255,255,0.82);font-size:0.82rem;border-left:3px solid transparent;transition:all 0.15s;text-decoration:none}
+#sidebar a.nav-link:hover{color:#fff;background:rgba(255,255,255,0.1);border-left-color:#c4b5fd}
+#sidebar a.nav-link.active{color:#fff;background:rgba(255,255,255,0.15);border-left-color:#a78bfa;font-weight:600}
+#sidebar a.nav-link.sub{padding-left:34px;font-size:0.78rem}
+#main{flex:1;padding:36px 44px;max-width:960px;overflow-x:hidden}
+.hero{background:linear-gradient(135deg,#4c1d95 0%,#6d28d9 60%,#8b5cf6 100%);color:#fff;border-radius:12px;padding:36px 40px;margin-bottom:36px}
+.hero h1{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+.hero p{font-size:1rem;opacity:0.88;max-width:600px;line-height:1.6}
+.hero .badges{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.hero .badge{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 14px;font-size:0.75rem;font-weight:600}
+.section{background:#fff;border-radius:10px;border:1px solid #e5e7eb;padding:30px 34px;margin-bottom:28px;scroll-margin-top:20px}
+.section h2{font-size:1.35rem;font-weight:700;color:#3d1e8f;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.section .subtitle{color:#6b7280;font-size:0.88rem;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #f3f4f6}
+.section h3{font-size:1.05rem;font-weight:600;color:#1f2937;margin:18px 0 8px}
+.section p{color:#374151;line-height:1.7;margin-bottom:12px;font-size:0.92rem}
+.section ul{padding-left:20px;margin-bottom:12px}
+.section ul li{color:#374151;line-height:1.7;margin-bottom:4px;font-size:0.92rem}
+.callout{border-radius:8px;padding:14px 18px;margin:14px 0;font-size:0.88rem;line-height:1.6}
+.callout.tip{background:#f5f3ff;border-left:4px solid #7c3aed;color:#4c1d95}
+.callout.info{background:#eff6ff;border-left:4px solid #3b82f6;color:#1e40af}
+.callout.warn{background:#fffbeb;border-left:4px solid #f59e0b;color:#78350f}
+.callout.success{background:#f0fdf4;border-left:4px solid #22c55e;color:#14532d}
+.screenshot{background:#f9fafb;border:2px dashed #d1d5db;border-radius:8px;padding:22px;text-align:center;margin:14px 0;color:#9ca3af;font-size:0.8rem}
+.screenshot strong{display:block;color:#6b7280;font-size:0.85rem;margin-bottom:4px}
+.agent-card{border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin:14px 0;background:#fafafa}
+.agent-card .agent-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.agent-card .agent-icon{width:40px;height:40px;background:#6d28d9;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.85rem;font-weight:700;flex-shrink:0}
+.agent-card h3{margin:0;font-size:1.05rem;color:#1f2937}
+.agent-card .agent-desc{color:#6b7280;font-size:0.82rem}
+.agent-card .agent-greeting{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:12px 14px;margin:10px 0;font-size:0.85rem;color:#374151;font-style:italic}
+.chat-demo{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:12px 0}
+.chat-demo .msg{margin:8px 0;font-size:0.85rem;line-height:1.5}
+.chat-demo .msg.user{color:#1f2937;padding-left:12px;border-left:3px solid #7c3aed}
+.chat-demo .msg.ai{color:#374151;background:#fff;border-radius:4px;padding:8px 12px;border-left:3px solid #e5e7eb}
+.steps{list-style:none;padding:0;counter-reset:steps}
+.steps li{counter-increment:steps;padding:10px 14px 10px 46px;position:relative;background:#f9fafb;border:1px solid #f3f4f6;border-radius:6px;margin:6px 0;font-size:0.88rem;color:#374151;line-height:1.6}
+.steps li::before{content:counter(steps);position:absolute;left:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;background:#6d28d9;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.85rem}
+th{background:#4c1d95;color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid #f3f4f6;color:#374151}
+tr:hover td{background:#f9fafb}
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.nav-tab{background:#f3f0ff;border:1px solid #c4b5fd;color:#5b21b6;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600}
+a{color:#5b21b6}
+</style></head><body>
+<nav id="sidebar">
+  <div class="logo"><h1>&#127959; Hilbert HatzAI</h1><p>Secure AI Training Guide</p></div>
+  <div class="nav-section">Getting Started</div>
+  <a class="nav-link" href="#overview">Platform Overview</a>
+  <a class="nav-link" href="#home">Home Page</a>
+  <a class="nav-link" href="#chat">Chat Page</a>
+  <a class="nav-link" href="#messagebar">Message Bar &amp; Controls</a>
+  <a class="nav-link" href="#choosingmodel">Choosing a Model or Agent</a>
+  <div class="nav-section">Your AI Agents</div>
+  <a class="nav-link" href="#agents">All 5 Hilberts Agents</a>
+  <a class="nav-link sub" href="#agent-template">Template Writer</a>
+  <a class="nav-link sub" href="#agent-quote">Quote Follow-Up Writer</a>
+  <a class="nav-link sub" href="#agent-prompt">Prompt Engineer</a>
+  <a class="nav-link sub" href="#agent-digest">Morning Digest</a>
+  <a class="nav-link sub" href="#agent-sop">Hilberts SOP Writer</a>
+  <a class="nav-link" href="#howto">Chat How-To Basics</a>
+  <div class="nav-section">Workshop</div>
+  <a class="nav-link" href="#discover">Discover</a>
+  <a class="nav-link" href="#myitems">My Items</a>
+  <a class="nav-link" href="#shareditems">Shared Items</a>
+  <a class="nav-link" href="#workflows">Scheduled Workflows</a>
+  <a class="nav-link" href="#connections">Connections</a>
+  <div class="nav-section">More Features</div>
+  <a class="nav-link" href="#phoneagent">AI Phone Agent</a>
+  <div class="nav-section">Workspace</div>
+  <a class="nav-link" href="#account">Account</a>
+  <a class="nav-link" href="#apikeys">API Keys</a>
+  <a class="nav-link" href="#aiprefs">AI Preferences</a>
+  <a class="nav-link" href="#memory">Memory</a>
+  <a class="nav-link" href="#users">Users &amp; Roles</a>
+  <a class="nav-link" href="#emailtemplates">Email Templates</a>
+  <a class="nav-link" href="#orgsettings">Org Settings</a>
+  <a class="nav-link" href="#groups">Groups</a>
+  <div class="nav-section">Advanced</div>
+  <a class="nav-link" href="#agenteditor">Agent Editor</a>
+  <a class="nav-link" href="#learningportal">Learning Portal</a>
+  <a class="nav-link" href="#quickref">Quick Reference</a>
+</nav><main id="main">
+<div class="hero">
+  <h1>&#127959; Hilbert HatzAI Training Guide</h1>
+  <p>Your complete reference for the Secure AI platform — built specifically for Robert M. Hilberts, Inc. Everything you need to serve mechanical contractors, manage quotes, and streamline your day.</p>
+  <div class="badges"><span class="badge">&#128736; HVAC Rep &amp; Distributor</span><span class="badge">&#128196; Quotes &amp; Follow-Ups</span><span class="badge">&#128196; SOPs &amp; Templates</span><span class="badge">&#128161; AI Productivity</span></div>
+</div>
+<section class="section" id="overview">
+  <h2>&#127968; Platform Overview</h2>
+  <p class="subtitle">The 6 main tabs — everything you need at a glance</p>
+  <div class="nav-tabs"><span class="nav-tab">&#127968; Home</span><span class="nav-tab">&#128172; Chat</span><span class="nav-tab">&#128736; Workshop</span><span class="nav-tab">&#128222; AI Phone Agent</span><span class="nav-tab">&#9881; Workspace</span><span class="nav-tab">&#127891; Learning Portal</span></div>
+  <table>
+    <tr><th>Tab</th><th>What It Does</th><th>When You'll Use It</th></tr>
+    <tr><td><strong>Home</strong></td><td>Dashboard — quick access to all 5 Hilberts agents and recent activity</td><td>Every time you log in</td></tr>
+    <tr><td><strong>Chat</strong></td><td>AI conversation workspace — type questions, get drafts, run tasks</td><td>Daily — quotes, emails, SOPs, research</td></tr>
+    <tr><td><strong>Workshop</strong></td><td>Browse and manage prompt templates and automated workflows</td><td>Building reusable templates; scheduled tasks</td></tr>
+    <tr><td><strong>AI Phone Agent</strong></td><td>Configure AI-powered phone call handling</td><td>When setting up automated call responses</td></tr>
+    <tr><td><strong>Workspace</strong></td><td>Account settings, user management, memory, preferences</td><td>Admin tasks, adding team members, personalizing AI</td></tr>
+    <tr><td><strong>Learning Portal</strong></td><td>Training resources, tutorials, best practices</td><td>Onboarding; learning advanced features</td></tr>
+  </table>
+  <div class="callout tip"><strong>&#128161; Tip:</strong> Start at <strong>Home</strong> each morning. Your 5 custom Hilberts agents are one click away from there.</div>
+</section>
+<section class="section" id="home">
+  <h2>&#127968; Home Page</h2>
+  <p class="subtitle">Your launchpad — everything important is one click away</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Home page with 5 agent cards</strong>Place screenshot here (ss_5866vqshf)</div>
+  <p>The Home page loads when you log in and shows your 5 custom Hilberts agents front and center. Launch any agent directly from here, or jump to any other tab.</p>
+  <h3>What You'll See on the Home Page</h3>
+  <ul>
+    <li><strong>Your 5 Hilberts Agents</strong> — displayed as cards, ready to launch with one click</li>
+    <li><strong>Recent Chats</strong> — pick up where you left off on a quote draft or email</li>
+    <li><strong>Browse Workflows</strong> — shortcut to the Workshop prompt library</li>
+    <li><strong>Prompts by Industry</strong> — pre-built prompts for HVAC and related fields</li>
+    <li><strong>Quick Tools</strong> — Web Search, file tools, and other one-click helpers</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; Tip:</strong> Bookmark the Home page. For Hilberts staff, this is where every AI workday begins — your 5 agents are right here, labeled and ready.</div>
+</section><section class="section" id="chat">
+  <h2>&#128172; Chat Page</h2>
+  <p class="subtitle">Where most of your work gets done — quotes, emails, SOPs, and more</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Chat page clean state (ss_0682kp4h6)</strong></div>
+  <p>The Chat page is your main AI workspace. Type a request — it responds with a draft, an answer, or a completed task. Think of it like a conversation with a knowledgeable assistant who already knows your business.</p>
+  <h3>Left Sidebar — Chat History</h3>
+  <ul>
+    <li><strong>Search bar</strong> — find any past conversation (e.g., search "Daikin VRV quote" to find that draft from last week)</li>
+    <li><strong>New Chat button</strong> — starts a fresh conversation (the purple + button)</li>
+    <li><strong>Folders</strong> — organize chats by project, customer, or job type</li>
+  </ul>
+  <h3>Center Panel — Your Conversation</h3>
+  <p>Your messages show on the right; AI responses appear on the left. The active agent name shows at the top.</p>
+  <h3>Model Selector — Top Center</h3>
+  <div class="screenshot"><strong>&#128247; Screenshot: Model dropdown open (ss_5907tqf2b)</strong></div>
+  <p>The dropdown at the top shows which AI model or agent is active. Click to switch between your 5 custom agents or base AI models.</p>
+</section>
+<section class="section" id="messagebar">
+  <h2>&#9889; Message Bar &amp; Controls</h2>
+  <p class="subtitle">How you communicate with the AI</p>
+  <table>
+    <tr><th>Control</th><th>What It Does</th></tr>
+    <tr><td><strong>+ button</strong></td><td>Attach a file, image, or document — useful for uploading a spec sheet or contractor email</td></tr>
+    <tr><td><strong>Auto-Tool toggle</strong></td><td>When ON (purple), the AI automatically picks the right tool. Leave this ON for everyday use.</td></tr>
+    <tr><td><strong>Tools button</strong></td><td>Manually choose which tools the AI can use — only for advanced tasks</td></tr>
+    <tr><td><strong>Microphone icon</strong></td><td>Speak your message instead of typing</td></tr>
+    <tr><td><strong>Send button</strong></td><td>Submits your message to the AI</td></tr>
+    <tr><td><strong>Memory off/on</strong></td><td>Controls whether the AI remembers details from previous conversations</td></tr>
+  </table>
+  <div class="callout tip"><strong>&#128161; Tip:</strong> For everyday Hilberts tasks — drafting follow-up emails, writing bid declines, or pulling a morning summary — leave Auto-Tool ON and type naturally. The AI handles the rest.</div>
+  <div class="callout info"><strong>&#128161; About Memory:</strong> When Memory is ON, the AI recalls your preferences, your territory (Eastern PA), and your top contractors over time. Turn it on for a smarter, more personalized experience.</div>
+</section>
+<section class="section" id="choosingmodel">
+  <h2>&#129302; Choosing a Model or Agent</h2>
+  <p class="subtitle">The AI dropdown — your quick-switch between tools</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Model dropdown (ss_5907tqf2b + ss_18399an3t)</strong></div>
+  <h3>My Models — The Base AI</h3>
+  <ul>
+    <li><strong>Claude Haiku 4.5</strong> (Recommended) — Fast; great for quick questions and simple drafts</li>
+    <li><strong>Claude Sonnet 4.6</strong> (Your Default) — More powerful; better for complex emails and detailed writing</li>
+  </ul>
+  <h3>My Agents — Your Hilberts-Customized Tools</h3>
+  <ul>
+    <li><strong>Morning Digest</strong> — Summarizes your overnight Microsoft 365 activity</li>
+    <li><strong>Prompt Engineer</strong> — Helps you write better prompts for any AI task</li>
+    <li><strong>Quote Follow-Up Writer</strong> — Drafts follow-up emails for outstanding quotes</li>
+    <li><strong>Template Writer</strong> — Creates reusable templates for common Hilberts communications</li>
+    <li><strong>Hilberts SOP Writer</strong> — Writes standard operating procedures in plain language</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; When to Use What:</strong> Use a <strong>custom agent</strong> for daily Hilberts work. Use a <strong>base model</strong> for general questions or tasks outside your agent's specialty.</div>
+</section><section class="section" id="agents">
+  <h2>&#129302; Your 5 Hilberts AI Agents</h2>
+  <p class="subtitle">Custom-built for Robert M. Hilberts, Inc. — each agent is pre-trained for a specific job</p>
+  <div class="callout info"><strong>&#128274; About These Agents:</strong> Each agent has detailed built-in instructions that tell it exactly how to help Hilberts staff. These instructions are private and secure. Just open the agent and start talking to it like a knowledgeable colleague.</div>
+  <div class="screenshot"><strong>&#128247; Screenshot: My Items — all 5 agents (ss_48301w0z2)</strong></div>
+</section>
+<section class="section" id="agent-template">
+  <h2>&#128196; Template Writer</h2>
+  <p class="subtitle">Your grow-with-you writing assistant for short, repeatable tasks</p>
+  <div class="agent-card">
+    <div class="agent-header"><div class="agent-icon">TW</div><div><h3>Template Writer</h3><div class="agent-desc">Pre-loaded with templates for bid declines, spec summaries, LinkedIn posts, and more</div></div></div>
+    <div class="callout tip"><strong>&#127775; What This Agent Does:</strong> Template Writer is your all-purpose business writing assistant. It comes pre-loaded with Hilberts-specific templates and can create new ones for any recurring communication — bid declines, spec summaries, contractor updates, LinkedIn posts, or anything you type, send, or quote regularly.</div>
+    <div class="agent-greeting">&#128172; <em>"Hello! What type of template are you looking for? Try 'decline a bid,' 'summarize a spec,' 'LinkedIn ideas,' or describe a new task you want a template for."</em></div>
+    <div class="screenshot"><strong>&#128247; Screenshot: Template Writer opening screen (877142f0)</strong></div>
+  </div>
+  <h3>&#128161; Example Chat</h3>
+  <div class="chat-demo">
+    <div class="msg user"><strong>You:</strong> I need a template for declining a bid from a mechanical contractor where we weren't the low bidder on Daikin VRV equipment. Professional and leave the door open.</div>
+    <div class="msg ai"><strong>Template Writer:</strong> Here's a bid decline template:<br><br><em>Subject: Re: [Project Name] — Daikin VRV Bid<br>Dear [Contractor Name],<br>Thank you for the opportunity to quote on [Project Name]. While we weren't selected for this project, we truly value our relationship with [Company] and look forward to supporting you on future opportunities. If anything changes, please don't hesitate to reach out.<br>Best regards, [Your Name], Robert M. Hilberts, Inc.</em><br><br>Want me to adjust the tone or add specific Daikin product language?</div>
+  </div>
+  <h3>&#9989; Best Used For</h3>
+  <ul>
+    <li>Bid decline letters after a lost quote</li>
+    <li>Spec summary emails to mechanical contractors</li>
+    <li>LinkedIn posts about new Daikin product lines</li>
+    <li>Customer update emails for lead times or backorder situations</li>
+    <li>Any communication you send more than once a week</li>
+  </ul>
+</section>
+<section class="section" id="agent-quote">
+  <h2>&#128233; Quote Follow-Up Writer</h2>
+  <p class="subtitle">Drafts warm, personable follow-up emails for outstanding quotes</p>
+  <div class="agent-card">
+    <div class="agent-header"><div class="agent-icon">QF</div><div><h3>Quote Follow-Up Writer</h3><div class="agent-desc">Drafts follow-ups for outstanding quotes — can send via Microsoft 365 when connected</div></div></div>
+    <div class="callout tip"><strong>&#127775; What This Agent Does:</strong> Built specifically for the quote-to-close process at Hilberts. Tell it which quote to follow up on and relevant details — contractor name, job site, equipment — and it drafts a professional, warm follow-up. If Microsoft 365 is connected, it can send the email after you approve.</div>
+    <div class="agent-greeting">&#128172; <em>"Hello! Tell me which quote to follow up on and any important details — I'll draft the email for you. I can also email it for you after you approve."</em></div>
+    <div class="screenshot"><strong>&#128247; Screenshot: Quote Follow-Up Writer (d5c263b8)</strong></div>
+  </div>
+  <h3>&#128161; Example Chat</h3>
+  <div class="chat-demo">
+    <div class="msg user"><strong>You:</strong> Follow up on the Daikin split system quote we sent ABC Mechanical two weeks ago for the Trexlertown medical office project. Quote #2024-1187. No response yet.</div>
+    <div class="msg ai"><strong>Quote Follow-Up Writer:</strong> Here's your follow-up:<br><br><em>Subject: Following Up — Quote #2024-1187, Trexlertown Medical Office<br>Hi [Name],<br>I wanted to check in on Quote #2024-1187 for the Daikin split system at the Trexlertown medical office project. We're here to answer any questions on specs, pricing, or lead times. Let me know if there's anything we can do to move this forward!<br>Best, [Your Name], Robert M. Hilberts, Inc.</em><br><br>Shall I send this, or adjust anything first?</div>
+  </div>
+  <h3>&#9989; Best Used For</h3>
+  <ul>
+    <li>Following up on Daikin equipment quotes (splits, VRV, commercial)</li>
+    <li>Checking in on diffuser, grille, or register orders</li>
+    <li>Following up after submitting equipment schedules or submittals</li>
+    <li>Re-engaging contractors after a quiet period</li>
+  </ul>
+</section><section class="section" id="agent-prompt">
+  <h2>&#9889; Prompt Engineer</h2>
+  <p class="subtitle">Turns a rough idea into a clear, effective AI prompt that gets you what you want</p>
+  <div class="agent-card">
+    <div class="agent-header"><div class="agent-icon">PE</div><div><h3>Prompt Engineer</h3><div class="agent-desc">Your coach for writing better AI instructions — for any task, any agent</div></div></div>
+    <div class="callout tip"><strong>&#127775; What This Agent Does:</strong> Not sure how to phrase something? The Prompt Engineer turns a vague idea into a clear, detailed instruction that gets the best result. Think of it as the "teach me to fish" agent — it makes you a more effective AI user across all your other tools.</div>
+    <div class="agent-greeting">&#128172; <em>"Hello! I am your AI Prompt Engineer. What kind of prompt are you looking for?"</em></div>
+    <div class="screenshot"><strong>&#128247; Screenshot: Prompt Engineer opening screen (fcdecdd0)</strong></div>
+  </div>
+  <h3>&#128161; Example Chat</h3>
+  <div class="chat-demo">
+    <div class="msg user"><strong>You:</strong> I want the AI to write a warranty claim letter for a Daikin unit that failed in the first year, but I'm not sure how to phrase it.</div>
+    <div class="msg ai"><strong>Prompt Engineer:</strong> Here's a more effective prompt:<br><br><em>"Write a professional warranty claim letter on behalf of Robert M. Hilberts, Inc. for a Daikin [model] unit that failed within 12 months of installation at [job site] by [contractor]. The issue is [describe problem]. Include a request for a replacement unit and reference the standard Daikin manufacturer warranty. Tone: professional and factual."</em><br><br>The more specific details you fill in, the better the result.</div>
+  </div>
+  <h3>&#9989; Best Used For</h3>
+  <ul>
+    <li>Building better prompts before using your other agents</li>
+    <li>Getting more precise results on complex requests</li>
+    <li>Creating prompts for recurring tasks you want to reuse</li>
+  </ul>
+</section>
+<section class="section" id="agent-digest">
+  <h2>&#127774; Morning Digest</h2>
+  <p class="subtitle">Pulls your last 24 hours of Microsoft 365 activity and gives you a smart summary</p>
+  <div class="agent-card">
+    <div class="agent-header"><div class="agent-icon">MD</div><div><h3>Morning Digest</h3><div class="agent-desc">Summarizes your emails, calendar, and Teams activity from the last 24 hours</div></div></div>
+    <div class="callout tip"><strong>&#127775; What This Agent Does:</strong> Connects to your Microsoft 365 account (Outlook, Calendar, Teams) and summarizes what happened since you last checked in. Instead of 20 minutes in your inbox, you get a clean briefing: urgent emails, today's meetings, pending contractor items, and anything that needs your attention.</div>
+    <div class="callout info"><strong>&#128279; Requires Microsoft 365 Connection:</strong> This agent works when your M365 account is connected in Workshop &gt; Connections. Talk to your admin if unsure whether this is set up.</div>
+    <div class="agent-greeting">&#128172; <em>"Good morning. Would you like your morning digest?"</em></div>
+    <div class="screenshot"><strong>&#128247; Screenshot: Morning Digest opening screen (7f4274c4)</strong></div>
+  </div>
+  <h3>&#128161; Example Chat</h3>
+  <div class="chat-demo">
+    <div class="msg user"><strong>You:</strong> Yes, give me my morning digest.</div>
+    <div class="msg ai"><strong>Morning Digest:</strong> Good morning! Here's your summary for today:<br><br><strong>&#128165; Urgent (2):</strong> ABC Mechanical replied to Quote #2024-1187 — they want to discuss pricing. Daikin sent a lead time update for VRV systems affecting 3 open orders.<br><strong>&#128197; Today's Calendar (3 meetings):</strong> 9 AM — Weekly team call | 11:30 AM — Contractor lunch with XYZ Mechanical | 2 PM — Daikin product training webinar<br><strong>&#128204; Pending Follow-Ups (4):</strong> 2 quotes with no response &gt;2 weeks, 1 submittal awaiting approval, 1 warranty claim in progress.<br><br>Want me to draft a reply to ABC Mechanical?</div>
+  </div>
+  <h3>&#9989; Best Used For</h3>
+  <ul>
+    <li>Starting every workday with a quick, organized briefing</li>
+    <li>Staying on top of urgent contractor emails without digging through your inbox</li>
+    <li>Catching follow-ups that may have slipped through the cracks</li>
+  </ul>
+</section>
+<section class="section" id="agent-sop">
+  <h2>&#128214; Hilberts SOP Writer</h2>
+  <p class="subtitle">Writes practical, plain-language standard operating procedures for Hilberts</p>
+  <div class="agent-card">
+    <div class="agent-header"><div class="agent-icon">SW</div><div><h3>Hilberts SOP Writer</h3><div class="agent-desc">Writes SOPs sized for a small HVAC rep firm — practical, plain-language, no fluff</div></div></div>
+    <div class="callout tip"><strong>&#127775; What This Agent Does:</strong> Creates standard operating procedures written specifically for your team — sized for a small, experienced HVAC rep firm. Describe a process, workflow, or policy and it turns it into a clean, numbered SOP document your staff can actually follow. Plain language, no legal jargon.</div>
+    <div class="agent-greeting">&#128172; <em>"Hello! I'm Hilberts SOP Writer. How can I help you today?"</em></div>
+    <div class="screenshot"><strong>&#128247; Screenshot: Hilberts SOP Writer opening screen (bce7ed58)</strong></div>
+  </div>
+  <h3>&#128161; Example Chat</h3>
+  <div class="chat-demo">
+    <div class="msg user"><strong>You:</strong> Write an SOP for how we handle a new contractor setting up a house account. Include credit application, product line intro, and who they should call for what.</div>
+    <div class="msg ai"><strong>Hilberts SOP Writer:</strong> <strong>SOP: New Contractor Account Setup — Robert M. Hilberts, Inc.</strong><br><br><strong>Step 1 — Initial Contact:</strong> Collect company name, contact info, license number, and primary territory. Assign to the appropriate outside sales rep by region.<br><strong>Step 2 — Credit Application:</strong> Send the Hilberts credit application. Standard review: 3–5 business days. Notify contractor when approved.<br><strong>Step 3 — Product Line Introduction:</strong> Schedule a 30-min intro call covering Daikin equipment, grilles/registers/diffusers, and any specialty lines relevant to their work.<br><strong>Step 4 — Key Contacts:</strong> Provide: Inside Sales (quotes &amp; orders), Outside Rep (applications &amp; jobsite support), Warranty (claims &amp; service).<br><br>Want me to add a checklist version or email template for new contractors?</div>
+  </div>
+  <h3>&#9989; Best Used For</h3>
+  <ul>
+    <li>Documenting quoting and order processes for new staff</li>
+    <li>Writing warranty claim handling procedures</li>
+    <li>Creating onboarding guides for new contractors or internal hires</li>
+    <li>Formalizing anything your team currently does from memory</li>
+  </ul>
+</section><section class="section" id="howto">
+  <h2>&#128218; Chat How-To Basics</h2>
+  <p class="subtitle">Common tasks every Hilberts user should know</p>
+  <h3>&#128172; Starting a New Chat</h3>
+  <ol class="steps">
+    <li>In the left sidebar, find the purple <strong>New Chat</strong> button at the top</li>
+    <li>Click the <strong>+</strong> icon on the right side of that button</li>
+    <li>A blank conversation opens — the active agent stays the same unless you change it</li>
+    <li>Type your first message and press Enter (or click the send arrow)</li>
+  </ol>
+  <div class="callout tip"><strong>&#128161; Tip:</strong> You don't need to start a new chat for every message. Within one conversation, you can follow up and ask for revisions. Start a new chat only when switching to a completely different task.</div>
+  <h3>&#128260; Switching Between Agents</h3>
+  <ol class="steps">
+    <li>Click the <strong>agent/model dropdown</strong> at the top center of the chat window</li>
+    <li>Under <strong>My Agents</strong>, click the agent you want to switch to</li>
+    <li>The new agent takes over from this point in the conversation</li>
+  </ol>
+  <h3>&#128203; Copying a Prompt Into the Message Bar</h3>
+  <ol class="steps">
+    <li>Open your saved prompts file (e.g., a shared Teams doc or Word file)</li>
+    <li>Select the prompt text you want to use</li>
+    <li>Copy it (Ctrl+C on Windows)</li>
+    <li>Click inside the <strong>Message Secure AI</strong> box at the bottom of the Chat page</li>
+    <li>Paste the prompt (Ctrl+V)</li>
+    <li>Fill in any blanks (customer name, quote number, etc.) before hitting Send</li>
+  </ol>
+  <div class="callout tip"><strong>&#128161; Tip:</strong> If your prompt has placeholders like [contractor name] or [quote number], always replace those before sending.</div>
+  <h3>&#128193; Creating Folders</h3>
+  <ol class="steps">
+    <li>In the left sidebar, find the <strong>Folders</strong> section below your chat list</li>
+    <li>Click the <strong>+</strong> icon next to Folders</li>
+    <li>Give it a descriptive name (e.g., "Q2 Contractor Quotes" or "Warranty Claims 2025")</li>
+    <li>Right-click a chat name and choose <strong>Move to folder</strong></li>
+  </ol>
+  <h3>&#128465; Deleting a Folder</h3>
+  <div class="callout warn"><strong>&#9888; Heads Up:</strong> Deleting a folder may delete the chats inside it. Make sure you don't need those conversations before deleting.</div>
+  <ol class="steps">
+    <li>Find the folder you want to delete in the left sidebar</li>
+    <li>Right-click the folder name (or click the three-dot menu on hover)</li>
+    <li>Select <strong>Delete</strong> from the menu</li>
+    <li>Confirm the deletion when prompted</li>
+  </ol>
+  <h3>&#128257; If the AI Response Isn't What You Expected</h3>
+  <ul>
+    <li><strong>Too long?</strong> Say: "Make this shorter — 3 sentences max."</li>
+    <li><strong>Wrong tone?</strong> Say: "Make this more formal" or "Make this more conversational."</li>
+    <li><strong>Missing details?</strong> Say: "Add a line about our 30-day lead time on Daikin VRV systems."</li>
+    <li><strong>Wrong direction?</strong> Say: "Start over. I need a bid decline letter, not a follow-up."</li>
+  </ul>
+  <div class="callout success"><strong>&#127775; You Can Always Refine:</strong> Every response is a starting point. The real power comes from the back-and-forth — tell it what to change and it will revise immediately.</div>
+</section><section class="section" id="discover">
+  <h2>&#128270; Workshop — Discover</h2>
+  <p class="subtitle">Browse a library of pre-built prompt templates and workflows</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Workshop Discover (ss_5855bqxd7)</strong></div>
+  <p>Discover is your browsable library of prompt templates. These are pre-written starting points for common tasks — HVAC, sales, operations, communications — that you can use as-is or customize for Hilberts.</p>
+  <ul>
+    <li><strong>Browse by category</strong> — Filter by industry or task type (e.g., "Sales", "Email Writing")</li>
+    <li><strong>Search</strong> — Type a keyword to find relevant templates (try "follow-up" or "proposal")</li>
+    <li><strong>Preview a template</strong> — Click any template card before saving it</li>
+    <li><strong>Save to My Items</strong> — Save useful templates for quick access later</li>
+  </ul>
+</section>
+<section class="section" id="myitems">
+  <h2>&#128196; Workshop — My Items</h2>
+  <p class="subtitle">Your personal library of saved agents, templates, and workflows</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: My Items (ss_48301w0z2)</strong></div>
+  <p>My Items is where all 5 of your custom Hilberts agents live, alongside any templates or workflows you've saved from Discover.</p>
+  <ul>
+    <li><strong>Your 5 Custom Agents</strong> — Template Writer, Quote Follow-Up Writer, Prompt Engineer, Morning Digest, and Hilberts SOP Writer</li>
+    <li><strong>Saved Templates</strong> — Any prompt templates you've saved from Discover</li>
+    <li><strong>Your Workflows</strong> — Any automated workflows you've created or saved</li>
+  </ul>
+</section>
+<section class="section" id="shareditems">
+  <h2>&#128101; Workshop — Shared Items</h2>
+  <p class="subtitle">Templates and workflows shared across your Hilberts team</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Shared Items (ss_5841lpbqj)</strong></div>
+  <p>Shared Items shows templates, agents, and workflows shared with your entire Hilberts organization. If an admin creates something useful and shares it, it shows up here.</p>
+  <ul>
+    <li>Anyone can <strong>view and use</strong> shared items</li>
+    <li>You can <strong>save a copy</strong> to your own My Items for personalization</li>
+    <li>Only admins or the original creator can <strong>edit or remove</strong> shared items</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; Team Tip:</strong> If you build a template the whole team would benefit from — like a standard quote follow-up — ask your admin to share it here. It keeps everyone using consistent language.</div>
+</section>
+<section class="section" id="workflows">
+  <h2>&#9889; Workshop — Scheduled Workflows</h2>
+  <p class="subtitle">Set up AI tasks that run automatically on a schedule</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Scheduled Workflows (ss_4843263mr)</strong></div>
+  <p>Scheduled Workflows let you automate recurring AI tasks — set it up once, and it runs on its own at whatever time and frequency you set.</p>
+  <ul>
+    <li><strong>Daily Morning Digest</strong> — Schedule to run every weekday at 7:30 AM so your summary is ready when you arrive</li>
+    <li><strong>Weekly Quote Follow-Up Reminders</strong> — Trigger a check on open quotes every Monday</li>
+    <li><strong>Recurring Reports</strong> — Run a weekly activity summary for territory reps</li>
+  </ul>
+  <div class="callout warn"><strong>&#9888; Before You Schedule:</strong> Make sure any connections the workflow needs (like Microsoft 365) are active in Connections. A scheduled workflow will fail if it can't reach the tools it needs.</div>
+</section>
+<section class="section" id="connections">
+  <h2>&#128279; Workshop — Connections</h2>
+  <p class="subtitle">Link your external tools so the AI can work with your real data</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Connections (ss_4962x0tfg)</strong></div>
+  <p>Connections is where you authorize the AI to access your external services — Microsoft 365, Google services, and others. Without a connection, your agents can only work with information you manually type in.</p>
+  <h3>Why Connections Matter for Hilberts</h3>
+  <ul>
+    <li><strong>Morning Digest</strong> needs your <strong>Microsoft 365</strong> connection to pull emails, calendar, and Teams messages</li>
+    <li><strong>Quote Follow-Up Writer</strong> can send emails through <strong>Outlook</strong> when connected</li>
+  </ul>
+  <h3>How to Add a Connection</h3>
+  <ol class="steps">
+    <li>Click <strong>Connections</strong> in the Workshop sidebar</li>
+    <li>Find the service you want to connect (e.g., Microsoft 365)</li>
+    <li>Click <strong>Connect</strong> or <strong>Add Integration</strong></li>
+    <li>Sign in to the external service and grant permissions</li>
+    <li>The connection shows as active (green checkmark) when complete</li>
+  </ol>
+  <div class="callout info"><strong>&#128274; Your Data Stays Secure:</strong> Connections use OAuth (standard industry-safe authorization). Hilberts AI never stores your Microsoft 365 password — only receives temporary, limited access.</div>
+</section><section class="section" id="phoneagent">
+  <h2>&#128222; AI Phone Agent</h2>
+  <p class="subtitle">Configure AI-powered handling for incoming calls</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: AI Phone Agent (ss_38324lhrh)</strong></div>
+  <p>The AI Phone Agent tab lets you set up automated AI-powered responses for incoming calls. This is an advanced feature — most Hilberts staff won't need to configure this directly, but it's good to know it exists.</p>
+  <ul>
+    <li>Greet callers and collect basic information automatically</li>
+    <li>Route calls based on the caller's need (service, new order, warranty, etc.)</li>
+    <li>Take messages and log them to your workflow</li>
+  </ul>
+  <div class="callout warn"><strong>&#9888; Admin Required:</strong> Setting up AI Phone Agents requires admin-level configuration. Contact Plus 1 Technology for setup assistance.</div>
+</section>
+<section class="section" id="account">
+  <h2>&#9881; Workspace — Account</h2>
+  <p class="subtitle">Manage your personal profile, password, and two-factor authentication</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Account / Personal Info (ss_4837wi3jg)</strong></div>
+  <p>The Account page is where you manage your personal login information — name, email, profile photo, password, and security settings.</p>
+  <ul>
+    <li><strong>Update your name and email</strong> — Keep your profile current</li>
+    <li><strong>Upload a profile photo</strong> — SVG, PNG, JPG (max 800x400px)</li>
+    <li><strong>Change your password</strong> — Use the Update Password button</li>
+    <li><strong>Two-Factor Authentication (2FA)</strong> — Strongly recommended; requires an authenticator app on your phone</li>
+  </ul>
+  <div class="callout tip"><strong>&#128274; Security Tip:</strong> Enable 2FA. Even if someone gets your password, they can't access your account without your phone.</div>
+</section>
+<section class="section" id="apikeys">
+  <h2>&#128273; Workspace — API Keys</h2>
+  <p class="subtitle">Manage technical integration keys — for admin use only</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: API Keys (ss_3828isywv)</strong></div>
+  <p>API Keys allow external software tools to connect to your Secure AI workspace. This is for technical integrations only — most Hilberts users will never need this page.</p>
+  <div class="callout warn"><strong>&#9888; Handle With Care:</strong> API keys provide programmatic access to your AI account. Never share a key publicly or outside your organization. If a key is compromised, rotate it immediately from this page.</div>
+</section>
+<section class="section" id="aiprefs">
+  <h2>&#128161; Workspace — AI Preferences</h2>
+  <p class="subtitle">Customize how the AI behaves for you personally</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: AI Preferences (ss_1854kj4xi)</strong></div>
+  <p>AI Preferences let you set personal defaults that shape how the AI responds — without having to repeat yourself in every chat.</p>
+  <ul>
+    <li><strong>Default AI model</strong> — Which model loads by default in new chats</li>
+    <li><strong>Response format</strong> — Bullet points, paragraphs, short answers, or detailed explanations</li>
+    <li><strong>Tone preferences</strong> — Professional, conversational, or direct</li>
+    <li><strong>Language and region</strong> — Useful if your team works across different regions</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; Hilberts Recommendation:</strong> Set tone to <strong>professional and direct</strong> and format to <strong>concise paragraphs</strong>. This matches the style expected by your contractors and saves you from adding these instructions to every prompt.</div>
+</section>
+<section class="section" id="memory">
+  <h2>&#129504; Workspace — Memory</h2>
+  <p class="subtitle">What the AI remembers about you and your business across conversations</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Memory (ss_08557kkk3)</strong></div>
+  <p>The Memory page shows everything the AI has stored about you and your work. When Memory is enabled, the AI recalls details from past conversations — saving time and making responses more relevant over time.</p>
+  <h3>What Gets Remembered</h3>
+  <ul>
+    <li>Your name, role, and company (Robert M. Hilberts, Inc.)</li>
+    <li>Your preferred communication style and tone</li>
+    <li>Key contacts you've mentioned (e.g., ABC Mechanical)</li>
+    <li>Products you frequently reference (Daikin VRV, grilles, diffusers)</li>
+    <li>Your territory (Eastern Pennsylvania)</li>
+  </ul>
+  <p>From this page, you can view all stored memories, edit inaccurate ones, and delete individual memories. You can clear all memories and start fresh at any time.</p>
+  <div class="callout info"><strong>&#128274; Privacy Note:</strong> Your memories are only visible to you. No other team members can see your personal AI memory.</div>
+</section><section class="section" id="users">
+  <h2>&#128100; Workspace — Users &amp; Roles</h2>
+  <p class="subtitle">Manage who has access to your Hilberts AI workspace</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Users and Roles (ss_7841oneek)</strong></div>
+  <p>Users &amp; Roles is where your organization admin manages team member access — add users, assign roles, and control what each team member can see and do.</p>
+  <h3>Roles Available</h3>
+  <ul>
+    <li><strong>Admin</strong> — Full access: manage users, agents, connections, billing, and all settings</li>
+    <li><strong>Member</strong> — Standard access: use chat, agents, and saved workflows; cannot manage users or settings</li>
+  </ul>
+  <div class="callout warn"><strong>&#9888; Admin-Only:</strong> Only account admins can add or remove users and change role assignments.</div>
+  <h3>Adding a New Team Member</h3>
+  <ol class="steps">
+    <li>Navigate to Workspace &gt; Users &amp; Roles</li>
+    <li>Click <strong>Invite User</strong></li>
+    <li>Enter their work email address</li>
+    <li>Select their role (Member or Admin)</li>
+    <li>Click <strong>Send Invitation</strong> — they'll receive an email to set up their account</li>
+  </ol>
+</section>
+<section class="section" id="emailtemplates">
+  <h2>&#128139; Workspace — Email Templates</h2>
+  <p class="subtitle">System email templates for platform notifications</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Email Templates (ss_683519as8)</strong></div>
+  <p>Email Templates manages the automated emails the platform sends — invitation emails, password reset notifications, and account alerts. These are system-level templates, not personal email drafts.</p>
+  <div class="callout info"><strong>&#128161; Note:</strong> You likely won't need to modify these templates. They're pre-configured as part of your platform setup. Admin-only access required to edit. If you notice an issue with a system email, report it to your admin.</div>
+</section>
+<section class="section" id="orgsettings">
+  <h2>&#127970; Workspace — Org Settings</h2>
+  <p class="subtitle">Company-wide platform settings for Robert M. Hilberts, Inc.</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Org Settings (ss_2858i23sj)</strong></div>
+  <p>Org Settings controls platform-wide configurations that apply to your entire organization — company name, branding, default behaviors, and billing. Admin-only; affects every user in your workspace.</p>
+  <ul>
+    <li><strong>Organization name and branding</strong></li>
+    <li><strong>Default AI model</strong> for new users</li>
+    <li><strong>Data retention settings</strong></li>
+    <li><strong>Security policies</strong> — passwords, session timeouts, 2FA requirements</li>
+  </ul>
+  <div class="callout warn"><strong>&#9888; Admin-Only:</strong> Changes to Org Settings affect all users. Always confirm changes with your Plus 1 Technology rep before modifying.</div>
+</section>
+<section class="section" id="groups">
+  <h2>&#128101; Workspace — Groups</h2>
+  <p class="subtitle">Organize your team into groups for shared resources and permissions</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Groups (ss_3840ql2vk)</strong></div>
+  <p>Groups let you organize Hilberts team members into subgroups — Inside Sales, Outside Reps, Management — with their own shared agents, templates, and access permissions.</p>
+  <h3>Use Cases for Hilberts</h3>
+  <ul>
+    <li>Give <strong>Outside Sales</strong> access to a quote-focused agent library</li>
+    <li>Give <strong>Management</strong> access to reporting and digest workflows</li>
+    <li>Give <strong>Inside Sales</strong> access to Template Writer and Quote Follow-Up Writer specifically</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; Admin Tip:</strong> Set up groups early. It's easier to manage permissions by group than to configure each user individually as your team grows.</div>
+</section>
+<section class="section" id="agenteditor">
+  <h2>&#128736; Agent Editor</h2>
+  <p class="subtitle">For admins — customize and configure your AI agents</p>
+  <div class="screenshot"><strong>&#128247; Screenshot: Agent Editor — Template Writer (ss_08598fm0a)</strong></div>
+  <p>The Agent Editor is where your custom Hilberts agents were built and can be updated. This is an advanced, admin-only section. Most Hilberts staff will never need to access it — but knowing it exists helps you understand how your agents work.</p>
+  <h3>What the Agent Editor Controls</h3>
+  <ul>
+    <li><strong>Agent Name &amp; Description</strong> — What shows in the dropdown and on cards</li>
+    <li><strong>System Instructions</strong> — Detailed behind-the-scenes guidance (kept private from general users)</li>
+    <li><strong>Model Selection</strong> — Which underlying AI model powers the agent</li>
+    <li><strong>Tools &amp; Capabilities</strong> — What tools the agent can access (web search, file reading, M365, etc.)</li>
+    <li><strong>Starter Prompts</strong> — The "Get Started" buttons on the agent's opening screen</li>
+  </ul>
+  <div class="callout info"><strong>&#128161; For Hilberts Admins:</strong> If an agent needs to be updated — new product line, pricing policy change, updated quoting procedures — the Agent Editor is where those changes happen. All 5 agents can be updated independently.</div>
+</section>
+<section class="section" id="learningportal">
+  <h2>&#127891; Learning Portal</h2>
+  <p class="subtitle">Tutorials, guides, and training resources for getting the most from Secure AI</p>
+  <p>The Learning Portal tab in the top navigation opens training resources from Plus 1 Technology — video tutorials, written guides, best practices, and tips for using the platform effectively.</p>
+  <ul>
+    <li>Getting-started videos for new users</li>
+    <li>Step-by-step guides for specific features</li>
+    <li>Prompt-writing tips and best practices</li>
+    <li>Updates on new features as they're released</li>
+  </ul>
+  <div class="callout tip"><strong>&#128161; Onboarding Tip:</strong> When a new Hilberts team member joins, send them to the Learning Portal first. Combined with this guide, they'll be productive quickly.</div>
+</section>
+<section class="section" id="quickref">
+  <h2>&#128203; Quick Reference</h2>
+  <p class="subtitle">Everything you need at a glance</p>
+  <h3>Your 5 Agents — When to Use Which</h3>
+  <table>
+    <tr><th>Agent</th><th>Use It When...</th><th>Example Task</th></tr>
+    <tr><td><strong>Template Writer</strong></td><td>You need a draft for a recurring communication</td><td>"Write a bid decline letter for a lost Daikin VRV job"</td></tr>
+    <tr><td><strong>Quote Follow-Up Writer</strong></td><td>A quote has gone silent and you need a follow-up</td><td>"Follow up on Quote #2024-1187 to ABC Mechanical"</td></tr>
+    <tr><td><strong>Prompt Engineer</strong></td><td>You have an idea but don't know how to phrase it</td><td>"Help me write a prompt for a warranty claim letter"</td></tr>
+    <tr><td><strong>Morning Digest</strong></td><td>You want a smart summary before diving into email</td><td>"Give me my morning digest"</td></tr>
+    <tr><td><strong>Hilberts SOP Writer</strong></td><td>You need to document a process or procedure</td><td>"Write an SOP for how we onboard a new contractor"</td></tr>
+  </table>
+  <h3>Common Actions — Quick Reference</h3>
+  <table>
+    <tr><th>Action</th><th>How To Do It</th></tr>
+    <tr><td>Start a new chat</td><td>Click the purple <strong>New Chat +</strong> button in the left sidebar</td></tr>
+    <tr><td>Switch agents</td><td>Click the agent dropdown at the top center of the chat window</td></tr>
+    <tr><td>Copy and paste a prompt</td><td>Copy from your prompt file &rarr; click message bar &rarr; paste &rarr; fill in blanks &rarr; send</td></tr>
+    <tr><td>Create a folder</td><td>Click the <strong>+</strong> icon next to Folders in the left sidebar</td></tr>
+    <tr><td>Delete a folder</td><td>Right-click the folder name &rarr; Delete &rarr; confirm</td></tr>
+    <tr><td>Fix a bad AI response</td><td>Type what needs to change: "Make it shorter" / "More formal" / "Add [detail]"</td></tr>
+    <tr><td>Connect Microsoft 365</td><td>Workshop &rarr; Connections &rarr; Microsoft 365 &rarr; Connect</td></tr>
+    <tr><td>Update your profile</td><td>Workspace &rarr; Account &rarr; edit fields &rarr; Save Changes</td></tr>
+    <tr><td>Add a team member</td><td>Workspace &rarr; Users &amp; Roles &rarr; Invite User (admin only)</td></tr>
+    <tr><td>Browse prompt templates</td><td>Workshop &rarr; Discover</td></tr>
+  </table>
+  <h3>Hilberts Platform — Key Details</h3>
+  <table>
+    <tr><th>Item</th><th>Detail</th></tr>
+    <tr><td>Platform Name</td><td>Secure AI (Powered by Hatz AI)</td></tr>
+    <tr><td>Organization</td><td>Robert M. Hilberts, Inc.</td></tr>
+    <tr><td>Territory</td><td>Eastern Pennsylvania</td></tr>
+    <tr><td>Primary Products</td><td>Daikin HVAC, Grilles/Registers/Diffusers, Fans, OR Systems</td></tr>
+    <tr><td>Customers Served</td><td>Mechanical contractors, facilities teams, engineers</td></tr>
+    <tr><td>Total Custom Agents</td><td>5</td></tr>
+    <tr><td>Platform Support</td><td>Contact Plus 1 Technology for technical issues</td></tr>
+  </table>
+</section>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const sections=document.querySelectorAll('.section[id]');
+  const navLinks=document.querySelectorAll('.nav-link');
+  function updateActive(){
+    let current='';
+    sections.forEach(s=>{if(s.getBoundingClientRect().top<=100)current=s.id;});
+    navLinks.forEach(l=>{l.classList.remove('active');if(l.getAttribute('href')==='#'+current)l.classList.add('active');});
+  }
+  window.addEventListener('scroll',updateActive);
+  updateActive();
+  navLinks.forEach(l=>{l.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+});
+</script>
+</body></html>
