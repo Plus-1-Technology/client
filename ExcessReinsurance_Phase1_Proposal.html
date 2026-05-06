@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plus 1 Technology — Proposal · Excess Reinsurance · Submission Intake Automation</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+:root{
+  --p1-blue:#1419A0;--p1-cyan:#00B9FF;--p1-dgray:#40404B;--p1-black:#11111F;--p1-white:#fff;
+  --p1-navy:#1419A0;--p1-navy-dark:#0d1070;--p1-navy-deep:#0e1278;--p1-navy-deeper:#0a0d5c;
+  --p1-navy-dim:#e8ecf8;--p1-navy-mid:#c5ceed;
+  --p1-cyan-bright:#7dd3fc;--p1-cyan-dim:#e0f4fc;--p1-cyan-mid:#a8ddf5;
+  --p1-bg:#f4f6fb;--p1-bg-card:#fff;--p1-bg-subtle:#eef1f8;--p1-bg-input:#f6f8fb;--p1-bg-hover:#f9fafd;
+  --p1-border:#dce2f0;--p1-border-strong:#c8d0e8;
+  --p1-text:#1a2040;--p1-muted:#5a6589;--p1-subtle:#8e9ab8;
+  --p1-green:#16a34a;--p1-green-bg:#f0fdf4;--p1-green-br:#bbf7d0;
+  --p1-yellow:#b45309;--p1-yellow-bg:#fffbeb;--p1-yellow-br:#fde68a;
+  --p1-purple:#7c3aed;--p1-purple-bg:#f5f3ff;--p1-purple-br:#ddd6fe;
+  --p1-teal:#0f766e;--p1-teal-bg:#f0fdfa;--p1-teal-br:#99f6e4;
+  --p1-orange:#c2410c;--p1-orange-bg:#fff7ed;--p1-orange-br:#fed7aa;
+  --p1-hero-gradient:linear-gradient(135deg,var(--p1-blue) 0%,var(--p1-navy-deep) 60%,var(--p1-navy-deeper) 100%);
+  --p1-cta-gradient:linear-gradient(135deg,var(--p1-blue) 0%,#2a30c8 100%);
+  --p1-avatar-gradient:linear-gradient(135deg,var(--p1-blue),var(--p1-cyan));
+  --p1-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --p1-display:'Syne','Inter',sans-serif;
+  --p1-mono:'DM Mono','JetBrains Mono',Menlo,monospace;
+  --p1-shadow-card:0 1px 4px rgba(20,25,160,.06);
+  --p1-shadow-cta:0 4px 16px rgba(20,25,160,.20);
+  --p1-shadow-pop:0 8px 32px rgba(0,0,0,.12);
+  --p1-shadow-header:0 2px 12px rgba(20,25,160,.25);
+  --p1-r-pill:20px;--p1-r-card:12px;--p1-r-cta:10px;--p1-r-input:8px;--p1-r-tag:6px;--p1-r-tight:4px;
+  --p1-trans:.15s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--p1-bg);color:var(--p1-black);font-family:var(--p1-sans);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ── Header (no nav tabs) ─────────────────────────── */
+.hdr{position:sticky;top:0;z-index:50;background:var(--p1-navy);color:#fff;display:flex;align-items:center;gap:18px;padding:0 28px;height:64px;box-shadow:var(--p1-shadow-header)}
+.brand img{height:32px;display:block}
+.spacer{flex:1}
+.hdr-right{display:flex;gap:12px;align-items:center}
+.pill-on-dark{font-family:var(--p1-mono);font-size:10.5px;font-weight:500;letter-spacing:.06em;padding:6px 12px;border-radius:20px;background:rgba(125,211,252,.15);color:#7dd3fc;border:1px solid rgba(125,211,252,.3);text-transform:uppercase}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--p1-avatar-gradient);border:2px solid rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;font-family:var(--p1-sans)}
+
+/* ── Hero ─────────────────────────────────────────── */
+.hero{background:var(--p1-hero-gradient);position:relative;overflow:hidden;padding:52px 0 48px;border-bottom:3px solid var(--p1-cyan)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(0,185,255,.18),transparent 60%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--p1-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--p1-cyan);margin-bottom:16px}
+.hero-title{font-family:var(--p1-display);font-size:42px;font-weight:800;letter-spacing:-.03em;line-height:1.12;color:#fff;margin:0}
+.hero-title em{font-style:italic;font-weight:700;color:rgba(255,255,255,.92)}
+.hero-title span{font-style:italic;color:var(--p1-cyan);font-weight:700}
+.hero-sub{margin-top:20px;color:rgba(255,255,255,.78);font-size:15px;max-width:720px;line-height:1.7}
+.hero-meta{margin-top:24px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── Sticky tab bar (only nav now) ────────────────── */
+.tabs{position:sticky;top:64px;z-index:40;background:#fff;border-bottom:1px solid var(--p1-border)}
+.tabs-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;padding:0 32px;overflow-x:auto}
+.tab{padding:16px 22px;font-size:13px;font-weight:600;color:var(--p1-muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;transition:var(--p1-trans);white-space:nowrap;font-family:var(--p1-sans)}
+.tab:hover{color:var(--p1-navy)}
+.tab.is-active{color:var(--p1-navy);border-color:var(--p1-cyan)}
+
+/* ── Page wrap ────────────────────────────────────── */
+.page{max-width:1100px;margin:0 auto;padding:44px 32px 80px}
+.pane{display:none;animation:fi .2s ease}
+.pane.is-active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.section{margin-bottom:52px}
+.section-head{margin-bottom:24px}
+.section-eyebrow{font-family:var(--p1-sans);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p1-cyan);margin-bottom:8px}
+.h2{font-family:var(--p1-display);font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--p1-navy);margin:0 0 8px;line-height:1.2}
+.h2 em{font-style:italic;color:var(--p1-cyan);font-weight:700}
+.section-sub{font-size:14px;color:var(--p1-muted);margin:0;max-width:760px;line-height:1.7}
+
+/* ── Cards ────────────────────────────────────────── */
+.grid{display:grid;gap:14px}
+.cols-2{grid-template-columns:1fr 1fr}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--p1-bg-card);border:1px solid var(--p1-border);border-radius:var(--p1-r-card);padding:24px;box-shadow:var(--p1-shadow-card);position:relative;overflow:hidden;transition:var(--p1-trans)}
+.card.cap-navy::before,.card.cap-cyan::before,.card.cap-yellow::before,.card.cap-purple::before,.card.cap-green::before,.card.cap-teal::before{content:"";position:absolute;inset:0 0 auto 0;height:3px}
+.card.cap-navy::before{background:var(--p1-navy)}
+.card.cap-cyan::before{background:var(--p1-cyan)}
+.card.cap-yellow::before{background:var(--p1-yellow)}
+.card.cap-purple::before{background:var(--p1-purple)}
+.card.cap-green::before{background:var(--p1-green)}
+.card.cap-teal::before{background:var(--p1-teal)}
+.card-title{font-family:var(--p1-sans);font-size:15px;font-weight:700;margin:0 0 8px;color:var(--p1-text);line-height:1.3}
+.card-desc{font-size:13.5px;color:var(--p1-muted);line-height:1.65;margin:0}
+
+/* ── Tags ─────────────────────────────────────────── */
+.tag{font-family:var(--p1-sans);font-size:10px;font-weight:700;letter-spacing:.05em;padding:4px 10px;border-radius:20px;border:1px solid;display:inline-flex;align-items:center;gap:4px;text-transform:uppercase}
+.tag.t-info{background:var(--p1-cyan-dim);color:#0369a1;border-color:var(--p1-cyan-mid)}
+.tag.t-ok{background:var(--p1-green-bg);color:#15803d;border-color:var(--p1-green-br)}
+.tag.t-warn{background:var(--p1-yellow-bg);color:var(--p1-yellow);border-color:var(--p1-yellow-br)}
+.tag.t-purple{background:var(--p1-purple-bg);color:#6d28d9;border-color:var(--p1-purple-br)}
+.tag.t-navy{background:var(--p1-navy-dim);color:var(--p1-navy);border-color:var(--p1-navy-mid)}
+.tag.mono{font-family:var(--p1-mono);text-transform:uppercase;letter-spacing:.05em}
+
+/* ── Notice ───────────────────────────────────────── */
+.notice{padding:14px 18px;border-radius:8px;border-left:4px solid;font-size:13.5px;line-height:1.65;background:#fff}
+.notice strong{font-weight:700;color:inherit}
+.notice.warn{background:var(--p1-yellow-bg);border-color:#f59e0b;color:#78350f}
+.notice.info{background:var(--p1-cyan-dim);border-color:var(--p1-cyan);color:#075985}
+.notice.ok{background:var(--p1-green-bg);border-color:var(--p1-green);color:#14532d}
+
+/* ── Mono / code ──────────────────────────────────── */
+.mono{font-family:var(--p1-mono);font-size:12.5px;color:var(--p1-navy)}
+code{font-family:var(--p1-mono);font-size:11.5px;background:var(--p1-bg-subtle);padding:1px 6px;border-radius:4px;color:var(--p1-blue);border:1px solid var(--p1-border)}
+
+/* ── Fact strip ───────────────────────────────────── */
+.fact-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border:1px solid var(--p1-border);border-radius:var(--p1-r-card);overflow:hidden;box-shadow:var(--p1-shadow-card)}
+.fact{padding:20px 22px;border-right:1px solid var(--p1-border)}
+.fact:last-child{border-right:0}
+.fact-lbl{font-family:var(--p1-sans);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--p1-cyan);margin-bottom:8px}
+.fact-val{font-family:var(--p1-display);font-size:18px;font-weight:800;color:var(--p1-navy);letter-spacing:-.01em;line-height:1.2}
+.fact-sub{font-size:11.5px;color:var(--p1-muted);margin-top:5px}
+
+/* ── Architecture options ─────────────────────────── */
+.arch-opt{background:#fff;border:1px solid var(--p1-border);border-radius:var(--p1-r-card);box-shadow:var(--p1-shadow-card);overflow:hidden;margin-bottom:32px}
+.arch-opt.is-recommended{border:2px solid var(--p1-cyan)}
+.arch-opt-hdr{padding:24px 28px;border-bottom:1px solid var(--p1-border);background:var(--p1-bg-hover);position:relative}
+.arch-opt-recpill{position:absolute;top:24px;right:28px;font-family:var(--p1-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:6px 12px;border-radius:20px;background:var(--p1-cyan);color:#fff}
+.arch-opt-fbpill{position:absolute;top:24px;right:28px;font-family:var(--p1-mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:6px 12px;border-radius:20px;background:var(--p1-yellow-bg);color:var(--p1-yellow);border:1px solid var(--p1-yellow-br)}
+.arch-opt-letter{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--p1-navy);color:#fff;font-family:var(--p1-display);font-weight:800;font-size:16px;margin-right:12px;vertical-align:middle}
+.arch-opt-letter.cyan{background:var(--p1-cyan)}
+.arch-opt-letter.purple{background:var(--p1-purple)}
+.arch-opt-title{font-family:var(--p1-display);font-size:22px;font-weight:800;color:var(--p1-navy);letter-spacing:-.02em;display:inline-block;vertical-align:middle}
+.arch-opt-tagline{font-size:14px;color:var(--p1-text);margin-top:14px;line-height:1.65;max-width:760px}
+.arch-opt-meta{display:flex;gap:24px;margin-top:18px;padding-top:18px;border-top:1px solid var(--p1-border);align-items:center;flex-wrap:wrap}
+.arch-opt-meta-block{display:flex;flex-direction:column;gap:3px}
+.arch-opt-meta-lbl{font-family:var(--p1-sans);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--p1-cyan)}
+.arch-opt-meta-val{font-family:var(--p1-display);font-size:16px;font-weight:800;color:var(--p1-navy);letter-spacing:-.01em}
+.arch-opt-pills{display:flex;gap:6px;flex-wrap:wrap}
+.arch-opt-body{padding:28px}
+
+/* Diagram */
+.arch-diagram{background:#fff;border:1px solid var(--p1-border);border-radius:10px;padding:0;margin-bottom:24px;overflow:hidden}
+.arch-diagram svg{width:100%;height:auto;display:block}
+.arch-diagram-cap{padding:10px 16px;background:var(--p1-bg-subtle);border-top:1px solid var(--p1-border);font-size:11.5px;color:var(--p1-muted);font-style:italic}
+
+/* Pros/Cons */
+.arch-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.arch-list-h{font-family:var(--p1-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--p1-cyan);margin-bottom:12px}
+.arch-list{list-style:none;padding:0;margin:0;font-size:13.5px;color:var(--p1-text);line-height:1.65}
+.arch-list li{padding:7px 0 7px 20px;position:relative;border-bottom:1px solid var(--p1-border)}
+.arch-list li:last-child{border-bottom:0}
+.arch-list.pros li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--p1-green)}
+.arch-list.cons li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--p1-yellow)}
+
+.arch-fit{margin-top:22px;padding:16px 18px;background:var(--p1-cyan-dim);border-left:4px solid var(--p1-cyan);border-radius:8px;font-size:13.5px;color:#075985;line-height:1.65}
+.arch-fit strong{font-weight:700;color:#0c4a6e}
+
+/* ── Total strip (now at TOP of scope) ───────────── */
+.total-strip{background:var(--p1-cta-gradient);color:#fff;border-radius:var(--p1-r-card);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;box-shadow:var(--p1-shadow-cta);position:relative;overflow:hidden;flex-wrap:wrap;gap:16px}
+.total-strip::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 90% 100%,rgba(0,185,255,.25),transparent 55%);pointer-events:none}
+.total-strip-l{position:relative;z-index:1;flex:1;min-width:280px}
+.total-strip-eyebrow{font-family:var(--p1-sans);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--p1-cyan-bright);margin-bottom:6px}
+.total-strip-title{font-family:var(--p1-display);font-size:20px;font-weight:800;letter-spacing:-.01em}
+.total-strip-sub{font-size:13px;color:rgba(255,255,255,.78);margin-top:6px;line-height:1.6;max-width:480px}
+.total-strip-r{position:relative;z-index:1;text-align:right}
+.total-strip-hrs{font-family:var(--p1-display);font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.total-strip-rsub{font-size:11px;color:rgba(255,255,255,.75);margin-top:5px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.total-by-opt{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#fff;border:1px solid var(--p1-border);border-radius:var(--p1-r-card);overflow:hidden;margin-bottom:32px;box-shadow:var(--p1-shadow-card)}
+.total-by-opt-cell{padding:20px 22px;border-right:1px solid var(--p1-border);position:relative}
+.total-by-opt-cell:last-child{border-right:0}
+.total-by-opt-cell.is-rec{background:linear-gradient(180deg,var(--p1-cyan-dim) 0%,#fff 100%)}
+.total-by-opt-lbl{font-family:var(--p1-sans);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--p1-cyan);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.total-by-opt-lbl .rec-mark{font-family:var(--p1-mono);font-size:9px;padding:2px 6px;background:var(--p1-cyan);color:#fff;border-radius:10px;letter-spacing:.06em}
+.total-by-opt-name{font-family:var(--p1-sans);font-size:13px;font-weight:700;color:var(--p1-text);margin-bottom:8px}
+.total-by-opt-hrs{font-family:var(--p1-display);font-size:22px;font-weight:800;color:var(--p1-navy);letter-spacing:-.01em}
+
+/* ── Scope items ──────────────────────────────────── */
+.scope-item{background:#fff;border:1px solid var(--p1-border);border-radius:var(--p1-r-card);box-shadow:var(--p1-shadow-card);overflow:hidden;margin-bottom:14px}
+.scope-hdr{padding:18px 24px;display:flex;justify-content:space-between;align-items:flex-start;gap:18px;border-bottom:1px solid var(--p1-border);background:var(--p1-bg-hover)}
+.scope-hdr-l{display:flex;gap:14px;align-items:flex-start;flex:1}
+.scope-num{width:34px;height:34px;border-radius:8px;background:var(--p1-navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--p1-mono);font-weight:600;font-size:13.5px;flex-shrink:0}
+.scope-title{font-family:var(--p1-sans);font-size:15px;font-weight:700;color:var(--p1-text);margin:0 0 6px}
+.scope-tags{display:flex;gap:5px;flex-wrap:wrap}
+.scope-est{text-align:right;flex-shrink:0}
+.scope-hrs{font-family:var(--p1-display);font-size:18px;font-weight:800;color:var(--p1-navy);letter-spacing:-.01em;line-height:1}
+.scope-hrs-lbl{font-family:var(--p1-sans);font-size:9px;color:var(--p1-subtle);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:5px}
+.scope-body{padding:20px 24px}
+.scope-desc{font-size:13.5px;color:var(--p1-text);line-height:1.7;margin-bottom:12px}
+.scope-meta{font-size:13px;color:var(--p1-muted);line-height:1.7}
+.scope-meta strong{color:var(--p1-text);font-weight:700}
+.scope-layer{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;background:var(--p1-purple-bg);color:#6d28d9;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--p1-purple-br);margin-right:6px}
+.scope-layer.exec{background:var(--p1-navy-dim);color:var(--p1-navy);border-color:var(--p1-navy-mid)}
+.scope-layer.human{background:var(--p1-yellow-bg);color:var(--p1-yellow);border-color:var(--p1-yellow-br)}
+
+/* ── Phase divider ────────────────────────────────── */
+.phase-bar{display:flex;align-items:center;gap:14px;margin:32px 0 18px}
+.phase-line{flex:1;height:1px;background:var(--p1-border)}
+.phase-badge{font-family:var(--p1-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:6px 14px;border-radius:20px;background:var(--p1-navy-dim);color:var(--p1-navy);border:1px solid var(--p1-navy-mid)}
+
+/* ── Decision matrix ──────────────────────────────── */
+.dmtx{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--p1-border);border-radius:10px;overflow:hidden}
+.dmtx th{background:var(--p1-navy);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:14px 18px;text-align:left}
+.dmtx td{padding:13px 18px;border-top:1px solid var(--p1-border);color:var(--p1-text)}
+.dmtx td:first-child{font-weight:600;color:var(--p1-text);background:var(--p1-bg-subtle)}
+.dmtx th.col-rec{background:var(--p1-cyan);color:#fff}
+.dmtx td.col-rec{background:var(--p1-cyan-dim)}
+.dmtx .strong{color:var(--p1-green);font-weight:700}
+
+/* ── Timeline ─────────────────────────────────────── */
+.tl-wrap{background:#fff;border:1px solid var(--p1-border);border-radius:var(--p1-r-card);padding:32px;box-shadow:var(--p1-shadow-card)}
+.tl-stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;position:relative}
+.tl-stepper::before{content:"";position:absolute;top:18px;left:8%;right:8%;height:2px;background:var(--p1-border);z-index:0}
+.tl-step{position:relative;text-align:center;z-index:1}
+.tl-step-num{width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid var(--p1-cyan);color:var(--p1-navy);font-family:var(--p1-mono);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.tl-step-wk{font-family:var(--p1-sans);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--p1-cyan);margin-bottom:3px}
+.tl-step-lbl{font-family:var(--p1-sans);font-size:13px;font-weight:700;color:var(--p1-text);line-height:1.3}
+.tl-phase{display:grid;grid-template-columns:160px 1fr 220px;gap:20px;padding:20px 22px;border:1px solid var(--p1-border);border-radius:10px;margin-bottom:12px;background:var(--p1-bg-hover)}
+.tl-phase-week{font-family:var(--p1-display);font-size:15px;font-weight:800;color:var(--p1-navy);letter-spacing:-.01em}
+.tl-phase-range{font-family:var(--p1-mono);font-size:11px;color:var(--p1-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:500;margin-top:5px}
+.tl-phase-title{font-family:var(--p1-sans);font-size:14px;font-weight:700;color:var(--p1-text);margin-bottom:5px}
+.tl-phase-desc{font-size:13px;color:var(--p1-muted);line-height:1.65}
+.tl-phase-deliv{font-family:var(--p1-sans);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--p1-cyan);margin-bottom:10px}
+.tl-phase-list{font-size:12.5px;color:var(--p1-text);line-height:1.7}
+.tl-phase-list>div{padding:2px 0}
+.tl-byopt{margin-top:24px;padding:18px 22px;background:var(--p1-cyan-dim);border-radius:10px;border:1px solid var(--p1-cyan-mid);font-size:13px;color:#075985;line-height:1.7}
+.tl-byopt strong{font-weight:700;color:#0c4a6e}
+
+/* ── Next Steps (matches ZDesign) ─────────────────── */
+.ns3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}
+.ns3-card{background:#fff;border:1px solid var(--p1-border);border-left:4px solid var(--p1-cyan);border-radius:12px;padding:24px;box-shadow:var(--p1-shadow-card);display:flex;flex-direction:column}
+.ns3-num{font-family:var(--p1-sans);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--p1-cyan);margin-bottom:10px}
+.ns3-title{font-family:var(--p1-sans);font-size:16px;font-weight:800;color:var(--p1-text);letter-spacing:-.005em;line-height:1.3;margin-bottom:10px}
+.ns3-desc{font-size:13px;color:var(--p1-muted);line-height:1.65}
+.ns2-cta{background:var(--p1-cta-gradient);color:#fff;border-radius:12px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;box-shadow:var(--p1-shadow-cta);position:relative;overflow:hidden}
+.ns2-cta::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 90% 100%,rgba(0,185,255,.25),transparent 55%);pointer-events:none}
+.ns2-cta-text{flex:1;min-width:300px;position:relative;z-index:1}
+.ns2-cta-kicker{font-family:var(--p1-sans);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px}
+.ns2-cta-title{font-family:var(--p1-display);font-size:20px;font-weight:800;color:#fff;letter-spacing:-.01em;line-height:1.3;margin-bottom:8px}
+.ns2-cta-sub{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.65;max-width:520px}
+.ns2-cta-contacts{display:flex;flex-direction:column;gap:10px;min-width:280px;position:relative;z-index:1}
+.ns2-cta-contact{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:14px 16px}
+.ns2-cta-contact-lbl{font-family:var(--p1-sans);font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:4px}
+.ns2-cta-contact-name{font-family:var(--p1-sans);font-size:14px;color:#fff;font-weight:700}
+.ns2-cta-contact-role{font-family:var(--p1-sans);font-size:11.5px;color:rgba(255,255,255,.7);margin-top:2px}
+.ns2-cta-contact-email{font-family:var(--p1-mono);font-size:11.5px;color:#9FB8FF;margin-top:5px;word-break:break-all}
+
+/* ── Footer ───────────────────────────────────────── */
+.footer{margin-top:48px;padding:24px 32px;border-top:1px solid var(--p1-border);background:#fff;font-size:12px;color:var(--p1-muted);text-align:center}
+.footer strong{color:var(--p1-navy)}
+.footer em{color:var(--p1-cyan);font-style:italic;font-weight:700}
+.rainbow{height:3px;background:linear-gradient(90deg,var(--p1-cyan) 0%,var(--p1-navy) 25%,var(--p1-teal) 45%,var(--p1-green) 60%,var(--p1-yellow) 80%,var(--p1-orange) 100%)}
+
+@media (max-width:780px){
+  .cols-2,.cols-3{grid-template-columns:1fr}
+  .arch-cols{grid-template-columns:1fr}
+  .fact-strip{grid-template-columns:1fr 1fr}
+  .total-by-opt{grid-template-columns:1fr}
+  .total-by-opt-cell{border-right:0;border-bottom:1px solid var(--p1-border)}
+  .tl-stepper{grid-template-columns:repeat(2,1fr)}
+  .tl-phase{grid-template-columns:1fr}
+  .ns3-grid{grid-template-columns:1fr}
+  .hero-title{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="brand">
+    <img src="data:image/png;base64,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" alt="Plus 1 Technology">
+  </div>
+  <div class="spacer"></div>
+  <div class="hdr-right">
+    <span class="pill-on-dark">Proposal · Phase 1</span>
+    <div class="avatar">JP</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Proposal · Excess Reinsurance · Phase 1</div>
+    <h1 class="hero-title"><em>Submission Intake.</em> Standardized. <span>Audit-Ready.</span></h1>
+    <p class="hero-sub">A focused build to remove the manual data-entry burden at the front of your stop-loss submission process. Three architecture options are presented so the right home for the workflow can be chosen alongside AON security and the Fusion software team. Phase 1 covers everything from inbound email to a clean, validated submission ready for Fusion.</p>
+    <div class="hero-meta">
+      <span class="tag t-info mono">Phase 1 · Intake Only</span>
+      <span class="tag t-info mono">HIPAA Compliant</span>
+      <span class="tag t-info mono">3 Architecture Options</span>
+      <span class="tag t-info mono">Fusion · System of Record</span>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <div class="tab is-active" data-pane="overview">Overview</div>
+    <div class="tab" data-pane="options">Architecture Options</div>
+    <div class="tab" data-pane="scope">Scope of Work</div>
+    <div class="tab" data-pane="timeline">Timeline</div>
+    <div class="tab" data-pane="next">Next Steps</div>
+  </div>
+</nav>
+
+<main class="page">
+
+<!-- ════════════════ OVERVIEW ════════════════ -->
+<div class="pane is-active" data-pane="overview">
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">What this proposal covers</div>
+      <h2 class="h2">Phase 1 · <em>Submission Intake Automation</em></h2>
+      <p class="section-sub">Phase 1 spans the path from inbound RFP email to a validated submission ready for Fusion. Rating, claims processing, and policy administration remain inside Fusion, where the existing actuarial tools and workflows continue to operate untouched. This proposal addresses the manual data-entry workload at the front of the funnel, where the highest volume of repetitive work currently sits.</p>
+    </div>
+
+    <div class="grid cols-3" style="margin-bottom:28px">
+      <div class="card cap-cyan">
+        <h3 class="card-title">The current process</h3>
+        <p class="card-desc">An RFP arrives by email with up to thirty attachments covering census, plan of benefits, claims history, contracts, and network listings. Data is manually converted, normalized, and re-keyed into Fusion to create the submission. Volume is high, formats vary by producer, and every record carries protected health information.</p>
+      </div>
+      <div class="card cap-navy">
+        <h3 class="card-title">What Phase 1 delivers</h3>
+        <p class="card-desc">Email arrives, is classified as an RFP, attachments are categorized, structured fields are extracted, and the census is normalized to the Excess Reinsurance schema. Output is either uploaded directly to Fusion through a confirmed integration path, or delivered as a single standardized file ready for one-click upload by an underwriter.</p>
+      </div>
+      <div class="card cap-green">
+        <h3 class="card-title">What stays in place</h3>
+        <p class="card-desc">Fusion remains the system of record. The existing work-stream routing logic, the underwriter assignment by carrier and state, and the case status pipeline from nascent through quoted to sold are all preserved. Underwriters and salespeople work the same Fusion experience they do today.</p>
+      </div>
+    </div>
+
+    <div class="fact-strip">
+      <div class="fact">
+        <div class="fact-lbl">System of Record</div>
+        <div class="fact-val">Fusion</div>
+        <div class="fact-sub">Proprietary platform with embedded actuarial tools</div>
+      </div>
+      <div class="fact">
+        <div class="fact-lbl">Compliance Standard</div>
+        <div class="fact-val">HIPAA</div>
+        <div class="fact-sub">Protected health information in every record</div>
+      </div>
+      <div class="fact">
+        <div class="fact-lbl">Tenant</div>
+        <div class="fact-val">AON / NFP</div>
+        <div class="fact-sub">Microsoft 365 with existing AI licenses</div>
+      </div>
+      <div class="fact">
+        <div class="fact-lbl">Volume Pattern</div>
+        <div class="fact-val">~30 docs / RFP</div>
+        <div class="fact-sub">Variable formats across producers</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">Plus 1 recommendation</div>
+      <h2 class="h2">Begin with <em>Option 1 · Microsoft Stack</em></h2>
+      <p class="section-sub">Three architectures are presented in the next tab. Plus 1 recommends Option 1, a Microsoft-native build using Power Automate, Copilot Studio agents, and Azure Functions for any code-driven extraction. The recommendation is conditional on AON confirming Azure OpenAI availability under the existing enterprise BAA and on the Fusion software team confirming the integration surface. If either condition cannot be met, Option 2 or Option 3 provides a clear fallback path.</p>
+    </div>
+    <div class="grid cols-2">
+      <div class="card cap-cyan">
+        <h3 class="card-title">Why Option 1 first</h3>
+        <p class="card-desc">Stays inside the AON Microsoft tenant, leverages tooling already approved by AON IT, requires no new vendor onboarding for security review, and delivers the fastest path to a working pilot. The build draws on Power Automate for orchestration, Copilot Studio agents for classification and extraction, and Azure Functions where deterministic code is the right tool for handling protected fields.</p>
+      </div>
+      <div class="card cap-navy">
+        <h3 class="card-title">Future engagements (separately scoped)</h3>
+        <p class="card-desc">Two adjacent opportunities surfaced during discovery and remain available for a future phase. The first applies AI summarization to long-form case management documentation as decision support for underwriters. The second is an advisory engagement on broader process re-engineering. Both will be scoped after Phase 1 is deployed and stable.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ════════════════ ARCHITECTURE OPTIONS ════════════════ -->
+<div class="pane" data-pane="options">
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">Three paths · same outcome</div>
+      <h2 class="h2">Three architectures, sequenced by <em>Plus 1 preference</em></h2>
+      <p class="section-sub">Each option ships the same Phase 1 outcome. The differences sit in where the workflow runs, who owns the BAA, and how protected information moves through the system. Option 1 is recommended subject to two confirmation conversations during the discovery sprint. Option 3 is positioned as a fallback that combines the strengths of Options 1 and 2 if Microsoft agents alone cannot achieve the extraction accuracy required.</p>
+    </div>
+  </section>
+
+  <!-- ── OPTION 1 — Microsoft Stack (RECOMMENDED) ─────────── -->
+  <div class="arch-opt is-recommended">
+    <div class="arch-opt-hdr">
+      <span class="arch-opt-recpill">Recommended</span>
+      <div><span class="arch-opt-letter">1</span><span class="arch-opt-title">Microsoft Stack · all inside the AON tenant</span></div>
+      <p class="arch-opt-tagline">Power Automate handles email triggers and Fusion handoff. Copilot Studio agents handle classification and extraction. Azure Functions in Python handle any field that needs deterministic code-based processing. Azure OpenAI provides the model layer under AON's enterprise BAA. Everything stays inside the Microsoft 365 boundary your team already uses.</p>
+      <div class="arch-opt-meta">
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Total Estimate</div><div class="arch-opt-meta-val">70 to 110 hrs</div></div>
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Build Window</div><div class="arch-opt-meta-val">4 to 6 weeks</div></div>
+        <div class="arch-opt-pills">
+          <span class="tag t-navy mono">Power Automate</span>
+          <span class="tag t-navy mono">Copilot Studio</span>
+          <span class="tag t-navy mono">Azure Functions</span>
+          <span class="tag t-navy mono">Azure OpenAI</span>
+          <span class="tag t-info mono">No New Vendors</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-opt-body">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 1100 380" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+          <defs>
+            <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#1419A0"/>
+            </marker>
+          </defs>
+
+          <!-- Single boundary: AON tenant -->
+          <rect x="20" y="60" width="1060" height="240" rx="14" fill="#f4f6fb" stroke="#1419A0" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="40" y="48" font-size="11" font-weight="700" fill="#1419A0" letter-spacing="1.2">AON / NFP MICROSOFT 365 TENANT</text>
+          <text x="40" y="338" font-size="11" font-weight="600" fill="#5a6589">All processing, storage, and AI inference remain inside the AON boundary.</text>
+
+          <!-- Box 1: Mailbox -->
+          <rect x="50" y="140" width="155" height="90" rx="10" fill="#fff" stroke="#1419A0" stroke-width="1.5"/>
+          <text x="127" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#1419A0" letter-spacing=".6">M365 SHARED MAILBOX</text>
+          <text x="127" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#1a2040">Email + Attachments</text>
+          <text x="127" y="213" text-anchor="middle" font-size="11" fill="#5a6589">Inbound trigger source</text>
+
+          <line x1="207" y1="185" x2="245" y2="185" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr1)"/>
+
+          <!-- Box 2: Power Automate -->
+          <rect x="247" y="140" width="155" height="90" rx="10" fill="#e0f4fc" stroke="#00B9FF" stroke-width="1.5"/>
+          <text x="324" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#075985" letter-spacing=".6">POWER AUTOMATE</text>
+          <text x="324" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Orchestration</text>
+          <text x="324" y="213" text-anchor="middle" font-size="11" fill="#5a6589">Triggers + flow control</text>
+
+          <line x1="404" y1="185" x2="442" y2="185" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr1)"/>
+
+          <!-- Box 3: Copilot Studio Agent -->
+          <rect x="444" y="100" width="170" height="80" rx="10" fill="#e0f4fc" stroke="#00B9FF" stroke-width="1.5"/>
+          <text x="529" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="#075985" letter-spacing=".6">COPILOT STUDIO AGENT</text>
+          <text x="529" y="151" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Classify + Extract</text>
+          <text x="529" y="167" text-anchor="middle" font-size="11" fill="#5a6589">Variable-format docs</text>
+
+          <!-- Box 4: Azure Functions (code) -->
+          <rect x="444" y="190" width="170" height="80" rx="10" fill="#e0f4fc" stroke="#00B9FF" stroke-width="1.5"/>
+          <text x="529" y="218" text-anchor="middle" font-size="11" font-weight="700" fill="#075985" letter-spacing=".6">AZURE FUNCTIONS</text>
+          <text x="529" y="241" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Python · PHI Code</text>
+          <text x="529" y="257" text-anchor="middle" font-size="11" fill="#5a6589">Deterministic processing</text>
+
+          <line x1="616" y1="185" x2="654" y2="185" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr1)"/>
+
+          <!-- Box 5: HITL -->
+          <rect x="656" y="140" width="155" height="90" rx="10" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+          <text x="733" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#78350f" letter-spacing=".6">TEAMS APPROVAL</text>
+          <text x="733" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">HITL Review</text>
+          <text x="733" y="213" text-anchor="middle" font-size="11" fill="#5a6589">SharePoint List queue</text>
+
+          <line x1="813" y1="185" x2="851" y2="185" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr1)"/>
+
+          <!-- Box 6: Fusion -->
+          <rect x="853" y="140" width="180" height="90" rx="10" fill="#1419A0" stroke="#0d1070" stroke-width="1.5"/>
+          <text x="943" y="170" text-anchor="middle" font-size="11" font-weight="700" fill="#7dd3fc" letter-spacing=".6">SYSTEM OF RECORD</text>
+          <text x="943" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Fusion</text>
+          <text x="943" y="213" text-anchor="middle" font-size="11" fill="#a8ddf5">API or formatted file</text>
+
+          <!-- Storage layer below Power Automate / Functions -->
+          <rect x="247" y="265" width="367" height="22" rx="4" fill="none" stroke="#1419A0" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="430" y="280" text-anchor="middle" font-size="10.5" fill="#1419A0" font-weight="600">Azure Blob storage · encrypted at rest · audit logged</text>
+        </svg>
+        <div class="arch-diagram-cap">Single-boundary architecture. All protected data, AI inference, and storage stay inside the AON tenant.</div>
+      </div>
+
+      <div class="arch-cols">
+        <div>
+          <div class="arch-list-h">Strengths</div>
+          <ul class="arch-list pros">
+            <li>No new vendors required for AON security review</li>
+            <li>Power Automate, Azure Functions, and Copilot Studio are already approved tooling at AON</li>
+            <li>Azure OpenAI provides BAA-eligible model access under the existing Microsoft enterprise agreement <code>[subject to confirmation in Phase 0]</code></li>
+            <li>Native to the environment the underwriting team already uses</li>
+            <li>Audit logging and DLP policies inherit AON's existing Microsoft 365 controls</li>
+            <li>Fastest path to AON security approval and deployment</li>
+          </ul>
+        </div>
+        <div>
+          <div class="arch-list-h">Considerations</div>
+          <ul class="arch-list cons">
+            <li>Iteration speed depends on AON IT change-control processes</li>
+            <li>Power Automate flows can become complex at scale; some logic is more naturally expressed in code</li>
+            <li>Azure OpenAI model availability and rate limits are tenant-scoped</li>
+            <li>Copilot Studio agent extraction accuracy on highly variable document formats requires validation during Phase 0 testing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-fit">
+        <strong>Best fit when</strong>
+        AON IT prefers all workloads remain inside the existing Microsoft boundary, the underwriting team is comfortable with Power Automate as the operational surface, and Azure OpenAI is provisioned (or readily provisionable) under the existing enterprise BAA. This option offers the lowest compliance friction and the fastest deployment path.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPTION 2 — n8n + Python ─────────── -->
+  <div class="arch-opt">
+    <div class="arch-opt-hdr">
+      <div><span class="arch-opt-letter cyan">2</span><span class="arch-opt-title">n8n + Python · self-hosted external workflow</span></div>
+      <p class="arch-opt-tagline">A self-hosted n8n instance running on HIPAA-eligible infrastructure orchestrates the workflow. Python handles all protected-field processing through deterministic code. The model layer, whether Anthropic Claude or OpenAI, only ever receives non-protected metadata such as document type labels and column-mapping decisions. This architecture provides the strongest defensive position around protected information handling.</p>
+      <div class="arch-opt-meta">
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Total Estimate</div><div class="arch-opt-meta-val">90 to 135 hrs</div></div>
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Build Window</div><div class="arch-opt-meta-val">5 to 7 weeks</div></div>
+        <div class="arch-opt-pills">
+          <span class="tag t-info mono">n8n Self-Hosted</span>
+          <span class="tag t-info mono">Python</span>
+          <span class="tag t-info mono">PostgreSQL</span>
+          <span class="tag t-ok mono">PHI Never to LLM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-opt-body">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 1100 410" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+          <defs>
+            <marker id="arr2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#1419A0"/>
+            </marker>
+            <marker id="arr2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#7c3aed"/>
+            </marker>
+          </defs>
+
+          <!-- Boundary 1: AON M365 -->
+          <rect x="20" y="70" width="200" height="240" rx="14" fill="#f4f6fb" stroke="#1419A0" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="40" y="58" font-size="11" font-weight="700" fill="#1419A0" letter-spacing="1.2">AON M365</text>
+
+          <!-- Boundary 2: Self-hosted -->
+          <rect x="240" y="70" width="540" height="240" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="260" y="58" font-size="11" font-weight="700" fill="#0f766e" letter-spacing="1.2">SELF-HOSTED · HIPAA-ELIGIBLE INFRASTRUCTURE</text>
+
+          <!-- Boundary 3: External LLM -->
+          <rect x="800" y="70" width="280" height="240" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="820" y="58" font-size="11" font-weight="700" fill="#7c3aed" letter-spacing="1.2">EXTERNAL · METADATA ONLY</text>
+
+          <!-- Box: Mailbox -->
+          <rect x="40" y="160" width="160" height="90" rx="10" fill="#fff" stroke="#1419A0" stroke-width="1.5"/>
+          <text x="120" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#1419A0" letter-spacing=".6">M365 MAILBOX</text>
+          <text x="120" y="215" text-anchor="middle" font-size="13" font-weight="700" fill="#1a2040">Email + Attachments</text>
+          <text x="120" y="233" text-anchor="middle" font-size="11" fill="#5a6589">IMAP / Graph poll</text>
+
+          <line x1="202" y1="205" x2="248" y2="205" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr2a)"/>
+
+          <!-- Box: n8n Orchestrator -->
+          <rect x="250" y="100" width="160" height="70" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+          <text x="330" y="125" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e" letter-spacing=".6">n8n ORCHESTRATOR</text>
+          <text x="330" y="148" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5d57">Workflow control</text>
+
+          <!-- Box: Python -->
+          <rect x="250" y="185" width="160" height="70" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+          <text x="330" y="210" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e" letter-spacing=".6">PYTHON · PHI CODE</text>
+          <text x="330" y="233" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5d57">Deterministic extraction</text>
+
+          <!-- Box: Postgres -->
+          <rect x="250" y="270" width="160" height="32" rx="8" fill="#fff" stroke="#0f766e" stroke-width="1"/>
+          <text x="330" y="290" text-anchor="middle" font-size="11.5" font-weight="600" fill="#0f766e">Encrypted PostgreSQL</text>
+
+          <!-- Down arrows inside coded env -->
+          <line x1="330" y1="170" x2="330" y2="183" stroke="#0f766e" stroke-width="1.8" marker-end="url(#arr2a)"/>
+          <line x1="330" y1="255" x2="330" y2="268" stroke="#0f766e" stroke-width="1.8" marker-end="url(#arr2a)"/>
+
+          <!-- Box: PHI Scrubber Gate -->
+          <rect x="440" y="160" width="180" height="90" rx="10" fill="#fff" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="530" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#7c3aed" letter-spacing=".6">PHI SCRUBBER GATE</text>
+          <text x="530" y="215" text-anchor="middle" font-size="13" font-weight="700" fill="#5b21b6">Metadata only</text>
+          <text x="530" y="233" text-anchor="middle" font-size="11" fill="#5a6589">No PHI passes</text>
+
+          <line x1="412" y1="220" x2="438" y2="205" stroke="#0f766e" stroke-width="1.8" marker-end="url(#arr2a)"/>
+
+          <!-- Box: HITL -->
+          <rect x="440" y="265" width="180" height="36" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+          <text x="530" y="288" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f">HITL Review Queue</text>
+
+          <line x1="412" y1="285" x2="438" y2="285" stroke="#b45309" stroke-width="1.8" marker-end="url(#arr2a)"/>
+
+          <!-- Dashed metadata-only arrow to LLM -->
+          <line x1="622" y1="205" x2="818" y2="205" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arr2b)"/>
+          <text x="720" y="195" text-anchor="middle" font-size="10.5" fill="#7c3aed" font-weight="700">LABEL ONLY</text>
+
+          <!-- Box: External LLM -->
+          <rect x="820" y="160" width="240" height="90" rx="10" fill="#7c3aed" stroke="#5b21b6" stroke-width="1.5"/>
+          <text x="940" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#ddd6fe" letter-spacing=".6">CLAUDE / OPENAI API</text>
+          <text x="940" y="215" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Model Layer</text>
+          <text x="940" y="233" text-anchor="middle" font-size="11" fill="#ddd6fe">Doc type · column map only</text>
+
+          <!-- Legend BELOW the boundary -->
+          <line x1="40" y1="350" x2="80" y2="350" stroke="#1419A0" stroke-width="2"/>
+          <text x="90" y="354" font-size="11" fill="#5a6589" font-weight="600">PHI in transit · in-boundary · encrypted</text>
+
+          <line x1="380" y1="350" x2="420" y2="350" stroke="#7c3aed" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="430" y="354" font-size="11" fill="#7c3aed" font-weight="600">Metadata only · no PHI leaves boundary</text>
+        </svg>
+        <div class="arch-diagram-cap">Three-boundary architecture. Protected information stays in the self-hosted environment; the external LLM only receives metadata.</div>
+      </div>
+
+      <div class="arch-cols">
+        <div>
+          <div class="arch-list-h">Strengths</div>
+          <ul class="arch-list pros">
+            <li>Strongest defensive posture around PHI handling, with code-only processing of protected fields</li>
+            <li>Self-hosted on HIPAA-eligible infrastructure (AWS or Azure with BAA, or your own VPC)</li>
+            <li>Full developer flexibility with Python for deterministic extraction, error handling, and audit logging</li>
+            <li>Iteration speed is fast; Plus 1 owns the stack with no AON IT change-control bottleneck</li>
+            <li>Easy to swap the model provider (Claude, OpenAI, future options) without re-architecting</li>
+            <li>All four hundred-plus n8n nodes are available, including Microsoft 365, OpenAI, Anthropic, and HTTP</li>
+          </ul>
+        </div>
+        <div>
+          <div class="arch-list-h">Considerations</div>
+          <ul class="arch-list cons">
+            <li>Plus 1 (or your team) operates the self-hosted infrastructure including patching and monitoring</li>
+            <li>New vendor surface for AON compliance review covering the hosting environment and the model provider BAAs</li>
+            <li>Higher upfront engineering effort than a Microsoft-native build</li>
+            <li>Two distinct ownership boundaries to govern long-term</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-fit">
+        <strong>Best fit when</strong>
+        AON's compliance team prefers a "no PHI sent to any LLM" architecture, maximum developer flexibility is a priority, and there is comfort with Plus 1 (or your team) operating a self-hosted environment. This option provides the strongest audit narrative if the data path is ever externally reviewed.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OPTION 3 — Hybrid (FALLBACK) ─────────── -->
+  <div class="arch-opt">
+    <div class="arch-opt-hdr">
+      <span class="arch-opt-fbpill">Fallback</span>
+      <div><span class="arch-opt-letter purple">3</span><span class="arch-opt-title">Layered · Microsoft + n8n with Python</span></div>
+      <p class="arch-opt-tagline">A layered architecture that begins with the Option 1 Microsoft surface and adds the Option 2 n8n with Python extraction layer if Copilot Studio agents cannot achieve the field extraction accuracy required during Phase 0 testing. Power Automate continues to handle email triggers and the Fusion handoff. The n8n with Python layer activates only for the specific extraction tasks that need it.</p>
+      <div class="arch-opt-meta">
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Total Estimate</div><div class="arch-opt-meta-val">100 to 150 hrs</div></div>
+        <div class="arch-opt-meta-block"><div class="arch-opt-meta-lbl">Build Window</div><div class="arch-opt-meta-val">5 to 8 weeks</div></div>
+        <div class="arch-opt-pills">
+          <span class="tag t-purple mono">Power Automate</span>
+          <span class="tag t-purple mono">Copilot Studio</span>
+          <span class="tag t-purple mono">n8n + Python</span>
+          <span class="tag t-warn mono">Activated If Needed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-opt-body">
+      <div class="arch-diagram">
+        <svg viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+          <defs>
+            <marker id="arr3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#1419A0"/>
+            </marker>
+            <marker id="arr3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#7c3aed"/>
+            </marker>
+          </defs>
+
+          <!-- Boundary 1: AON Microsoft (primary path) -->
+          <rect x="20" y="60" width="660" height="320" rx="14" fill="#f4f6fb" stroke="#1419A0" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="40" y="48" font-size="11" font-weight="700" fill="#1419A0" letter-spacing="1.2">AON / NFP MICROSOFT 365 TENANT — PRIMARY PATH</text>
+
+          <!-- Boundary 2: Self-hosted (fallback) -->
+          <rect x="700" y="60" width="240" height="320" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="720" y="48" font-size="11" font-weight="700" fill="#0f766e" letter-spacing="1.2">SELF-HOSTED · FALLBACK ONLY</text>
+
+          <!-- Boundary 3: Destination (Fusion) -->
+          <rect x="960" y="60" width="120" height="320" rx="14" fill="#e8ecf8" stroke="#1419A0" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <text x="980" y="48" font-size="11" font-weight="700" fill="#1419A0" letter-spacing="1.2">DESTINATION</text>
+
+          <!-- ROW 1: M365 Mailbox → Power Automate → Copilot Studio Agent -->
+          <rect x="40" y="100" width="140" height="80" rx="10" fill="#fff" stroke="#1419A0" stroke-width="1.5"/>
+          <text x="110" y="128" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1419A0" letter-spacing=".6">M365 MAILBOX</text>
+          <text x="110" y="151" text-anchor="middle" font-size="13" font-weight="700" fill="#1a2040">Email Trigger</text>
+          <text x="110" y="168" text-anchor="middle" font-size="10.5" fill="#5a6589">Inbound RFP source</text>
+
+          <line x1="182" y1="140" x2="218" y2="140" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr3a)"/>
+
+          <rect x="220" y="100" width="160" height="80" rx="10" fill="#e0f4fc" stroke="#00B9FF" stroke-width="1.5"/>
+          <text x="300" y="128" text-anchor="middle" font-size="10.5" font-weight="700" fill="#075985" letter-spacing=".6">POWER AUTOMATE</text>
+          <text x="300" y="151" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Orchestration</text>
+          <text x="300" y="168" text-anchor="middle" font-size="10.5" fill="#5a6589">Routes to extractor</text>
+
+          <line x1="382" y1="140" x2="418" y2="140" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr3a)"/>
+
+          <rect x="420" y="100" width="200" height="80" rx="10" fill="#e0f4fc" stroke="#00B9FF" stroke-width="1.5"/>
+          <text x="520" y="128" text-anchor="middle" font-size="10.5" font-weight="700" fill="#075985" letter-spacing=".6">COPILOT STUDIO AGENT</text>
+          <text x="520" y="151" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">Primary extraction</text>
+          <text x="520" y="168" text-anchor="middle" font-size="10.5" fill="#5a6589">Microsoft AI agent</text>
+
+          <!-- Down arrow from Copilot Studio to Confidence Check -->
+          <line x1="520" y1="182" x2="520" y2="218" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr3a)"/>
+
+          <!-- ROW 2 — Confidence Check (decision diamond shape) -->
+          <rect x="420" y="220" width="200" height="60" rx="10" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+          <text x="520" y="246" text-anchor="middle" font-size="10.5" font-weight="700" fill="#78350f" letter-spacing=".6">CONFIDENCE CHECK</text>
+          <text x="520" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f">Decision point</text>
+
+          <!-- Two paths from Confidence Check -->
+          <!-- Path A: high confidence → HITL (down) -->
+          <line x1="475" y1="282" x2="475" y2="318" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr3a)"/>
+          <text x="395" y="305" text-anchor="middle" font-size="10" fill="#1419A0" font-weight="700">HIGH CONFIDENCE</text>
+
+          <!-- Path B: low confidence → fallback to n8n (right and out) -->
+          <line x1="620" y1="250" x2="660" y2="250" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arr3b)"/>
+          <text x="640" y="237" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="700">LOW CONFIDENCE</text>
+
+          <!-- ROW 3: HITL Review -->
+          <rect x="380" y="320" width="200" height="40" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+          <text x="480" y="345" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f">HITL Review · Teams Approval</text>
+
+          <!-- ── n8n + Python (fallback layer) ── -->
+          <rect x="720" y="200" width="200" height="100" rx="10" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+          <text x="820" y="228" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0f766e" letter-spacing=".6">n8n + PYTHON</text>
+          <text x="820" y="251" text-anchor="middle" font-size="13" font-weight="700" fill="#0f5d57">Fallback extraction</text>
+          <text x="820" y="270" text-anchor="middle" font-size="10.5" fill="#5a6589">Code-driven processing</text>
+          <text x="820" y="287" text-anchor="middle" font-size="10.5" fill="#5a6589">PHI handled in code</text>
+
+          <!-- Fallback path returns to HITL via Power Automate -->
+          <line x1="820" y1="302" x2="820" y2="340" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4"/>
+          <line x1="820" y1="340" x2="582" y2="340" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arr3b)"/>
+          <text x="700" y="358" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="700">FALLBACK RETURNS TO HITL</text>
+
+          <!-- Arrow from HITL to Fusion -->
+          <line x1="582" y1="340" x2="958" y2="340" stroke="none"/>
+          <line x1="600" y1="320" x2="600" y2="200" stroke="none"/>
+          <!-- Clean arrow path: HITL → Fusion -->
+          <path d="M 582 340 L 950 340 L 950 220 L 998 220" stroke="#1419A0" stroke-width="1.8" fill="none" marker-end="url(#arr3a)"/>
+
+          <!-- Fusion box -->
+          <rect x="980" y="180" width="80" height="100" rx="10" fill="#1419A0" stroke="#0d1070" stroke-width="1.5"/>
+          <text x="1020" y="210" text-anchor="middle" font-size="10" font-weight="700" fill="#7dd3fc" letter-spacing=".6">SoR</text>
+          <text x="1020" y="234" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">Fusion</text>
+          <text x="1020" y="252" text-anchor="middle" font-size="10" fill="#a8ddf5">API or</text>
+          <text x="1020" y="266" text-anchor="middle" font-size="10" fill="#a8ddf5">file upload</text>
+
+          <!-- Legend -->
+          <line x1="40" y1="420" x2="80" y2="420" stroke="#1419A0" stroke-width="2"/>
+          <text x="90" y="424" font-size="11" fill="#5a6589" font-weight="600">Primary path · Microsoft stack handles the majority of intake</text>
+
+          <line x1="500" y1="420" x2="540" y2="420" stroke="#7c3aed" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="550" y="424" font-size="11" fill="#7c3aed" font-weight="600">Fallback path · activated only when confidence is low</text>
+
+          <line x1="40" y1="445" x2="80" y2="445" stroke="#b45309" stroke-width="2"/>
+          <text x="90" y="449" font-size="11" fill="#5a6589" font-weight="600">Decision point determines which path is taken per document</text>
+        </svg>
+        <div class="arch-diagram-cap">The Microsoft path remains primary. The n8n with Python layer is engaged only when Copilot Studio confidence falls below threshold, then returns to the standard HITL review queue.</div>
+      </div>
+
+      <div class="arch-cols">
+        <div>
+          <div class="arch-list-h">Strengths</div>
+          <ul class="arch-list pros">
+            <li>Preserves all the operational benefits of Option 1 for the majority of intake volume</li>
+            <li>Adds a code-driven safety net for difficult documents where Microsoft agents cannot achieve required accuracy</li>
+            <li>Iteration is fast on the fallback layer; Plus 1 owns and maintains the n8n environment</li>
+            <li>Provides a graceful upgrade path from Option 1 if extraction quality becomes a constraint after launch</li>
+          </ul>
+        </div>
+        <div>
+          <div class="arch-list-h">Considerations</div>
+          <ul class="arch-list cons">
+            <li>Two architectural surfaces to govern: Microsoft and self-hosted n8n</li>
+            <li>Highest total build cost of the three options</li>
+            <li>Requires the same AON compliance review as Option 2 for the self-hosted layer</li>
+            <li>Operational ownership of the fallback layer needs clear definition between Plus 1 and your software team</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-fit">
+        <strong>Best fit when</strong>
+        Phase 0 testing reveals that Copilot Studio agents struggle with extraction accuracy on certain document types and a code-driven fallback becomes necessary. This option exists primarily as a planned upgrade path from Option 1, not as a starting architecture.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Decision matrix ─────────── -->
+  <section class="section" style="margin-top:40px">
+    <div class="section-head">
+      <div class="section-eyebrow">Side-by-side comparison</div>
+      <h2 class="h2">Decision matrix</h2>
+    </div>
+    <div style="overflow-x:auto;border-radius:10px">
+      <table class="dmtx">
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th class="col-rec">Option 1 · Microsoft</th>
+            <th>Option 2 · n8n + Python</th>
+            <th>Option 3 · Layered Fallback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Total estimate</td><td class="col-rec"><span class="strong">70 to 110 hrs</span></td><td>90 to 135 hrs</td><td>100 to 150 hrs</td></tr>
+          <tr><td>Build window</td><td class="col-rec"><span class="strong">4 to 6 weeks</span></td><td>5 to 7 weeks</td><td>5 to 8 weeks</td></tr>
+          <tr><td>Workload location</td><td class="col-rec">AON Microsoft tenant</td><td>Self-hosted infrastructure</td><td>Both</td></tr>
+          <tr><td>PHI handling</td><td class="col-rec">Azure Functions code + Azure OpenAI under BAA</td><td>Python code only; no PHI to LLM</td><td>Mostly Microsoft, code fallback</td></tr>
+          <tr><td>New vendors for AON to vet</td><td class="col-rec"><span class="strong">None</span></td><td>Hosting + LLM provider</td><td>Hosting + LLM provider</td></tr>
+          <tr><td>Time to AON approval</td><td class="col-rec"><span class="strong">Fastest</span></td><td>Slowest</td><td>Slow</td></tr>
+          <tr><td>Iteration speed post-launch</td><td class="col-rec">Moderate (AON change control)</td><td><span class="strong">Fastest</span></td><td>Moderate</td></tr>
+          <tr><td>Long-term ownership</td><td class="col-rec">AON IT + your software team</td><td>Plus 1 or your team</td><td>Split across both</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice info" style="margin-top:18px"><strong>Plus 1 recommendation.</strong> Begin with Option 1, conditional on AON confirming Azure OpenAI availability under the existing enterprise BAA and on the Fusion software team confirming the integration surface. Both confirmations are scheduled inside the Phase 0 discovery sprint. If either condition cannot be met, Option 2 becomes the recommendation. Option 3 is held in reserve as a planned upgrade path if extraction accuracy in Option 1 falls short of the threshold set during Phase 0.</div>
+  </section>
+
+</div>
+
+<!-- ════════════════ SCOPE OF WORK ════════════════ -->
+<div class="pane" data-pane="scope">
+
+  <!-- TOTAL AT TOP (per-option) -->
+  <div class="total-strip">
+    <div class="total-strip-l">
+      <div class="total-strip-eyebrow">Phase 1 · Total Commitment Range</div>
+      <div class="total-strip-title">Discovery, Build, Pilot, and Handoff</div>
+      <div class="total-strip-sub">Total varies by architecture chosen during Phase 0. Final commitment is locked at the close of the discovery sprint.</div>
+    </div>
+    <div class="total-strip-r">
+      <div class="total-strip-hrs">70 – 150 hrs</div>
+      <div class="total-strip-rsub">Locks after Phase 0</div>
+    </div>
+  </div>
+
+  <div class="total-by-opt">
+    <div class="total-by-opt-cell is-rec">
+      <div class="total-by-opt-lbl">Option 1 <span class="rec-mark">Recommended</span></div>
+      <div class="total-by-opt-name">Microsoft Stack</div>
+      <div class="total-by-opt-hrs">70 – 110 hrs</div>
+    </div>
+    <div class="total-by-opt-cell">
+      <div class="total-by-opt-lbl">Option 2</div>
+      <div class="total-by-opt-name">n8n + Python</div>
+      <div class="total-by-opt-hrs">90 – 135 hrs</div>
+    </div>
+    <div class="total-by-opt-cell">
+      <div class="total-by-opt-lbl">Option 3</div>
+      <div class="total-by-opt-name">Layered Fallback</div>
+      <div class="total-by-opt-hrs">100 – 150 hrs</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">Phase 1 deliverables</div>
+      <h2 class="h2">Six work items, <em>one outcome</em></h2>
+      <p class="section-sub">The work items below describe the Phase 1 build at the conceptual level. Hour ranges shown for each item reflect the recommended Option 1 path. Equivalent estimates for Options 2 and 3 are reflected in the totals above. Final commitment locks at the close of Phase 0.</p>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase-line"></div>
+      <div class="phase-badge">Phase 0 · Discovery Sprint</div>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">0</div>
+          <div>
+            <div class="scope-title">Discovery sprint, architecture lock, and schema definition</div>
+            <div class="scope-tags"><span class="tag t-info">Working Sessions</span><span class="tag t-info">Sample Documents</span><span class="tag t-info">Fusion Team Sync</span><span class="tag t-info">AON Security Sync</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">12–18 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">One to two working sessions with the Excess Reinsurance team to walk current intake, gather ten representative example RFP submissions, and lock the field-extraction schema. One working session with the Fusion software team to confirm the integration surface (API path or file-based handoff). One working session with AON Microsoft and security teams to confirm Azure OpenAI BAA scope and AI usage policies.</div>
+        <div class="scope-meta"><span class="scope-layer human">Human</span><strong>Output:</strong> Architecture choice locked. Schema definition signed off. Accuracy baseline target set. Final hour commitment confirmed for items 1.1 through 1.7.</div>
+      </div>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase-line"></div>
+      <div class="phase-badge" style="background:var(--p1-cyan-dim);color:#075985;border-color:var(--p1-cyan-mid)">Phase 1 · Build</div>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.1</div>
+          <div>
+            <div class="scope-title">Email triage and RFP classification</div>
+            <div class="scope-tags"><span class="tag t-info">Shared Mailbox Trigger</span><span class="tag t-info">Carrier and State Tagging</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">4–6 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Inbound mail in the shared mailbox is classified as a new RFP submission, follow-up on an existing case, or not relevant. Carrier and state are tagged from header and body content for downstream routing. Misclassified items surface to a human exception queue rather than being silently routed.</div>
+        <div class="scope-meta"><span class="scope-layer">AI Decision</span><span class="scope-layer exec">Automation</span><strong>Guardrail:</strong> Confidence thresholds enforced. Items below threshold route to human review.</div>
+      </div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.2</div>
+          <div>
+            <div class="scope-title">Attachment categorization across all documents per RFP</div>
+            <div class="scope-tags"><span class="tag t-info">Census, POB, Claims, Network</span><span class="tag t-info">Per-Document Routing</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">8–12 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Each attachment in an RFP email is labeled by document type: census, plan of benefits, claims history, contract, network listing, or large-claims report. AI provides the label; downstream automation routes each document to the correct extractor. The same document type frequently arrives with different filenames and structures across producers, which makes deterministic rules alone insufficient for this step.</div>
+        <div class="scope-meta"><span class="scope-layer">AI Decision</span><strong>Boundary:</strong> Categorization only. Field extraction and completeness assessment are downstream responsibilities.</div>
+      </div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.3</div>
+          <div>
+            <div class="scope-title">Structured field extraction across submission documents</div>
+            <div class="scope-tags"><span class="tag t-info">Variable Format Handling</span><span class="tag t-info">Confidence Scored</span><span class="tag t-info">Schema Validated</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">14–20 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Extraction of group name, effective date, contract basis, plan-of-benefits parameters (deductible, out-of-pocket maximum, coinsurance), TPA, network, requested specific and aggregate attachment points across variable-format documents. Plus 1 has direct precedent for this type of work, including a recent engagement extracting structured data from large-format CAD documents into a downstream system.</div>
+        <div class="scope-meta"><span class="scope-layer">AI Decision</span><span class="scope-layer exec">Automation</span><strong>Boundary:</strong> Rate computation and underwriting judgment remain in Fusion. <strong>Guardrail:</strong> Each extracted field carries a confidence score; schema validation runs before any handoff.</div>
+      </div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.4</div>
+          <div>
+            <div class="scope-title">Census normalization with per-producer column mapping</div>
+            <div class="scope-tags"><span class="tag t-info">AI Decides Once</span><span class="tag t-info">Code Runs Forever</span><span class="tag t-ok">No PHI to LLM</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">8–14 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Census columns vary across producers. The mapping to the Excess Reinsurance standard schema (age, sex, dependents, ZIP and region) is decided once per producer with AI assistance and then locked. From that point on, every census from that producer is transformed deterministically by code, with no protected information sent to an LLM. The mapping is reviewed only when a producer changes its source format.</div>
+        <div class="scope-meta"><span class="scope-layer">AI Decision (one-time)</span><span class="scope-layer exec">Automation (every time)</span><strong>Rationale:</strong> Minimizes BAA and compliance surface area while handling the variance pattern that defeats pure rule-based normalization.</div>
+      </div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.5</div>
+          <div>
+            <div class="scope-title">Submission handoff to Fusion via API or standardized file</div>
+            <div class="scope-tags"><span class="tag t-info">JSON / CSV / Excel</span><span class="tag t-info">Idempotent</span><span class="tag t-warn">HITL Gate</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">10–16 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Validated extracted fields create a submission record in Fusion through the API path if Phase 0 confirms one is supported. If a direct API path is not available, the same validated package is delivered as a single standardized file ready for one-click upload by an underwriter. Both outcomes are within scope; the right path is determined during the Phase 0 conversation with the Fusion software team.</div>
+        <div class="scope-meta"><span class="scope-layer exec">Automation</span><span class="scope-layer human">Human Gate</span><strong>HITL gate remains active</strong> through Phase 1 and Pilot until measured accuracy meets the baseline set during Phase 0.</div>
+      </div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.6</div>
+          <div>
+            <div class="scope-title">HITL validation queue and accuracy tuning</div>
+            <div class="scope-tags"><span class="tag t-warn">Human in the Loop</span><span class="tag t-info">Accuracy Metrics</span><span class="tag t-info">Exception Triage</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">6–10 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">A reviewer-facing validation queue (Microsoft Teams Approvals with a SharePoint List backend in Option 1) where every submission produced by Phase 1 is validated against a hand-keyed baseline. The accuracy metric is published. The gate transitions from "review every submission" to "review exceptions only" once the threshold target is met. The gate itself remains permanent for HIPAA audit-trail purposes.</div>
+        <div class="scope-meta"><span class="scope-layer human">Human</span><span class="scope-layer exec">Automation</span><strong>Audit trail:</strong> Every reviewer action is logged with reviewer ID, timestamp, fields changed, and the original AI confidence score for each field.</div>
+      </div>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase-line"></div>
+      <div class="phase-badge" style="background:var(--p1-green-bg);color:#15803d;border-color:var(--p1-green-br)">Phase 2 · Pilot &amp; Handoff</div>
+      <div class="phase-line"></div>
+    </div>
+
+    <div class="scope-item">
+      <div class="scope-hdr">
+        <div class="scope-hdr-l">
+          <div class="scope-num">1.7</div>
+          <div>
+            <div class="scope-title">Pilot, accuracy testing, documentation, and team training</div>
+            <div class="scope-tags"><span class="tag t-ok">Real RFPs</span><span class="tag t-ok">SOPs Delivered</span><span class="tag t-ok">Team Training</span></div>
+          </div>
+        </div>
+        <div class="scope-est"><div class="scope-hrs">14–20 hrs</div><div class="scope-hrs-lbl">Estimated</div></div>
+      </div>
+      <div class="scope-body">
+        <div class="scope-desc">Real RFPs run through the pipeline in parallel with the current process for two to three weeks. Accuracy is measured against a hand-keyed baseline. Confidence thresholds and extractors are tuned. Standard operating procedures are delivered to the underwriting team and administrative documentation is delivered to the software team. Both groups are trained. Handoff includes a thirty-day post-launch support window.</div>
+        <div class="scope-meta"><span class="scope-layer human">Human</span><span class="scope-layer exec">Automation</span><strong>Success criterion:</strong> Accuracy threshold met and the underwriting team is comfortable trusting validated output without re-keying.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ════════════════ TIMELINE ════════════════ -->
+<div class="pane" data-pane="timeline">
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">From kickoff to handoff</div>
+      <h2 class="h2">Kickoff <em>May 18, 2026</em>. Handoff by <em>late July</em>.</h2>
+      <p class="section-sub">The timeline below reflects the recommended Option 1 path. Options 2 and 3 extend the build window by one to two weeks; calendar dates for each are noted at the bottom of this tab. Each phase has a clear deliverable and an explicit exit criterion before the next phase begins.</p>
+    </div>
+
+    <div class="tl-wrap">
+      <div class="tl-stepper">
+        <div class="tl-step">
+          <div class="tl-step-num">0</div>
+          <div class="tl-step-wk">May 18 – May 29</div>
+          <div class="tl-step-lbl">Discovery</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-step-num">1</div>
+          <div class="tl-step-wk">Jun 1 – Jul 10</div>
+          <div class="tl-step-lbl">Build</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-step-num">2</div>
+          <div class="tl-step-wk">Jul 13 – Jul 17</div>
+          <div class="tl-step-lbl">Pilot &amp; Tune</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-step-num">3</div>
+          <div class="tl-step-wk">Jul 20 – Jul 24</div>
+          <div class="tl-step-lbl">Handoff</div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div>
+          <div class="tl-phase-week">Phase 0</div>
+          <div class="tl-phase-range">May 18 – May 29 · 2 wks</div>
+        </div>
+        <div>
+          <div class="tl-phase-title">Discovery sprint and architecture lock</div>
+          <div class="tl-phase-desc">Walk current intake with the underwriting team. Pull ten example RFPs. Sync with the Fusion software team on integration surface. Sync with AON security on AI usage and BAA scope. Lock the architecture (Option 1, 2, or 3). Sign off on the field-extraction schema. Set the accuracy baseline target.</div>
+        </div>
+        <div>
+          <div class="tl-phase-deliv">Exit Criteria</div>
+          <div class="tl-phase-list">
+            <div>Architecture chosen</div>
+            <div>Schema signed off</div>
+            <div>Hours commitment locked</div>
+            <div>Accuracy target set</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div>
+          <div class="tl-phase-week">Phase 1</div>
+          <div class="tl-phase-range">Jun 1 – Jul 10 · 6 wks</div>
+        </div>
+        <div>
+          <div class="tl-phase-title">Build the six pipeline items</div>
+          <div class="tl-phase-desc">Items 1.1 through 1.6 built in dependency order. Email trigger first, then classification, extraction, normalization, Fusion handoff, and the HITL queue. Plus 1 builds; weekly check-ins with your team. Phase 1 closes when the pipeline runs end-to-end against test RFPs.</div>
+        </div>
+        <div>
+          <div class="tl-phase-deliv">Exit Criteria</div>
+          <div class="tl-phase-list">
+            <div>End-to-end run on test data</div>
+            <div>HITL queue functional</div>
+            <div>Audit logs writing</div>
+            <div>Ready for real RFPs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div>
+          <div class="tl-phase-week">Phase 2</div>
+          <div class="tl-phase-range">Jul 13 – Jul 17 · 1 wk</div>
+        </div>
+        <div>
+          <div class="tl-phase-title">Pilot with real RFPs and accuracy tuning</div>
+          <div class="tl-phase-desc">Real RFPs run through the pipeline in parallel with the current process. Every submission validated through HITL. Accuracy measured against the hand-keyed baseline. Extractors and confidence thresholds tuned through the pilot week.</div>
+        </div>
+        <div>
+          <div class="tl-phase-deliv">Exit Criteria</div>
+          <div class="tl-phase-list">
+            <div>Accuracy target met</div>
+            <div>Team trusts the output</div>
+            <div>HITL moves to exception-only</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-phase">
+        <div>
+          <div class="tl-phase-week">Phase 3</div>
+          <div class="tl-phase-range">Jul 20 – Jul 24 · 1 wk</div>
+        </div>
+        <div>
+          <div class="tl-phase-title">Documentation, training, and handoff</div>
+          <div class="tl-phase-desc">Standard operating procedures for the underwriting team. Administrative documentation for the software team. Training sessions for both groups. The thirty-day post-launch support window opens. Final architecture diagram and runbook delivered.</div>
+        </div>
+        <div>
+          <div class="tl-phase-deliv">Final Deliverables</div>
+          <div class="tl-phase-list">
+            <div>Underwriter SOP</div>
+            <div>Software-team admin doc</div>
+            <div>Architecture diagram</div>
+            <div>30-day support window open</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-byopt">
+        <strong>Calendar variance by option.</strong> The dates above reflect Option 1 (recommended) with handoff complete by Jul 24. Option 2 (n8n + Python) extends the build window by approximately one to two weeks, completing handoff in early August. Option 3 (Layered Fallback) extends the build window by approximately two weeks, completing handoff in mid-August. The Phase 0 discovery sprint dates do not change across options.
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ════════════════ NEXT STEPS ════════════════ -->
+<div class="pane" data-pane="next">
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-eyebrow">From this proposal to kickoff</div>
+      <h2 class="h2">A simple three-step path</h2>
+      <p class="section-sub">Review this proposal alongside the separate cost proposal delivered with it, then reply by email with questions or with approval to move forward. No formal signature block is required.</p>
+    </div>
+
+    <div class="notice info" style="margin-bottom:24px"><strong>Review together with the cost proposal.</strong> Everything Excess Reinsurance needs to make a decision is in those two documents: scope, timeline, three architecture options, and investment.</div>
+
+    <div class="ns3-grid">
+      <div class="ns3-card">
+        <div class="ns3-num">Step 1 · Review</div>
+        <div class="ns3-title">Review the Proposal and Cost</div>
+        <div class="ns3-desc">Read this proposal alongside the separate cost proposal delivered with it. Together they cover scope, timeline, the three architecture options, and the investment for each path.</div>
+      </div>
+      <div class="ns3-card" style="border-left-color:var(--p1-green)">
+        <div class="ns3-num" style="color:var(--p1-green)">Step 2 · Decide</div>
+        <div class="ns3-title">Reply by Email</div>
+        <div class="ns3-desc">Reply to either contact below with questions or with approval to move forward. A simple email confirmation is all that is required. No formal signature block.</div>
+      </div>
+      <div class="ns3-card" style="border-left-color:var(--p1-navy)">
+        <div class="ns3-num" style="color:var(--p1-navy)">Step 3 · Kickoff</div>
+        <div class="ns3-title">Schedule and Begin Phase 0</div>
+        <div class="ns3-desc">On approval, Plus 1 schedules the Phase 0 kickoff call to confirm the architecture path, schema, and discovery sprint cadence. Build starts on the agreed date and runs the timeline shown.</div>
+      </div>
+    </div>
+
+    <div class="ns2-cta">
+      <div class="ns2-cta-text">
+        <div class="ns2-cta-kicker">Ready to Move Forward</div>
+        <div class="ns2-cta-title">Reply by email to confirm approval and we will lock the kickoff date.</div>
+        <div class="ns2-cta-sub">Send questions or approval to either contact below. Plus 1 will schedule the Phase 0 kickoff call within two business days of approval.</div>
+      </div>
+      <div class="ns2-cta-contacts">
+        <div class="ns2-cta-contact">
+          <div class="ns2-cta-contact-lbl">Point of Contact</div>
+          <div class="ns2-cta-contact-name">Jessica Peaden</div>
+          <div class="ns2-cta-contact-role">AI Implementation Engineer · Plus 1 Technology</div>
+          <div class="ns2-cta-contact-email">jpeaden@plus1technology.com</div>
+        </div>
+        <div class="ns2-cta-contact">
+          <div class="ns2-cta-contact-lbl">Owner · Proposal Approval</div>
+          <div class="ns2-cta-contact-name">Marc Umstead</div>
+          <div class="ns2-cta-contact-role">Owner · Plus 1 Technology</div>
+          <div class="ns2-cta-contact-email">mumstead@plus1technology.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</main>
+
+<div class="rainbow"></div>
+<footer class="footer">
+  <div><strong>Plus 1 Technology</strong> · Smarter IT. Simpler Processes. <em>Stronger Results.</em></div>
+  <div style="margin-top:6px">Prepared for Excess Reinsurance · May 6, 2026 · Marc Umstead and Jessica Peaden</div>
+</footer>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const panes = document.querySelectorAll('.pane');
+function activate(target){
+  panes.forEach(p => p.classList.toggle('is-active', p.dataset.pane === target));
+  tabs.forEach(t => t.classList.toggle('is-active', t.dataset.pane === target));
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.pane)));
+</script>
+
+</body>
+</html>
