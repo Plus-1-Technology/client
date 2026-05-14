@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Plugins &amp; Connectors — Recommendations for The Catalyst Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── BRAND (exact Plus 1) ── */
+  --p1-blue:    #1419A0;
+  --p1-cyan:    #00B9FF;
+  --p1-dgray:   #40404B;
+  --p1-black:   #11111F;
+
+  /* ── ALIASES ── */
+  --navy:       #1419A0;
+  --navy-dark:  #0d1070;
+  --navy-dim:   #e8ecf8;
+  --navy-mid:   #c5ceed;
+  --cyan:       #00B9FF;
+  --cyan-dim:   #e0f4fc;
+  --cyan-mid:   #a8ddf5;
+
+  /* ── SURFACES ── */
+  --bg:         #f4f6fb;
+  --bg2:        #ffffff;
+  --bg3:        #eef1f8;
+  --bg4:        #f9fafd;
+
+  --border:     #dce2f0;
+  --border2:    #c8d0e8;
+
+  --text:       #1a2040;
+  --muted:      #5a6589;
+  --subtle:     #8e9ab8;
+
+  /* ── STATUS ── */
+  --green:      #16a34a; --green-bg:   #f0fdf4; --green-bd:  #bbf7d0;
+  --yellow:     #b45309; --yellow-bg:  #fffbeb; --yellow-bd: #fde68a;
+  --red:        #dc2626; --red-bg:     #fef2f2; --red-bd:    #fecaca;
+  --purple:     #7c3aed; --purple-bg:  #f5f3ff; --purple-bd: #ddd6fe;
+  --teal:       #0f766e; --teal-bg:    #f0fdfa; --teal-bd:   #99f6e4;
+  --orange:     #c2410c; --orange-bg:  #fff7ed; --orange-bd: #fed7aa;
+
+  /* ── SIDEBAR ── */
+  --sb-bg:      #0e1278;
+  --sb-bg2:     #1419A0;
+  --sb-hover:   rgba(255,255,255,0.05);
+  --sb-active:  rgba(0,185,255,0.15);
+  --sb-border:  rgba(255,255,255,0.08);
+  --sb-text:    rgba(255,255,255,0.65);
+  --sb-text-on: #ffffff;
+
+  /* ── TYPOGRAPHY ── */
+  --font-body:    'Inter', sans-serif;
+  --font-display: 'Inter', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* ── SHADOWS ── */
+  --sh:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --sh2:  0 4px 16px rgba(0,0,0,0.09);
+
+  /* ── RADII ── */
+  --r:    8px;
+  --r2:   12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.65;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--sb-bg);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--sb-border);
+  z-index: 100;
+}
+.sb-logo-block {
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--sb-border);
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-mark {
+  display: flex; align-items: center; gap: 9px;
+}
+.logo-mark svg { flex-shrink: 0; }
+.logo-mark .lm-text {
+  font-family: var(--font-body);
+  font-weight: 800; font-size: 12.5px;
+  color: #fff; letter-spacing: -0.01em; line-height: 1.1;
+}
+.logo-mark .lm-text small {
+  display: block;
+  font-size: 8.5px; letter-spacing: 0.16em;
+  font-weight: 500; opacity: 0.65; margin-top: 2px;
+}
+
+.sb-info-block {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--sb-border);
+  background: rgba(0,0,0,0.2);
+}
+.sb-info-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); font-weight: 700; margin-bottom: 4px; }
+.sb-info-name { font-family: var(--font-display); font-size: 13px; color: #fff; font-weight: 700; line-height: 1.3; margin-bottom: 2px; }
+.sb-info-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+.sb-nav { flex: 1; overflow-y: auto; padding: 8px 10px 14px; }
+.sb-group { margin-bottom: 6px; }
+.sb-group-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); font-weight: 700; padding: 10px 10px 5px; }
+.sb-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 10px;
+  font-family: var(--font-body);
+  font-size: 12.5px; font-weight: 500;
+  color: var(--sb-text);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.12s;
+  border-left: 2px solid transparent;
+  user-select: none;
+}
+.sb-item:hover { background: var(--sb-hover); color: var(--sb-text-on); }
+.sb-item.active {
+  background: rgba(0,185,255,0.12);
+  color: #fff;
+  font-weight: 600;
+  border-left-color: #00B9FF;
+  box-shadow: inset 0 0 0 1px rgba(0,185,255,0.15);
+}
+.sb-icon { font-size: 13px; width: 16px; text-align: center; flex-shrink: 0; }
+
+.sb-link {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 10px;
+  font-family: var(--font-body);
+  font-size: 11.5px; font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.12s;
+}
+.sb-link:hover { background: var(--sb-hover); color: #fff; }
+
+.sb-footer { padding: 12px 18px; border-top: 1px solid var(--sb-border); background: rgba(0,0,0,0.2); }
+.sb-footer-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; gap: 8px; }
+.sb-footer-row:last-child { margin-bottom: 0; }
+.sb-footer-label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); font-weight: 700; }
+.sb-footer-val { font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 600; }
+
+/* ── CONTENT ── */
+.content { display: flex; flex-direction: column; min-width: 0; overflow-x: hidden; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1a5fa8 100%);
+  border-bottom: 3px solid var(--cyan);
+  padding: 36px 40px 32px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 85% 0%, rgba(0,185,255,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cyan); font-weight: 500;
+  margin-bottom: 10px;
+  position: relative; z-index: 1;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 800;
+  line-height: 1.1; letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  position: relative; z-index: 1;
+}
+.hero-sub {
+  font-size: 14px; color: rgba(255,255,255,0.78);
+  max-width: 760px; line-height: 1.55;
+  position: relative; z-index: 1;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 18px;
+  position: relative; z-index: 1;
+}
+.hero-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11px; font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+.hero-chip.cyan { background: rgba(0,185,255,0.15); border-color: rgba(0,185,255,0.4); color: #cdf2ff; }
+
+/* ── TAB BAR ── */
+.tab-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  display: flex;
+  overflow-x: auto;
+  padding: 0 28px;
+  gap: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.tab-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 12.5px; font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.18s;
+  margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--text); background: var(--bg3); }
+.tab-btn.active { color: var(--navy); border-bottom-color: var(--cyan); background: var(--navy-dim); font-weight: 700; }
+.tab-btn-icon { font-size: 14px; }
+.tab-btn-count {
+  display: inline-block;
+  background: var(--bg3); color: var(--muted);
+  padding: 1px 8px; border-radius: 100px;
+  font-size: 10px; font-weight: 700;
+  margin-left: 4px;
+}
+.tab-btn.active .tab-btn-count { background: var(--cyan); color: #fff; }
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; padding: 32px 40px 80px; }
+.tab-panel.active { display: block; animation: fadeIn 0.22s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADERS ── */
+.sh { margin-bottom: 22px; max-width: 880px; }
+.sh-title { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin-bottom: 5px; }
+.sh-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+.sh-sub { margin: 32px 0 16px; padding-top: 18px; border-top: 1px solid var(--border); max-width: 880px; }
+.sh-sub:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+.sh-sub-title {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sh-sub-title .sh-pill {
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 3px 9px; border-radius: 100px;
+}
+.sh-sub-title .sh-pill.green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+.sh-sub-title .sh-pill.yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+.sh-sub-title .sh-pill.red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+.sh-sub-desc { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+
+/* ── HOW TO USE CALLOUT ── */
+.howto {
+  background: linear-gradient(180deg, #fff 0%, var(--navy-dim) 100%);
+  border: 1px solid var(--navy-mid);
+  border-left: 4px solid var(--cyan);
+  border-radius: var(--r2);
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.howto-icon {
+  font-size: 22px;
+  background: var(--cyan);
+  color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.howto-title {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.howto-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+.howto-body strong { color: var(--navy); font-weight: 700; }
+.howto-body a { color: var(--navy); font-weight: 600; text-decoration: underline; text-decoration-color: var(--cyan); text-underline-offset: 3px; }
+
+/* ── CARDS ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 1100px) { .g2 { grid-template-columns: 1fr; } }
+
+.rcard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 18px 20px;
+  box-shadow: var(--sh);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  display: flex; flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.rcard:hover { border-color: var(--border2); box-shadow: var(--sh2); }
+.rcard.pick {
+  border-left: 4px solid var(--cyan);
+}
+.rcard.maybe {
+  border-left: 4px solid var(--yellow-bd);
+}
+.rcard.skip {
+  border-left: 4px solid var(--border2);
+  opacity: 0.92;
+}
+
+.rcard-hdr {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 10px; margin-bottom: 4px;
+}
+.rcard-title {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 800;
+  color: var(--text); letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+.rcard-title a {
+  color: inherit; text-decoration: none;
+  border-bottom: 1.5px dotted var(--border2);
+  transition: border-color 0.15s;
+}
+.rcard-title a:hover { border-bottom-color: var(--cyan); color: var(--navy); }
+.rcard-tag {
+  font-family: var(--font-body);
+  font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 3px 8px; border-radius: 100px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.rcard-tag.pick { background: var(--cyan-dim); color: #0369a1; border: 1px solid var(--cyan-mid); }
+.rcard-tag.maybe { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+.rcard-tag.skip { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+.rcard-tag.anth { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-bd); }
+
+.rcard-meta {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.rcard-chip {
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 100px;
+  background: var(--bg3); color: var(--muted);
+  border: 1px solid var(--border);
+}
+.rcard-chip.cowork { background: var(--cyan-dim); color: #0369a1; border-color: var(--cyan-mid); }
+.rcard-chip.code   { background: var(--purple-bg); color: var(--purple); border-color: var(--purple-bd); }
+.rcard-chip.both   { background: var(--green-bg); color: var(--green); border-color: var(--green-bd); }
+
+.rcard-what {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.rcard-take {
+  background: var(--bg4);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.rcard-take-label {
+  font-family: var(--font-body);
+  font-size: 9.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--navy);
+  margin-bottom: 3px;
+  display: flex; align-items: center; gap: 5px;
+}
+.rcard-take-body {
+  font-size: 12.5px; color: var(--text);
+  line-height: 1.55;
+}
+.rcard-take-body strong { color: var(--navy); font-weight: 700; }
+
+.rcard-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.rcard-foot a {
+  color: var(--navy); text-decoration: none; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.rcard-foot a:hover { color: var(--cyan); }
+.rcard-cost {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.rcard-cost.free { color: var(--green); font-weight: 600; }
+.rcard-cost.paid { color: var(--orange); font-weight: 600; }
+
+/* ── TABLE ── */
+.table-wrap { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--bg2); }
+thead tr { background: var(--bg3); }
+th {
+  padding: 11px 14px; text-align: left;
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg3); }
+td.center { text-align: center; }
+td .badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 9px; border-radius: 100px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.badge-green  { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-bd); }
+.badge-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+.badge-red    { background: var(--red-bg);    color: var(--red);    border: 1px solid var(--red-bd); }
+
+/* ── BANNER CTA ── */
+.cta {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+  border-radius: var(--r2);
+  padding: 22px 26px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 20px;
+  margin: 28px 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 100% 50%, rgba(0,185,255,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-text { position: relative; z-index: 1; }
+.cta-title { font-family: var(--font-display); font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+.cta-sub { font-size: 13px; color: rgba(255,255,255,0.78); max-width: 600px; line-height: 1.5; }
+.cta-btn {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--cyan);
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 700; font-size: 12.5px;
+  padding: 11px 20px;
+  border-radius: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,185,255,0.4); }
+
+/* ── INLINE NOTE ── */
+.note {
+  background: var(--yellow-bg);
+  border-left: 3px solid var(--yellow);
+  border-radius: 0 6px 6px 0;
+  padding: 11px 14px;
+  font-size: 12.5px;
+  color: var(--text);
+  margin: 14px 0;
+  line-height: 1.55;
+}
+.note strong { color: var(--yellow); }
+.note.green { background: var(--green-bg); border-left-color: var(--green); }
+.note.green strong { color: var(--green); }
+.note.blue { background: var(--navy-dim); border-left-color: var(--navy); }
+.note.blue strong { color: var(--navy); }
+
+/* ── AVAILABILITY MATRIX ── */
+.opt-legend {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+@media (max-width: 1000px) { .opt-legend { grid-template-columns: 1fr 1fr; } }
+.opt-legend-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  border-left: 4px solid var(--cyan);
+}
+.opt-legend-name {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 800;
+  color: var(--navy);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+.opt-legend-desc {
+  font-size: 11.5px; color: var(--muted);
+  line-height: 1.5;
+}
+.opt-legend-card.avail   { border-left-color: var(--cyan); }
+.opt-legend-card.default { border-left-color: var(--green); }
+.opt-legend-card.notav   { border-left-color: var(--muted); }
+.opt-legend-card.req     { border-left-color: var(--purple); }
+
+.matrix-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  background: var(--bg2);
+  box-shadow: var(--sh);
+  margin-bottom: 18px;
+}
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.matrix-table thead tr { background: var(--bg3); }
+.matrix-table th {
+  padding: 11px 12px; text-align: left;
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.matrix-table th.opts-col { text-align: center; width: 320px; }
+.matrix-table td {
+  padding: 12px; vertical-align: top;
+  border-bottom: 1px solid var(--border);
+}
+.matrix-table tr:last-child td { border-bottom: none; }
+.matrix-table tr:hover td { background: var(--bg4); }
+.mx-name { font-family: var(--font-display); font-weight: 800; font-size: 13px; color: var(--text); }
+.mx-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.mx-rec {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 3px 9px; border-radius: 100px;
+  white-space: nowrap;
+}
+.mx-rec.avail   { background: var(--cyan-dim);  color: #0369a1;       border: 1px solid var(--cyan-mid); }
+.mx-rec.default { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-bd); }
+.mx-rec.notav   { background: var(--bg3);       color: var(--muted);  border: 1px solid var(--border); }
+.mx-rec.req     { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-bd); }
+
+.opts {
+  display: flex; gap: 4px; flex-wrap: nowrap;
+  justify-content: center;
+}
+.opt {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-body);
+  font-size: 10px; font-weight: 600;
+  padding: 4px 8px; border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--muted);
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.opt-box {
+  display: inline-block;
+  width: 11px; height: 11px;
+  border: 1.5px solid var(--subtle);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.opt.rec {
+  background: var(--navy-dim);
+  border-color: var(--cyan);
+  color: var(--navy);
+  font-weight: 700;
+}
+.opt.rec .opt-box {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  position: relative;
+}
+.opt.rec .opt-box::after {
+  content: '✓';
+  position: absolute;
+  top: -3px; left: 0px;
+  color: #fff; font-size: 10px;
+  font-weight: 900; line-height: 1;
+}
+
+.mx-section {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 9px 14px;
+}
+.mx-section td { padding: 9px 14px !important; background: var(--navy) !important; color: #fff !important; }
+
+/* ── PRINT ── */
+@media print {
+  body { grid-template-columns: 1fr; font-size: 11pt; }
+  .sidebar { display: none; }
+  .tab-bar { display: none; }
+  .tab-panel { display: block !important; page-break-after: always; padding: 18px; }
+  .hero { padding: 24px; }
+  .rcard { break-inside: avoid; }
+  .cta { background: var(--bg3) !important; color: var(--text) !important; }
+  .cta-btn { background: var(--navy); color: #fff; }
+}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sb-logo-block">
+    <div class="logo-mark">
+      <svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#00B9FF" stroke-width="3"/>
+        <text x="24" y="30" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-weight="800" font-size="16">+1</text>
+      </svg>
+      <div class="lm-text">PLUS ONE<small>TECHNOLOGY</small></div>
+    </div>
+  </div>
+
+  <div class="sb-info-block">
+    <div class="sb-info-label">Prepared for</div>
+    <div class="sb-info-name">The Catalyst Group</div>
+    <div class="sb-info-sub">Claude Plugins &amp; Connectors Guide</div>
+  </div>
+
+  <div class="sb-nav">
+    <div class="sb-group">
+      <div class="sb-group-label">Recommendations</div>
+      <div class="sb-item active" onclick="showSection('free', this)">
+        <span class="sb-icon">✅</span>
+        <span>Plugins — Free</span>
+      </div>
+      <div class="sb-item" onclick="showSection('paid', this)">
+        <span class="sb-icon">💳</span>
+        <span>Plugins — Subscription</span>
+      </div>
+      <div class="sb-item" onclick="showSection('admin', this)">
+        <span class="sb-icon">☑️</span>
+        <span>Availability Worksheet</span>
+      </div>
+      <div class="sb-item" onclick="showSection('connectors', this)">
+        <span class="sb-icon">🔌</span>
+        <span>Connectors</span>
+      </div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-label">Browse the full lists</div>
+      <a class="sb-link" href="https://claude.com/plugins" target="_blank" rel="noopener">
+        <span class="sb-icon">🌐</span>
+        <span>All plugins (Claude)</span>
+      </a>
+      <a class="sb-link" href="https://claude.com/connectors" target="_blank" rel="noopener">
+        <span class="sb-icon">🌐</span>
+        <span>All connectors (Claude)</span>
+      </a>
+      <a class="sb-link" href="https://claude.com/skills" target="_blank" rel="noopener">
+        <span class="sb-icon">🌐</span>
+        <span>Skills directory</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="sb-footer">
+    <div class="sb-footer-row">
+      <span class="sb-footer-label">Prepared by</span>
+      <span class="sb-footer-val">Plus 1 Technology</span>
+    </div>
+    <div class="sb-footer-row">
+      <span class="sb-footer-label">Date</span>
+      <span class="sb-footer-val">May 2026</span>
+    </div>
+    <div class="sb-footer-row">
+      <span class="sb-footer-label">Status</span>
+      <span class="sb-footer-val">Confidential</span>
+    </div>
+  </div>
+</nav>
+
+<main class="content">
+
+  <header class="hero">
+    <div class="hero-eyebrow">Claude Adoption — Companion Guide</div>
+    <h1 class="hero-title">Plugins &amp; Connectors<br>Built for The Catalyst Group</h1>
+    <p class="hero-sub">A curated list of the plugins and connectors Plus 1 recommends for TCG's Claude Teams environment — what to install on day one, what to add when you're ready, and what to skip. Built specifically for a chemicals &amp; energy consulting practice running on Microsoft 365 and SUGAR CRM.</p>
+    <div class="hero-meta">
+      <span class="hero-chip cyan">✦ Claude Teams</span>
+      <span class="hero-chip">Microsoft 365</span>
+      <span class="hero-chip">Chemicals &amp; Energy Consulting</span>
+      <span class="hero-chip">Stage 1 Aligned</span>
+    </div>
+  </header>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showSection('free', this)">
+      <span class="tab-btn-icon">✅</span>Plugins — Free<span class="tab-btn-count">4</span>
+    </button>
+    <button class="tab-btn" onclick="showSection('paid', this)">
+      <span class="tab-btn-icon">💳</span>Plugins — Subscription Required<span class="tab-btn-count">6</span>
+    </button>
+    <button class="tab-btn" onclick="showSection('admin', this)">
+      <span class="tab-btn-icon">☑️</span>Availability Worksheet<span class="tab-btn-count">44</span>
+    </button>
+    <button class="tab-btn" onclick="showSection('connectors', this)">
+      <span class="tab-btn-icon">🔌</span>Connectors<span class="tab-btn-count">14</span>
+    </button>
+  </div>
+
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <!-- TAB 1 — FREE PLUGINS                                          -->
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <section id="sec-free" class="tab-panel active">
+
+    <div class="sh">
+      <div class="sh-title">Plugins — No Extra Subscription Required</div>
+      <div class="sh-desc">These plugins are free to install and run on your existing Claude Teams seats. No additional vendor billing, no extra logins, no procurement. They extend what Claude can do out of the box — and the top picks below should be the first additions to your environment after Stage 1 goes live.</div>
+    </div>
+
+    <div class="howto">
+      <div class="howto-icon">💡</div>
+      <div>
+        <div class="howto-title">What is a plugin, exactly?</div>
+        <div class="howto-body">A <strong>plugin</strong> bundles multiple capabilities — skills, MCP servers, slash commands, and tools — into one click-to-install package. Think of it like installing an app: instead of you wiring up each piece, Anthropic (or a vendor) ships the whole thing pre-configured. Plugins extend <strong>what Claude can do</strong>; <strong>connectors</strong> (see the third tab) extend <strong>what Claude can see</strong>. Many plugins are tagged "Cowork" or "Claude Code" — Cowork plugins work in your Claude Teams environment; Claude Code plugins are for developers using the command-line tool. <a href="https://claude.com/plugins" target="_blank" rel="noopener">Browse the full Claude plugin directory →</a></div>
+      </div>
+    </div>
+
+    <!-- TIER 1: TOP PICKS -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 1 — Install on day one <span class="sh-pill green">Plus 1 Top Picks</span></div>
+      <div class="sh-sub-desc">These are the highest-leverage installs for TCG. Free, built for Claude Teams, and directly aligned with how your team works.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/data" target="_blank" rel="noopener">Data</a></div>
+          <span class="rcard-tag pick">★ Top Pick</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams (Cowork)</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Turns Claude into an analyst. Write SQL across any major dialect (Snowflake, BigQuery, Postgres), profile and explore raw datasets, generate publication-quality visualizations, and build interactive HTML dashboards from data — all from a natural-language prompt.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">This is the single most useful free plugin for consultants. Drop a client's Excel export or a market dataset, and Claude profiles it, surfaces outliers, and ships a dashboard you can hand back. Pairs perfectly with the <strong>Stage 3 SharePoint mining</strong> work in your roadmap — once Claude can read your proprietary docs, the Data plugin turns those reads into structured analysis.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/data" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/skill-creator" target="_blank" rel="noopener">Skill Creator</a></div>
+          <span class="rcard-tag pick">★ Top Pick</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip code">Claude Code</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Lets you create, edit, and benchmark custom Claude "skills" — packaged instructions and templates Claude can use repeatedly. Skills are how you teach Claude TCG-specific workflows that don't exist in any plugin out of the box.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Skill Creator is technically a Claude Code plugin, but the <strong>concept of skills applies to your Claude Teams workspace too</strong>. Once you've used Claude for a few weeks and notice the same TCG-specific request being typed over and over — "draft a market scan for chemical X using our format", "summarize this client doc in TCG voice" — that's a skill candidate. Plus 1 will help package those into reusable skills during Stage 2 training.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/skill-creator" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 2: WORTH CONSIDERING -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 2 — Worth a look <span class="sh-pill yellow">Conditional</span></div>
+      <div class="sh-sub-desc">Solid free plugins that fit specific situations at TCG. Not essential, but worth installing if the use case lines up.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/microsoft-docs" target="_blank" rel="noopener">Microsoft Docs</a></div>
+          <span class="rcard-tag maybe">Conditional</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip code">Claude Code</span>
+        </div>
+        <div class="rcard-what">Live access to official Microsoft documentation, API references, and code samples for Azure, .NET, Windows, and the M365 stack.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Useful if anyone on the TCG side ever has to troubleshoot M365 connector permissions or admin settings. Otherwise low priority — your team works <strong>in</strong> M365, not <strong>on</strong> it.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/microsoft-docs" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/frontend-design" target="_blank" rel="noopener">Frontend Design</a></div>
+          <span class="rcard-tag maybe">Conditional</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip code">Claude Code</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Generates polished, production-grade web frontends that don't look like generic AI output — sharp typography, real design taste, distinctive color systems.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Only relevant if TCG ever wants Claude to spin up an interactive client deliverable or microsite. Most consulting work is in Word/PowerPoint/Excel, so this is a "nice to have if curious" pick — not a day-one install.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/frontend-design" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WHY THE LIST IS SHORT -->
+    <div class="note blue">
+      <strong>Why the free plugin list is short:</strong> Most plugins in Claude's directory today are built for developers using <strong>Claude Code</strong>, not for the Claude Teams (Cowork) environment TCG is deploying. The Cowork plugin ecosystem is growing fast — Anthropic and partners are shipping new ones monthly — so check <a href="https://claude.com/plugins" target="_blank" rel="noopener" style="color:var(--navy);font-weight:600">claude.com/plugins</a> periodically and filter by "Works with: Cowork." Plus 1 reviews the catalog quarterly and will flag new ones worth adding.
+    </div>
+
+    <div class="cta">
+      <div class="cta-text">
+        <div class="cta-title">Want to see every plugin available?</div>
+        <div class="cta-sub">Anthropic publishes the full catalog with install counts, verification status, and category filters. Use the "Cowork" filter to narrow to what works in your Claude Teams environment.</div>
+      </div>
+      <a class="cta-btn" href="https://claude.com/plugins" target="_blank" rel="noopener">Browse all plugins →</a>
+    </div>
+
+  </section>
+
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <!-- TAB 2 — PAID PLUGINS                                          -->
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <section id="sec-paid" class="tab-panel">
+
+    <div class="sh">
+      <div class="sh-title">Plugins — Require a Subscription to an External Service</div>
+      <div class="sh-desc">These plugins are free to install, but they only work if TCG already pays for (or signs up for) the underlying service — Slack, Atlassian, S&amp;P Global, etc. Only install the ones where you already use the tool or have a clear plan to.</div>
+    </div>
+
+    <div class="howto">
+      <div class="howto-icon">💳</div>
+      <div>
+        <div class="howto-title">How to read this tab</div>
+        <div class="howto-body">For each plugin: <strong>"What you need"</strong> tells you which paid service is required and roughly what it costs. <strong>"Plus 1 Take"</strong> says whether it fits TCG's current stack. We're not recommending anyone <strong>add</strong> a new subscription just to use a plugin — the plugin is the wrapper, the value is the service. Only enable these if you already have (or genuinely need) the underlying tool.</div>
+      </div>
+    </div>
+
+    <!-- TIER 1: ALIGNS WITH TCG STACK -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 1 — Aligns with TCG's existing stack <span class="sh-pill green">Recommended</span></div>
+      <div class="sh-sub-desc">If TCG already uses these tools, install the corresponding plugin. Immediate productivity gain, zero net-new cost.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/slack" target="_blank" rel="noopener">Slack</a></div>
+          <span class="rcard-tag pick">If you use Slack</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams + Code</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Surface Slack channels, threads, and DMs inside Claude. Draft replies in voice, summarize threads, search history, and trigger actions back into Slack.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> Active Slack workspace (any paid tier). <strong>For TCG:</strong> TCG primarily uses Microsoft Teams (already in M365), so this is only relevant if a specific client engagement or partner channel runs in Slack. If you do, the plugin is worth turning on — otherwise skip.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$ Slack Pro+</span>
+          <a href="https://claude.com/plugins/slack" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/atlassian" target="_blank" rel="noopener">Atlassian (Jira + Confluence)</a></div>
+          <span class="rcard-tag pick">If you use them</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip code">Claude Code</span>
+        </div>
+        <div class="rcard-what">Search and create Jira issues, manage sprints, query Confluence pages, and integrate development tracking into Claude's workflow.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> Atlassian Cloud subscription ($7+/user/month per product). <strong>For TCG:</strong> Discovery didn't surface Jira or Confluence in the stack — TCG runs lighter on traditional PM tooling. Skip unless someone starts using Confluence for an internal knowledge base.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$ Atlassian Cloud</span>
+          <a href="https://claude.com/plugins/atlassian" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 2: STRATEGIC FIT -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 2 — Strategic fit for energy &amp; chemicals consulting <span class="sh-pill yellow">Evaluate</span></div>
+      <div class="sh-sub-desc">These plugins connect Claude to specialized market and financial intelligence platforms. They're not cheap, but for an energy/chemicals consulting practice they could change how research gets done.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/sp-global" target="_blank" rel="noopener">S&amp;P Global</a></div>
+          <span class="rcard-tag maybe">Worth Evaluating</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams (Cowork)</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Direct access to S&amp;P Global's financial intelligence — company fundamentals, sector research, commodity pricing, and market analytics — inside Claude.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> S&amp;P Global Market Intelligence subscription (enterprise pricing). <strong>For TCG:</strong> If client work touches energy market sizing, M&amp;A research, or commodity benchmarking, this is a serious accelerator. If TCG's current data sources are sufficient, hold off — the subscription is a meaningful add.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$$ Enterprise</span>
+          <a href="https://claude.com/plugins/sp-global" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/lseg" target="_blank" rel="noopener">LSEG (Refinitiv)</a></div>
+          <span class="rcard-tag maybe">Worth Evaluating</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams (Cowork)</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Institutional-grade market data and analytics from LSEG (formerly Refinitiv) — build DCF models, draft research notes, analyze deals, and rebalance portfolios with live data.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> LSEG Workspace or Eikon subscription. <strong>For TCG:</strong> Same logic as S&amp;P Global — if your team subscribes to either, the plugin is a productivity multiplier. If not, this is overkill for chemicals consulting outside of a financial advisory engagement.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$$ Enterprise</span>
+          <a href="https://claude.com/plugins/lseg" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/financial-analysis" target="_blank" rel="noopener">Financial Analysis</a></div>
+          <span class="rcard-tag maybe">Evaluate</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams (Cowork)</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Build DCF models, run comps analyses, structure LBO scenarios, and review pitch decks with finance-trained agents.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> No subscription — but designed for investment-banking-style work. <strong>For TCG:</strong> If client engagements involve valuation work for chemicals or energy targets, this gives you institutional-grade modeling frameworks. Free to try and worth a one-engagement test.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/financial-analysis" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/plugins/equity-research" target="_blank" rel="noopener">Equity Research</a></div>
+          <span class="rcard-tag maybe">Evaluate</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams (Cowork)</span>
+          <span class="rcard-chip">Anthropic Verified</span>
+        </div>
+        <div class="rcard-what">Analyze earnings releases, generate investment theses, and draft initiating coverage reports with sell-side research workflows.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body"><strong>What you need:</strong> Free to install. <strong>For TCG:</strong> Niche but possibly useful — if a client wants a competitive read on a public chemicals/energy company, this plugin lets Claude pull and structure earnings analysis in research-report format. Optional, no downside to having it.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free</span>
+          <a href="https://claude.com/plugins/equity-research" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NOT RECOMMENDED -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Skip for now <span class="sh-pill red">Not a Fit</span></div>
+      <div class="sh-sub-desc">Popular plugins that don't fit TCG's stack or workflow. Listed so the team knows we've reviewed them.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Plugin</th><th>What it does</th><th>Why skip for TCG</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GitHub</strong></td>
+            <td>Repo management, PRs, code review</td>
+            <td>TCG doesn't develop software internally</td>
+          </tr>
+          <tr>
+            <td><strong>Linear / GitLab / Sentry</strong></td>
+            <td>Developer workflow tools</td>
+            <td>Same — not part of the consulting workflow</td>
+          </tr>
+          <tr>
+            <td><strong>Figma</strong></td>
+            <td>Design file access</td>
+            <td>Branding is handled by Juliet externally, not in-house</td>
+          </tr>
+          <tr>
+            <td><strong>Stripe / RevenueCat</strong></td>
+            <td>Billing &amp; subscriptions</td>
+            <td>Consulting engagements aren't billed through these platforms</td>
+          </tr>
+          <tr>
+            <td><strong>Apollo / ZoomInfo / Common Room</strong></td>
+            <td>B2B sales prospecting and lead intel</td>
+            <td>TCG's growth model isn't outbound SDR work</td>
+          </tr>
+          <tr>
+            <td><strong>SEO plugins (Ahrefs, SearchFit)</strong></td>
+            <td>Search engine optimization</td>
+            <td>Lower priority — TCG isn't an inbound content-marketing business</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cta">
+      <div class="cta-text">
+        <div class="cta-title">Want the full subscription-required plugin list?</div>
+        <div class="cta-sub">Anthropic's full plugin directory shows every option, sortable by category and verification status. Use it to spot tools you already pay for that have a Claude integration.</div>
+      </div>
+      <a class="cta-btn" href="https://claude.com/plugins" target="_blank" rel="noopener">Browse all plugins →</a>
+    </div>
+
+  </section>
+
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <!-- TAB 3 — CONNECTORS                                            -->
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <section id="sec-connectors" class="tab-panel">
+
+    <div class="sh">
+      <div class="sh-title">Connectors — Where Claude Reads Your Data</div>
+      <div class="sh-desc">Connectors let Claude securely query the apps and data sources you already use. They're <strong>read-first</strong> and run on <strong>delegated permissions</strong> — Claude only ever sees what the logged-in user can already see. TCG's roadmap has M365 connectors landing in Stage 2; this tab covers what's recommended, what to add later, and which ones to skip.</div>
+    </div>
+
+    <div class="howto">
+      <div class="howto-icon">🔌</div>
+      <div>
+        <div class="howto-title">Plugins vs. Connectors — the short version</div>
+        <div class="howto-body"><strong>Plugins</strong> extend what Claude can <em>do</em> (skills, slash commands, MCP servers bundled together). <strong>Connectors</strong> extend what Claude can <em>see</em> — they pipe your data from Microsoft 365, Google Drive, Slack, Airtable, and 200+ other apps into Claude's context. Both run on the Model Context Protocol (MCP). <strong>Security note for TCG:</strong> connectors use OAuth delegated permissions, are read-only by default, and respect every existing share-permission your team has set in the source app. Per-connector scoping is documented in your AI Ethics SOP. <a href="https://claude.com/connectors" target="_blank" rel="noopener">Browse the full connector directory →</a></div>
+      </div>
+    </div>
+
+    <!-- TIER 1: STAGE 1 / 2 -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 1 — Already in your roadmap <span class="sh-pill green">Stage 1 + 2</span></div>
+      <div class="sh-sub-desc">These connectors are scoped into the engagement Plus 1 is already delivering. Listed here so you have the full reference in one place.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Microsoft 365 — Outlook</div>
+          <span class="rcard-tag pick">Stage 2</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Read email, drafts, calendar invites, and meeting notes from Outlook. Summarize threads, find context, draft replies — all in user-permission scope.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Highest day-one value. Most of TCG's institutional memory lives in email threads. Owner enables once in Claude admin; Microsoft Entra Global Admin grants tenant-wide consent. Roughly 30 minutes total.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included with M365</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">M365 connector docs →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Microsoft 365 — SharePoint</div>
+          <span class="rcard-tag pick">Stage 2</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Query the full SharePoint document library — proprietary client deliverables, market research, internal knowledge bases — using the same permission model SharePoint enforces today.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">This is where TCG's IP lives. The connector respects existing folder permissions, so a user only sees in Claude what they can already see in SharePoint. Stage 3 builds on this for the proprietary-doc workflow.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included with M365</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">M365 connector docs →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Microsoft 365 — OneDrive</div>
+          <span class="rcard-tag pick">Stage 2</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Access individual users' OneDrive files — working drafts, downloads, personal client folders — through the user's own login session.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Lower-risk than SharePoint because the scope is per-user, but it's where in-progress work lives. Highly useful for "summarize my notes from this engagement" requests.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included with M365</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">M365 connector docs →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Microsoft Teams</div>
+          <span class="rcard-tag pick">Stage 2</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Surface Teams chat history, channel messages, meeting transcripts, and shared files inside Claude. Summarize conversations, find decisions, draft follow-ups.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Combined with Outlook, this captures most of TCG's internal communication. Useful for "what did Clyde decide last week" type queries. Enable alongside the rest of the M365 stack in Stage 2.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included with M365</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">M365 connector docs →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Claude for Excel</div>
+          <span class="rcard-tag pick">Stage 2 Add-In</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Office Add-In that puts Claude inside the Excel sidebar. Build models, write formulas, transform data, and generate analysis without leaving the spreadsheet.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">For a consulting practice, this is the highest-ROI add-in we install. Drop it on every analyst's desktop. <a href="https://claude.com/claude-for-excel" target="_blank" rel="noopener" style="color:var(--navy);font-weight:600">claude.com/claude-for-excel</a></div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included</span>
+          <a href="https://claude.com/claude-for-excel" target="_blank" rel="noopener">Add-in details →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title">Claude for PowerPoint</div>
+          <span class="rcard-tag pick">Stage 2 Add-In</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Office Add-In for PowerPoint. Build slides from a brief, restructure decks, polish copy, and generate charts — directly inside the presentation.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Client decks are the unit of consulting output. The add-in turns Claude into a senior associate who can rough out a 20-slide deck while you grab coffee. <a href="https://claude.com/claude-for-powerpoint" target="_blank" rel="noopener" style="color:var(--navy);font-weight:600">claude.com/claude-for-powerpoint</a></div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included</span>
+          <a href="https://claude.com/claude-for-powerpoint" target="_blank" rel="noopener">Add-in details →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 2: STRONGLY RECOMMENDED ADD-ONS -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 2 — Strongly recommended additions <span class="sh-pill green">Plus 1 Recommends</span></div>
+      <div class="sh-sub-desc">Free with your existing accounts, high incremental value for TCG. Add these once the M365 stack is settled in.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors" target="_blank" rel="noopener">Claude for Word</a></div>
+          <span class="rcard-tag pick">Recommended</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Office Add-In for Microsoft Word. Edit, rewrite, restructure, and generate long-form documents inside Word's native interface.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Pairs with the Excel and PowerPoint add-ins to cover the full Microsoft authoring suite. Client reports, proposals, and deliverables get a meaningful speed-up.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Included</span>
+          <a href="https://claude.com/claude-for-word" target="_blank" rel="noopener">Add-in details →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors" target="_blank" rel="noopener">Google Drive</a></div>
+          <span class="rcard-tag pick">If shared with clients</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+          <span class="rcard-chip">Anthropic First-Party</span>
+        </div>
+        <div class="rcard-what">Search and read Google Drive files — Docs, Sheets, Slides, PDFs — with the user's existing Google permissions.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Many clients send working files via Google Drive even when their primary stack is Microsoft. Enabling this means a Google Drive share-link from a client can be queried by Claude without first downloading and re-uploading. Light lift, real convenience.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free with Google account</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">View in directory →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors/airtable" target="_blank" rel="noopener">Airtable</a></div>
+          <span class="rcard-tag pick">If used internally</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+        </div>
+        <div class="rcard-what">Brings structured Airtable data into Claude. Query bases, filter records, draft updates — useful for client trackers, market scan databases, and pipeline lists.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">If TCG runs internal trackers in Airtable (client pipeline, market scan database, regulatory watch list), this connector lights up serious value. Skip if everything lives in Excel/SharePoint.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost free">● Free tier available</span>
+          <a href="https://claude.com/connectors/airtable" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard pick">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors/asana" target="_blank" rel="noopener">Asana</a></div>
+          <span class="rcard-tag pick">If using Asana</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip both">Claude Teams</span>
+        </div>
+        <div class="rcard-what">Coordinate tasks, projects, and goals across Asana — search work, update status, draft project updates from inside Claude.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Only relevant if TCG (or a key client) runs project management in Asana. Discovery didn't surface this — confirm before enabling.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$ Asana account</span>
+          <a href="https://claude.com/connectors/asana" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TIER 3: INDUSTRY-SPECIFIC -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Tier 3 — Energy &amp; chemicals industry intelligence <span class="sh-pill yellow">Evaluate</span></div>
+      <div class="sh-sub-desc">Specialized data connectors that fit TCG's industry vertical. Worth a serious look during Stage 4 planning.</div>
+    </div>
+
+    <div class="g2">
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors/aiera" target="_blank" rel="noopener">Aiera</a></div>
+          <span class="rcard-tag maybe">Evaluate</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams</span>
+        </div>
+        <div class="rcard-what">Live access to earnings calls, regulatory filings, corporate publications, and event-driven market data.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">High potential fit for energy market research. If a client wants Claude to track a specific energy major's quarterly commentary or filings, Aiera pipes that in directly. Requires Aiera subscription — worth a trial.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$$ Subscription</span>
+          <a href="https://claude.com/connectors/aiera" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+      <div class="rcard maybe">
+        <div class="rcard-hdr">
+          <div class="rcard-title"><a href="https://claude.com/connectors" target="_blank" rel="noopener">Adobe Experience Manager</a></div>
+          <span class="rcard-tag maybe">Optional</span>
+        </div>
+        <div class="rcard-meta">
+          <span class="rcard-chip cowork">Claude Teams</span>
+        </div>
+        <div class="rcard-what">Manage Adobe Experience Manager content — useful only if TCG produces and hosts content campaigns through Adobe's stack.</div>
+        <div class="rcard-take">
+          <div class="rcard-take-label">⭐ Plus 1 Take — for TCG</div>
+          <div class="rcard-take-body">Almost certainly skip — TCG doesn't run an enterprise content marketing operation. Listed for completeness only.</div>
+        </div>
+        <div class="rcard-foot">
+          <span class="rcard-cost paid">$$$ Enterprise</span>
+          <a href="https://claude.com/connectors" target="_blank" rel="noopener">View on Claude →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SUGAR CRM CALLOUT -->
+    <div class="note">
+      <strong>⚠️ SUGAR CRM — no native connector exists today.</strong> Per the proposal, Anthropic does not currently publish a first-party connector for SUGAR. The Stage 4 integration path is via <strong>middleware</strong> — an API-based pull or scheduled sync built through n8n or a similar workflow tool. This is a known gap and is scoped in your Stage 4 feasibility review. Plus 1 monitors the connector directory monthly; if Anthropic ships a SUGAR connector before Stage 4, we'll re-scope accordingly.
+    </div>
+
+    <!-- NOT RECOMMENDED -->
+    <div class="sh-sub">
+      <div class="sh-sub-title">Skip for now <span class="sh-pill red">Not Recommended</span></div>
+      <div class="sh-sub-desc">Connectors we've reviewed and ruled out for TCG. Listed for transparency.</div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Connector</th><th>Why skip for TCG</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Consumer connectors</strong> (AllTrails, Audible, Instacart, Spotify, Uber, Booking.com)</td>
+            <td>Personal-life utility, not business workflow</td>
+          </tr>
+          <tr>
+            <td><strong>Developer tooling</strong> (GitHub, GitLab, AWS Marketplace, Postman, Sentry)</td>
+            <td>TCG doesn't ship software internally</td>
+          </tr>
+          <tr>
+            <td><strong>Sales prospecting</strong> (Apollo.io, ZoomInfo, Attio, ActiveCampaign)</td>
+            <td>TCG's growth model isn't built on outbound sales motion</td>
+          </tr>
+          <tr>
+            <td><strong>Industry-specific outliers</strong> (10x Genomics, AdisInsight, AlltTrails)</td>
+            <td>Healthcare, life sciences, and consumer verticals — wrong industry</td>
+          </tr>
+          <tr>
+            <td><strong>Linear, Intercom, Stripe</strong></td>
+            <td>Product-org tools for SaaS companies, not consulting practices</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note green">
+      <strong>One more thing — every connector respects your existing permissions.</strong> If a user can't see a SharePoint folder today, enabling the connector doesn't change that. Claude only ever queries with the logged-in user's credentials. That permission model is what makes the connector layer compatible with the AI Ethics SOP guardrails Plus 1 is building in Stage 1.
+    </div>
+
+    <div class="cta">
+      <div class="cta-text">
+        <div class="cta-title">Browse the full 200+ connector directory</div>
+        <div class="cta-sub">Anthropic ships new connectors monthly — filter by industry, capability, and use case. The directory is the authoritative source; this guide is the curated subset for TCG.</div>
+      </div>
+      <a class="cta-btn" href="https://claude.com/connectors" target="_blank" rel="noopener">Browse all connectors →</a>
+    </div>
+
+  </section>
+
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <!-- TAB 4 — AVAILABILITY WORKSHEET                                -->
+  <!-- ═════════════════════════════════════════════════════════════ -->
+  <section id="sec-admin" class="tab-panel">
+
+    <div class="sh">
+      <div class="sh-title">Plugin Availability Worksheet</div>
+      <div class="sh-desc">This is the full list of plugins the Catalyst Group org admin can manage in the Anthropic admin console. For each plugin, choose one of the four availability options. Plus 1's recommended setting is pre-marked with a check — adjust to match how TCG wants the plugin marketplace exposed to your team.</div>
+    </div>
+
+    <div class="howto">
+      <div class="howto-icon">☑️</div>
+      <div>
+        <div class="howto-title">How to use this worksheet</div>
+        <div class="howto-body">Each row shows a plugin from your <strong>Anthropic Console → Plugins</strong> page. The <strong>Plus 1 Recommendation</strong> column shows the option we'd select for a boutique chemicals &amp; energy consulting practice on Claude Teams. The four option pills on the right are your <strong>decision row</strong> — Plus 1's pick has a filled check; mark a different pill if TCG wants a different setting. Once finalized, an admin applies the choices in the Anthropic Console plugin marketplace.</div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="opt-legend">
+      <div class="opt-legend-card avail">
+        <div class="opt-legend-name">Available to install</div>
+        <div class="opt-legend-desc">Appears in the plugin marketplace. Users can install or uninstall it at any time.</div>
+      </div>
+      <div class="opt-legend-card default">
+        <div class="opt-legend-name">Installed by default</div>
+        <div class="opt-legend-desc">Pre-installed for all users. Users can still disable or uninstall it.</div>
+      </div>
+      <div class="opt-legend-card notav">
+        <div class="opt-legend-name">Not available</div>
+        <div class="opt-legend-desc">Hidden from the marketplace. Users won't see it or be able to install it.</div>
+      </div>
+      <div class="opt-legend-card req">
+        <div class="opt-legend-name">Required</div>
+        <div class="opt-legend-desc">Pre-installed and always on. Users can't disable or uninstall.</div>
+      </div>
+    </div>
+
+    <!-- MATRIX TABLE -->
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="width:170px">Plugin</th>
+            <th>What it does</th>
+            <th style="width:150px">Plus 1 Rec</th>
+            <th class="opts-col">TCG Availability Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ─── HIGH-PRIORITY DEFAULTS ─── -->
+          <tr class="mx-section"><td colspan="4">Tier 1 — Plus 1 recommends installed by default</td></tr>
+
+          <tr>
+            <td><div class="mx-name">Data</div></td>
+            <td><div class="mx-desc">SQL, dataset exploration, dashboards, and visualizations from natural language. The single highest-leverage skill bundle for consultants.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Enterprise search</div></td>
+            <td><div class="mx-desc">Search across every connected source — SharePoint, OneDrive, Outlook, etc. — in one query. Essential pair with the M365 connectors.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">PDF viewer</div></td>
+            <td><div class="mx-desc">Renders and extracts content from PDF files. Universal utility — client reports, regulatory filings, technical specs.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Productivity</div></td>
+            <td><div class="mx-desc">Task management, scheduling, and personal productivity skills bundle. Light footprint, broad applicability.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Finance</div></td>
+            <td><div class="mx-desc">Financial analysis skills — modeling, comps, valuation frameworks. Useful for consulting engagements touching M&amp;A or capital decisions.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Marketing</div></td>
+            <td><div class="mx-desc">Marketing skill bundle — content drafting, campaign planning, brand-aligned copy. Useful for thought-leadership and client deliverables.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Operations</div></td>
+            <td><div class="mx-desc">Operations workflow skills — SOPs, process documentation, internal ops drafting. Helpful for a small firm running lean.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Human resources</div></td>
+            <td><div class="mx-desc">HR-related drafting — policies, job descriptions, performance reviews, internal comms. Light-touch HR support for a small team.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">S&amp;P Global</div></td>
+            <td><div class="mx-desc">S&amp;P Global financial intelligence — sector research, commodity pricing, fundamentals. Already marked default; high value for energy markets work.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">LSEG</div></td>
+            <td><div class="mx-desc">Institutional-grade market data and analytics from LSEG (formerly Refinitiv). Already marked default; only valuable if TCG subscribes to LSEG Workspace.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Bigdata.com</div></td>
+            <td><div class="mx-desc">Alternative financial market data and news. Currently marked default; sensible for energy/chemicals market scans.</div></td>
+            <td><span class="mx-rec default">★ Default</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt rec"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <!-- ─── TIER 2: AVAILABLE TO INSTALL ─── -->
+          <tr class="mx-section"><td colspan="4">Tier 2 — Plus 1 recommends available to install</td></tr>
+
+          <tr>
+            <td><div class="mx-name">Small business</div></td>
+            <td><div class="mx-desc">Skill bundle tailored to small business operations — invoicing, vendor management, light bookkeeping support.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Legal</div></td>
+            <td><div class="mx-desc">Legal drafting and contract review skills. Useful for NDAs, engagement letters, and reviewing client-side legal language.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Sales</div></td>
+            <td><div class="mx-desc">Sales workflow skills — proposal drafting, follow-ups, deal qualification. Useful for the BD side of consulting practice.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Design</div></td>
+            <td><div class="mx-desc">Design workflow skills — visual concepting, layout drafting, design critique. Useful if TCG team members ever draft client visuals.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Brand voice</div></td>
+            <td><div class="mx-desc">Apply and enforce a brand voice and style guide across content. Worth installing if TCG defines a written voice/style standard.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Zoom plugin</div></td>
+            <td><div class="mx-desc">Surface Zoom meeting transcripts, recordings, and metadata inside Claude. Useful for post-call summaries and client meeting follow-ups.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Miro</div></td>
+            <td><div class="mx-desc">Collaborative whiteboarding — diagrams, journey maps, workshop boards. Useful if TCG runs client workshops or strategy sessions visually.</div></td>
+            <td><span class="mx-rec avail">Available</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Slack by Salesforce</div></td>
+            <td><div class="mx-desc">Slack messaging integration. Only enable if a client engagement or partner relationship runs in Slack — TCG primarily uses Microsoft Teams.</div></td>
+            <td><span class="mx-rec avail">Conditional</span></td>
+            <td><div class="opts">
+              <span class="opt rec"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <!-- ─── TIER 3: NOT AVAILABLE ─── -->
+          <tr class="mx-section"><td colspan="4">Tier 3 — Plus 1 recommends not available (hide from marketplace)</td></tr>
+
+          <tr>
+            <td><div class="mx-name">Box</div></td>
+            <td><div class="mx-desc">Box cloud file storage. TCG stores files in SharePoint and OneDrive — Box adds a parallel storage system without a workflow need.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Adobe for creativity</div></td>
+            <td><div class="mx-desc">Adobe creative suite skills (Photoshop, Illustrator, etc.). TCG's branding is handled externally by Juliet — no internal creative work.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Figma</div></td>
+            <td><div class="mx-desc">Design file access — extract components, tokens, layouts. Same logic as Adobe: not part of TCG's internal workflow.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Product tracking skills</div></td>
+            <td><div class="mx-desc">SaaS product analytics scaffolding — event tracking plans, instrumentation. Built for product orgs, not consulting practices.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Atlan</div></td>
+            <td><div class="mx-desc">Enterprise data catalog and governance. Built for org with large internal data warehouses — overkill for TCG's footprint.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">SearchFit SEO</div></td>
+            <td><div class="mx-desc">SEO audit and optimization toolkit. TCG isn't an inbound content marketing business — SEO isn't a workflow.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Brightdata plugin</div></td>
+            <td><div class="mx-desc">Web scraping and proxy infrastructure. Already set to Not available — keep it that way.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Nimble</div></td>
+            <td><div class="mx-desc">Web data extraction toolkit. Already set to Not available — same reasoning as Brightdata.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Cloudinary</div></td>
+            <td><div class="mx-desc">Image and video CDN, automated transformations. A developer-side tool, not a consulting workflow tool.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Fastly agent toolkit</div></td>
+            <td><div class="mx-desc">Fastly edge compute and CDN tooling. Developer infrastructure — not relevant to TCG.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Polara</div></td>
+            <td><div class="mx-desc">Conversion-rate optimization and A/B testing tooling (verify name in console). Built for e-commerce / web teams — not relevant for TCG.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">CockroachDB</div></td>
+            <td><div class="mx-desc">Distributed SQL database administration. Developer infrastructure tool — not a consulting need.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Datalogue</div></td>
+            <td><div class="mx-desc">Data preparation / pipeline tooling (verify name in console). Developer infrastructure — not in scope for TCG.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Intercom</div></td>
+            <td><div class="mx-desc">Customer support messaging platform. TCG doesn't run a help-desk operation.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">ZoomInfo</div></td>
+            <td><div class="mx-desc">B2B contact and company intelligence for outbound sales. TCG's growth isn't built on outbound SDR motion.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Sanity plugin</div></td>
+            <td><div class="mx-desc">Headless CMS for content management. Developer/web team tool — not relevant for TCG.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Adspirer ads agent</div></td>
+            <td><div class="mx-desc">Multi-platform ad campaign management (Google, Meta, TikTok, LinkedIn). TCG doesn't run paid acquisition campaigns.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">PlanetScale</div></td>
+            <td><div class="mx-desc">Managed MySQL database platform. Developer infrastructure — not in TCG's stack.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Common Room</div></td>
+            <td><div class="mx-desc">GTM intelligence — account research, call prep, signal-based outreach. Built for SaaS sales teams, not consulting practices.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Apollo</div></td>
+            <td><div class="mx-desc">Sales prospecting and lead intelligence. Same logic as ZoomInfo and Common Room — not TCG's growth model.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Bio research</div></td>
+            <td><div class="mx-desc">Life sciences research skills. Currently marked Installed by default — wrong industry vertical for TCG. Plus 1 recommends moving to Not available.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Product management</div></td>
+            <td><div class="mx-desc">PRDs, roadmap planning, feature spec drafting. Built for software product teams — TCG doesn't run product orgs.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Engineering</div></td>
+            <td><div class="mx-desc">Software engineering skills — code review, debugging, architecture. TCG doesn't develop internal software.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Customer support</div></td>
+            <td><div class="mx-desc">Customer support workflow skills — ticket triage, response drafting, knowledge base. Not a consulting workflow.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+          <tr>
+            <td><div class="mx-name">Postiz</div></td>
+            <td><div class="mx-desc">Social media automation — scheduling, multi-platform posting. TCG isn't running an active social posting program.</div></td>
+            <td><span class="mx-rec notav">Not available</span></td>
+            <td><div class="opts">
+              <span class="opt"><span class="opt-box"></span>Available</span>
+              <span class="opt"><span class="opt-box"></span>Default</span>
+              <span class="opt rec"><span class="opt-box"></span>Not avail</span>
+              <span class="opt"><span class="opt-box"></span>Required</span>
+            </div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SUMMARY + NEXT STEPS -->
+    <div class="note blue">
+      <strong>Quick read of Plus 1's recommendation:</strong> 11 plugins as <strong>Installed by default</strong> (the day-one toolkit for TCG's team), 8 plugins as <strong>Available to install</strong> (let users opt in based on their work), and 25 plugins as <strong>Not available</strong> (hidden from the marketplace to keep it focused). No plugins are recommended as <strong>Required</strong> at this stage — TCG can revisit once Stage 1 is live and you see how the team uses Claude in real workflows.
+    </div>
+
+    <div class="cta">
+      <div class="cta-text">
+        <div class="cta-title">Once TCG has marked the worksheet</div>
+        <div class="cta-sub">Send the marked-up worksheet back to Plus 1 and we'll apply the selections in the Anthropic Console plugin marketplace alongside Stage 1 deployment. You can re-run this exercise at any point — availability decisions are reversible.</div>
+      </div>
+      <a class="cta-btn" href="mailto:jessica@plus1technology.com?subject=Catalyst%20Group%20Plugin%20Availability%20Decisions">Send to Plus 1 →</a>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+function showSection(id, el) {
+  // Hide all panels
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('sec-' + id);
+  if (target) target.classList.add('active');
+
+  // Sync sidebar items
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  // Sync tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+  // Activate matching sidebar item
+  document.querySelectorAll('.sb-item').forEach(i => {
+    if (i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + id + "'")) {
+      i.classList.add('active');
+    }
+  });
+  // Activate matching tab button
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+      b.classList.add('active');
+    }
+  });
+
+  // Scroll to top of content
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Ensure first section is active on load
+  showSection('free', null);
+  // But re-apply both syncs
+  const firstSb = document.querySelector('.sb-item');
+  const firstTab = document.querySelector('.tab-btn');
+  if (firstSb) firstSb.classList.add('active');
+  if (firstTab) firstTab.classList.add('active');
+});
+</script>
+
+</body>
+</html>
