@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everything Printing AI Discovery</title>
+<style>
+:root{
+  --bg:#f5f3ee;
+  --paper:#ffffff;
+  --ink:#14131d;
+  --muted:#666575;
+  --line:#dfd9cc;
+  --purple:#7b3fbf;
+  --purple-soft:#f2eafe;
+  --teal:#0aada8;
+  --teal-soft:#e7f7f6;
+  --blue:#1419a0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(180deg,#ece8f7 0,#f5f3ee 180px);
+  color:var(--ink);
+  line-height:1.55;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 56px}
+.hero{
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#fff;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 18px 40px rgba(20,25,160,.16);
+}
+.eyebrow{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+h1{margin:14px 0 8px;font-size:36px;line-height:1.08}
+.sub{margin:0;max-width:760px;font-size:17px;opacity:.94}
+.meta{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  margin-top:22px;
+}
+.meta-card{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;
+  padding:12px 14px;
+}
+.meta-card b{
+  display:block;
+  margin-bottom:4px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  opacity:.8;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+  margin-top:18px;
+}
+.stack{display:grid;gap:18px}
+.card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 8px 24px rgba(20,19,29,.05);
+}
+.card h2{
+  margin:0 0 12px;
+  font-size:22px;
+}
+.kicker{
+  margin:0 0 8px;
+  color:var(--purple);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.list{margin:0;padding-left:18px}
+.list li{margin:8px 0}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  display:inline-block;
+  padding:7px 11px;
+  border-radius:999px;
+  background:var(--purple-soft);
+  color:var(--purple);
+  font-size:13px;
+  font-weight:700;
+}
+.pill.teal{background:var(--teal-soft);color:#0d6f6b}
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:12px;
+}
+.mini{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  background:#fbfaf7;
+}
+.mini b{display:block;margin-bottom:6px}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+th,td{
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:top;
+}
+th{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.note{
+  margin-top:18px;
+  padding:14px 16px;
+  border-left:4px solid var(--teal);
+  background:var(--teal-soft);
+  border-radius:12px;
+}
+.footer{
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+  text-align:center;
+}
+@media (max-width:860px){
+  h1{font-size:30px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Plus 1 Technology • AI Discovery</div>
+    <h1>Everything Printing</h1>
+    <p class="sub">ClickUp implementation discovery for the Phase 1A foundation build. This live version captures the current workshop framing, scope, workflow structure, roles, routing plan, and pre-build checklist from the uploaded discovery document.</p>
+    <div class="meta">
+      <div class="meta-card"><b>Client</b>Everything Printing, Gilbertsville, PA</div>
+      <div class="meta-card"><b>Workshop Date</b>Thursday, May 21, 2026</div>
+      <div class="meta-card"><b>Attendees</b>Lee Levengood, Zach Ralph, Jessica Peaden</div>
+      <div class="meta-card"><b>Build Target</b>Phase 1A ClickUp Foundation, 10-18 hours</div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="stack">
+      <section class="card">
+        <p class="kicker">Context</p>
+        <h2>What this build is meant to solve</h2>
+        <p>The discovery is centered on translating Everything Printing's real job lifecycle into a practical ClickUp structure. The goal is to create a system that handles intake, quoting, approvals, production handoff, readiness, invoicing, and internal visibility without overbuilding the first phase.</p>
+        <div class="note">Today's scope is the operating structure: Spaces, Lists, statuses, custom fields, views, role permissions, and starter email routing rules. Future integrations and later-phase automations stay out of scope for this version.</div>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Committed Scope</p>
+        <h2>Phase 1 Deliverables</h2>
+        <ul class="list">
+          <li>Workspace setup with 2 Spaces and roughly 5-7 Lists.</li>
+          <li>Company directory import from InfoFlow for about 1,000 client records.</li>
+          <li>Contact directory with linked records and baseline custom fields.</li>
+          <li>Shared mailbox connection for <b>order@everythingprinting.com</b>.</li>
+          <li>Starter email-flow automation using sender and keyword rules.</li>
+          <li>Intake form support for missing job details like quantity, paper type, and color mode.</li>
+          <li>InfoFlow BCC routing for estimates and invoices.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Workflow</p>
+        <h2>Default Job Lifecycle</h2>
+        <div class="pill-row">
+          <span class="pill">Inquiry</span>
+          <span class="pill">Quoting</span>
+          <span class="pill">Quote Sent</span>
+          <span class="pill">Approved</span>
+          <span class="pill">In Production</span>
+          <span class="pill">Ready</span>
+          <span class="pill">Delivered / Invoiced</span>
+        </div>
+        <p style="margin-top:14px">The uploaded workshop doc frames these statuses as the starting scaffold. Each stage is intended to map to the data the team needs before a job can move forward.</p>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Build Structure</p>
+        <h2>Proposed Spaces and Views</h2>
+        <div class="mini-grid">
+          <div class="mini">
+            <b>Client Management</b>
+            <div>Active Clients</div>
+            <div>Prospects</div>
+            <div>Active Jobs</div>
+            <div>Quotes</div>
+            <div>Invoices</div>
+          </div>
+          <div class="mini">
+            <b>Internal Operations</b>
+            <div>Internal Tasks</div>
+            <div>SOPs</div>
+            <div>Follow-Ups</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section class="card">
+        <p class="kicker">Team</p>
+        <h2>Core Roles</h2>
+        <table>
+          <tr><th>Name</th><th>Role</th></tr>
+          <tr><td>Lee Levengood</td><td>Owner and decision maker</td></tr>
+          <tr><td>Zach Ralph</td><td>Project manager and internal champion</td></tr>
+          <tr><td>Cady</td><td>Design and front desk</td></tr>
+          <tr><td>Ben</td><td>Ordering and pricing</td></tr>
+          <tr><td>Jason</td><td>Design, wide format, and EDDM</td></tr>
+        </table>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Tech Stack</p>
+        <h2>Systems in Play</h2>
+        <div class="pill-row">
+          <span class="pill teal">InfoFlow</span>
+          <span class="pill teal">Microsoft 365</span>
+          <span class="pill teal">Loyalty Loop</span>
+          <span class="pill teal">MPI4 Marketing</span>
+          <span class="pill teal">Fiery Controllers</span>
+          <span class="pill teal">N-ABLE File Server</span>
+          <span class="pill teal">ClickUp</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Routing</p>
+        <h2>Starter Email Rules</h2>
+        <ul class="list">
+          <li><b>quote</b>: create or route to inquiry work and notify Cady.</li>
+          <li><b>rush</b>: tag as high priority and alert Lee plus Zach.</li>
+          <li><b>reorder</b>: match to an existing client and reuse prior job context when possible.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <p class="kicker">Pre-Build Checklist</p>
+        <h2>Client Inputs Needed</h2>
+        <ul class="list">
+          <li>InfoFlow client CSV export.</li>
+          <li>Microsoft 365 admin or delegated mailbox access.</li>
+          <li>Five or more common email senders and typical message types.</li>
+          <li>Confirmed ClickUp subscription tier.</li>
+          <li>Examples of wide-format or EDDM jobs that may need their own workflow.</li>
+          <li>Three to five representative recent job emails for routing tests.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <section class="card">
+    <p class="kicker">Next Steps</p>
+    <h2>What happens after sign-off</h2>
+    <p>After discovery confirmation, this document feeds the build kickoff spec for Phase 1A. The next implementation pass finalizes statuses, required fields, role-based views, notification hygiene, and email routing inside ClickUp, then returns the locked build structure for approval.</p>
+  </section>
+
+  <div class="footer">Prepared from the uploaded Everything Printing ClickUp discovery workshop document.</div>
+</div>
+</body>
+</html>
