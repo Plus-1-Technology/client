@@ -3,289 +3,2934 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Everything Printing AI Discovery</title>
+<title>Everything Printing — ClickUp Implementation Discovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ============================================================
+   EP CLICKUP DISCOVERY · DESIGN TOKENS
+   Plus 1 AI doc standard: DM Sans + DM Mono
+   EP brand: purple primary, teal secondary
+   ============================================================ */
 :root{
-  --bg:#f5f3ee;
-  --paper:#ffffff;
-  --ink:#14131d;
-  --muted:#666575;
-  --line:#dfd9cc;
-  --purple:#7b3fbf;
-  --purple-soft:#f2eafe;
-  --teal:#0aada8;
-  --teal-soft:#e7f7f6;
-  --blue:#1419a0;
+  /* EP brand */
+  --purple:#7B3FBF; --purple-d:#5a2d8c; --purple-l:#9B5FDF;
+  --purple-bg:#F4EDFC; --purple-br:#E0CFF5;
+  --teal:#0AADA8; --teal-d:#077672; --teal-l:#3FC9C4;
+  --teal-bg:#E6F8F7; --teal-br:#B8E8E5;
+
+  /* Plus 1 chrome */
+  --p1-blue:#1419A0; --p1-cyan:#00B9FF;
+
+  /* Neutrals */
+  --bg:#F7F6F3;
+  --paper:#FFFFFF;
+  --ink:#11111F;
+  --ink-2:#40404B;
+  --ink-3:#6B6B7A;
+  --ink-4:#9B9BA8;
+  --line:#E5E3DD;
+  --line-2:#D4D2CB;
+  --line-3:#B8B6AE;
+  --ifoc:#FAF9F5;
+
+  /* Semantic */
+  --ok:#16a34a; --ok-bg:#f0fdf4; --ok-br:#bbf7d0;
+  --warn:#b45309; --warn-bg:#fffbeb; --warn-br:#fde68a;
+  --err:#dc2626; --err-bg:#fef2f2; --err-br:#fecaca;
+
+  /* Accent (active) */
+  --accent:var(--purple); --accent-d:var(--purple-d); --accent-l:var(--purple-l);
+  --accent-bg:var(--purple-bg); --accent-br:var(--purple-br);
+
+  /* Type */
+  --f-body:'DM Sans',-apple-system,system-ui,sans-serif;
+  --f-mono:'DM Mono','JetBrains Mono',Menlo,monospace;
+
+  /* Radius / shadow */
+  --r-1:4px; --r-2:8px; --r-3:12px; --r-pill:100px;
+  --sh-1:0 1px 3px rgba(20,17,31,.06),0 1px 2px rgba(20,17,31,.04);
+  --sh-2:0 4px 12px rgba(20,17,31,.08);
+  --sh-3:0 8px 32px rgba(20,17,31,.12);
 }
-*{box-sizing:border-box}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{scroll-behavior:smooth}
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(180deg,#ece8f7 0,#f5f3ee 180px);
+  font-family:var(--f-body);
+  background:var(--bg);
   color:var(--ink);
-  line-height:1.55;
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 56px}
-.hero{
-  background:linear-gradient(135deg,var(--blue),var(--purple));
+
+/* ─── TOP CHROME ─────────────────────────────── */
+.chrome{
+  background:var(--p1-blue);
   color:#fff;
-  border-radius:20px;
-  padding:28px;
-  box-shadow:0 18px 40px rgba(20,25,160,.16);
+  padding:10px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 2px 12px rgba(20,25,160,.25);
 }
-.eyebrow{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(255,255,255,.14);
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.08em;
+.chrome-l{display:flex;align-items:center;gap:14px}
+.p1-mark{
+  width:26px;height:26px;border-radius:6px;
+  background:var(--p1-cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-weight:700;font-size:14px;
+  color:var(--p1-blue);
 }
-h1{margin:14px 0 8px;font-size:36px;line-height:1.08}
-.sub{margin:0;max-width:760px;font-size:17px;opacity:.94}
-.meta{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
-  margin-top:22px;
+.chrome-title{
+  font-size:13px;font-weight:600;letter-spacing:.01em;
 }
-.meta-card{
+.chrome-title b{font-weight:700}
+.chrome-title span{
+  opacity:.72;font-family:var(--f-mono);font-size:11px;
+  margin-left:8px;padding:2px 8px;border-radius:var(--r-1);
   background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:14px;
-  padding:12px 14px;
 }
-.meta-card b{
-  display:block;
-  margin-bottom:4px;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  opacity:.8;
+.chrome-r{display:flex;gap:6px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:var(--r-2);
+  font-family:var(--f-body);font-size:12px;font-weight:600;
+  cursor:pointer;border:0;
+  transition:all .15s ease;
+  letter-spacing:.01em;white-space:nowrap;
 }
-.grid{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:18px;
-  margin-top:18px;
+.btn-p{background:var(--accent);color:#fff}
+.btn-p:hover{background:var(--accent-l);transform:translateY(-1px);box-shadow:0 3px 12px rgba(123,63,191,.3)}
+.btn-g{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.btn-g:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3)}
+.btn-w{background:#fff;color:var(--p1-blue)}
+.btn-w:hover{background:var(--p1-cyan);color:var(--p1-blue)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-xs{padding:3px 8px;font-size:10px;border-radius:var(--r-1)}
+.btn-danger{background:transparent;color:#fda4af;border:1px solid rgba(253,164,175,.3)}
+.btn-danger:hover{background:rgba(220,38,38,.15);color:#fecaca}
+
+/* ─── HEADER BAR (doc-level) ─────────────────── */
+.hdr{
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  padding:18px 24px;
 }
-.stack{display:grid;gap:18px}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;max-width:1400px;margin:0 auto}
+.hdr-l{flex:1;min-width:300px}
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-bg);border:1px solid var(--accent-br);
+  border-radius:var(--r-pill);padding:3px 11px;
+  font-size:10px;color:var(--accent);font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  margin-bottom:8px;
+}
+.hdr-badge .dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hdr-title{
+  font-family:var(--f-body);font-weight:800;
+  font-size:24px;color:var(--ink);
+  letter-spacing:-.02em;line-height:1.15;
+}
+.hdr-title em{font-style:italic;color:var(--accent);font-weight:800}
+.hdr-sub{font-size:13px;color:var(--ink-3);margin-top:4px}
+.hdr-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px}
+.hdr-meta-i{font-size:11px}
+.hdr-meta-i b{display:block;font-weight:700;color:var(--ink-3);font-size:9px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.hdr-meta-i span{color:var(--ink);font-weight:500}
+.hdr-meta-i a{color:var(--accent);text-decoration:none}
+
+/* ─── LIFECYCLE RIBBON (embedded card) ─────── */
+.lifeline-wrap{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-3);
+  padding:16px 18px 12px;
+  margin-bottom:16px;
+  box-shadow:var(--sh-1);
+}
+.lifeline-wrap.compact{padding:10px 14px 6px;margin-bottom:12px}
+.lifeline-hd{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.lifeline-hd-l{display:flex;align-items:center;gap:10px}
+.lifeline-eb{
+  font-size:10px;font-weight:700;color:var(--ink-3);
+  text-transform:uppercase;letter-spacing:.1em;
+}
+.lifeline-hd-r{display:flex;gap:6px}
+.lifeline{
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;
+  padding-bottom:4px;
+}
+.lstage{
+  display:flex;align-items:center;flex-shrink:0;
+}
+.lstage-chip{
+  background:var(--paper);
+  border:1.5px solid var(--accent-br);
+  border-radius:var(--r-pill);
+  padding:6px 14px;
+  font-size:12px;font-weight:600;
+  color:var(--ink);
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:all .15s ease;
+  position:relative;
+}
+.lstage-chip:hover{border-color:var(--accent);background:var(--accent-bg)}
+.lstage-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.lstage-num{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent-bg);color:var(--accent);
+  font-family:var(--f-mono);font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.lstage-chip.active .lstage-num{background:rgba(255,255,255,.25);color:#fff}
+.lstage-name{font-family:var(--f-body)}
+.lstage-arr{
+  color:var(--line-3);
+  margin:0 4px;font-size:14px;font-weight:300;
+  flex-shrink:0;
+}
+.lstage-add{
+  background:transparent;border:1.5px dashed var(--line-3);
+  border-radius:var(--r-pill);padding:6px 12px;
+  color:var(--ink-3);font-size:11px;font-weight:500;
+  cursor:pointer;flex-shrink:0;margin-left:6px;
+}
+.lstage-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* Build-So-Far mini strip */
+.bsf{
+  background:var(--accent-bg);
+  border-top:1px solid var(--accent-br);
+  border-bottom:1px solid var(--accent-br);
+  padding:8px 24px;
+  position:sticky;
+  top:46px;
+  z-index:38;
+}
+.bsf-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.bsf-l{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.bsf-i{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;color:var(--accent-d);font-weight:600;
+}
+.bsf-i b{font-family:var(--f-mono);font-weight:700;font-size:12px;color:var(--accent)}
+.bsf-i.locked b{color:var(--teal)}
+.bsf-r a{
+  color:var(--accent);text-decoration:none;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.bsf-r a:hover{color:var(--accent-d)}
+
+/* ─── TAB BAR ────────────────────────────────── */
+.tabs{
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  padding:0 24px;
+  position:sticky;
+  top:88px;
+  z-index:35;
+  overflow-x:auto;
+}
+.tabs-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;gap:2px;
+}
+.tab{
+  background:transparent;border:0;
+  padding:12px 14px 10px;
+  font-family:var(--f-body);font-size:12px;font-weight:600;
+  color:var(--ink-3);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  display:inline-flex;align-items:center;gap:6px;
+  white-space:nowrap;
+  transition:all .15s ease;
+}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-cnt{
+  background:var(--accent-bg);color:var(--accent);
+  font-family:var(--f-mono);font-size:10px;
+  padding:1px 6px;border-radius:var(--r-pill);font-weight:700;
+}
+.tab.on .tab-cnt{background:var(--accent);color:#fff}
+
+/* ─── MAIN ───────────────────────────────────── */
+main{max-width:1400px;margin:0 auto;padding:24px}
+.sec{display:none}
+.sec.on{display:block}
+
+.sec-hd{margin-bottom:18px}
+.sec-eb{
+  font-size:10px;font-weight:700;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;
+  font-family:var(--f-mono);
+}
+.sec-title{
+  font-family:var(--f-body);font-weight:800;
+  font-size:22px;color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:3px;
+}
+.sec-desc{font-size:13px;color:var(--ink-3);max-width:780px;line-height:1.6}
+
+.callout{
+  background:var(--accent-bg);
+  border:1px solid var(--accent-br);
+  border-left:4px solid var(--accent);
+  border-radius:var(--r-2);
+  padding:12px 16px;
+  font-size:12.5px;color:var(--ink-2);
+  margin-bottom:18px;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.callout .ico{
+  font-family:var(--f-mono);font-weight:700;font-size:13px;
+  color:var(--accent);flex-shrink:0;line-height:1.6;
+}
+.callout b{color:var(--accent-d);font-weight:700}
+
+.cheat{
+  background:var(--warn-bg);
+  border:1px solid var(--warn-br);
+  border-left:4px solid var(--warn);
+  border-radius:var(--r-2);
+  padding:0;
+  margin-bottom:18px;
+  font-size:12px;
+}
+.cheat-hd{
+  padding:10px 14px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:700;color:var(--warn);font-size:11px;
+  text-transform:uppercase;letter-spacing:.07em;
+}
+.cheat-hd::after{content:'▼';font-size:9px;transition:transform .15s}
+.cheat.open .cheat-hd::after{transform:rotate(180deg)}
+.cheat-body{display:none;padding:0 14px 12px;color:#78350f;line-height:1.7}
+.cheat.open .cheat-body{display:block}
+.cheat-body ul{margin-left:18px;margin-top:4px}
+.cheat-body li{margin-bottom:3px}
+
+/* ─── CARDS ──────────────────────────────────── */
 .card{
   background:var(--paper);
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 8px 24px rgba(20,19,29,.05);
+  border-radius:var(--r-3);
+  padding:18px;
+  box-shadow:var(--sh-1);
+  margin-bottom:16px;
 }
-.card h2{
-  margin:0 0 12px;
-  font-size:22px;
+.card-t{
+  font-family:var(--f-body);font-size:11px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-3);margin-bottom:12px;
+  display:flex;align-items:center;gap:7px;justify-content:space-between;
 }
-.kicker{
-  margin:0 0 8px;
-  color:var(--purple);
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.08em;
+.card-t-l{display:flex;align-items:center;gap:7px}
+.card-t-ico{
+  width:22px;height:22px;border-radius:var(--r-1);
+  background:var(--accent-bg);color:var(--accent);
+  font-family:var(--f-mono);font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
 }
-.list{margin:0;padding-left:18px}
-.list li{margin:8px 0}
-.pill-row{display:flex;flex-wrap:wrap;gap:8px}
-.pill{
-  display:inline-block;
-  padding:7px 11px;
-  border-radius:999px;
-  background:var(--purple-soft);
-  color:var(--purple);
-  font-size:13px;
-  font-weight:700;
+.card-t-ico.teal{background:var(--teal-bg);color:var(--teal)}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ─── FORM CONTROLS ──────────────────────────── */
+.f{margin-bottom:12px}
+.f:last-child{margin-bottom:0}
+.f label,.fl{
+  display:block;
+  font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.07em;
+  color:var(--ink-3);margin-bottom:5px;
 }
-.pill.teal{background:var(--teal-soft);color:#0d6f6b}
-.mini-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:12px;
-}
-.mini{
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px;
-  background:#fbfaf7;
-}
-.mini b{display:block;margin-bottom:6px}
-table{
+.f .hint{font-size:11px;color:var(--ink-4);font-weight:400;text-transform:none;letter-spacing:0;margin-top:3px;display:block}
+input[type=text],input[type=date],input[type=email],input[type=number],select,textarea{
   width:100%;
-  border-collapse:collapse;
-  font-size:14px;
+  background:var(--ifoc);
+  border:1px solid var(--line);
+  border-radius:var(--r-2);
+  padding:9px 12px;
+  color:var(--ink);
+  font-family:var(--f-body);font-size:13px;
+  outline:none;
+  transition:all .15s ease;
+  -webkit-appearance:none;
 }
-th,td{
-  padding:10px 0;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-  vertical-align:top;
+input:focus,select:focus,textarea:focus{
+  border-color:var(--accent);
+  background:var(--paper);
+  box-shadow:0 0 0 3px rgba(123,63,191,.12);
 }
-th{
-  color:var(--muted);
+textarea{resize:vertical;min-height:60px;line-height:1.5}
+.f-row{display:flex;gap:10px;align-items:flex-start}
+.f-row .f{flex:1;margin-bottom:0}
+
+/* Pill choice (radio-style) */
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  padding:5px 12px;
+  font-size:11px;font-weight:600;
+  color:var(--ink-2);
+  cursor:pointer;
+  transition:all .15s ease;
+  user-select:none;
+}
+.pill:hover{border-color:var(--accent-l);color:var(--accent);background:var(--accent-bg)}
+.pill.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pill.on-teal{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+/* Toggle */
+.tg{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--ink-2);font-weight:600;
+  cursor:pointer;user-select:none;
+}
+.tg-box{
+  width:30px;height:18px;background:var(--line-2);border-radius:10px;
+  position:relative;transition:background .15s;
+}
+.tg-box::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:14px;height:14px;background:#fff;border-radius:50%;
+  transition:left .15s;box-shadow:0 1px 2px rgba(0,0,0,.2);
+}
+.tg.on .tg-box{background:var(--accent)}
+.tg.on .tg-box::after{left:14px}
+
+/* Status chip */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:2px 9px;border-radius:var(--r-pill);
+  font-size:10px;font-weight:700;letter-spacing:.04em;
+  border:1px solid;
+}
+.chip-purple{background:var(--purple-bg);color:var(--purple-d);border-color:var(--purple-br)}
+.chip-teal{background:var(--teal-bg);color:var(--teal-d);border-color:var(--teal-br)}
+.chip-ok{background:var(--ok-bg);color:#15803d;border-color:var(--ok-br)}
+.chip-warn{background:var(--warn-bg);color:var(--warn);border-color:var(--warn-br)}
+.chip-mono{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.05em}
+.chip-gray{background:#F1F0EB;color:var(--ink-2);border-color:var(--line-2)}
+.chip-blue{background:#E0F0FE;color:#075985;border-color:#A8DDF5}
+
+/* ─── TAB 1: CONTEXT ─────────────────────────── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.team-i{
+  background:var(--ifoc);border:1px solid var(--line);
+  border-radius:var(--r-2);padding:11px 13px;
+  display:flex;gap:10px;align-items:center;
+}
+.team-av{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-body);font-weight:700;font-size:13px;
+  flex-shrink:0;
+}
+.team-av.zach{background:var(--teal)}
+.team-av.cady{background:#0369a1}
+.team-av.ben{background:#7c2d12}
+.team-av.jason{background:#0f766e}
+.team-info{min-width:0}
+.team-name{font-weight:700;font-size:12.5px;color:var(--ink)}
+.team-role{font-size:10.5px;color:var(--ink-3);margin-top:1px}
+
+.scope-list{display:flex;flex-direction:column;gap:8px}
+.scope-li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 11px;
+  background:var(--teal-bg);
+  border-left:3px solid var(--teal);
+  border-radius:var(--r-2);
+  font-size:12.5px;
+}
+.scope-li-n{
+  width:20px;height:20px;border-radius:var(--r-1);
+  background:var(--teal);color:#fff;
+  font-family:var(--f-mono);font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.scope-li-body b{color:var(--teal-d);font-weight:700}
+
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tech-i{
+  background:#F1F0EB;border:1px solid var(--line);
+  border-radius:var(--r-2);padding:8px 11px;
+  font-size:11.5px;
+}
+.tech-i b{display:block;font-size:12px;color:var(--ink);font-weight:700;margin-bottom:2px}
+.tech-i span{font-size:10.5px;color:var(--ink-3)}
+
+.today-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:760px){.today-grid{grid-template-columns:1fr}}
+.today-col{
+  background:var(--ifoc);
+  border:1px solid var(--line);
+  border-radius:var(--r-2);
+  padding:14px;
+}
+.today-col-t{
+  font-family:var(--f-mono);font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--accent);margin-bottom:8px;
+}
+.today-col.out .today-col-t{color:var(--ink-3)}
+.today-list{font-size:12px;line-height:1.7;color:var(--ink-2)}
+.today-list li{margin-left:18px;margin-bottom:4px}
+
+/* ─── TAB 2: LIFECYCLE ───────────────────────── */
+.stage-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-left:4px solid var(--accent);
+  border-radius:var(--r-3);
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:var(--sh-1);
+}
+.stage-hd{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:14px;margin-bottom:12px;
+}
+.stage-hd-l{flex:1;display:flex;align-items:center;gap:12px}
+.stage-num{
+  width:34px;height:34px;border-radius:var(--r-2);
+  background:var(--accent);color:#fff;
+  font-family:var(--f-body);font-weight:800;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.stage-name-in{
+  font-family:var(--f-body);font-weight:700;font-size:17px;
+  color:var(--ink);background:transparent;border:0;
+  padding:4px 0;width:100%;border-bottom:1px dashed transparent;
+}
+.stage-name-in:hover{border-bottom-color:var(--line-2)}
+.stage-name-in:focus{border-bottom-color:var(--accent);outline:none}
+.stage-act{display:flex;gap:5px;flex-shrink:0}
+.icon-btn{
+  background:transparent;border:0;cursor:pointer;
+  width:26px;height:26px;border-radius:var(--r-1);
+  color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;line-height:1;
+  transition:all .15s;
+}
+.icon-btn:hover{background:var(--accent-bg);color:var(--accent)}
+.icon-btn.del:hover{background:var(--err-bg);color:var(--err)}
+
+.stage-body{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.stage-body{grid-template-columns:1fr}}
+.stage-body .f-wide{grid-column:1/-1}
+
+/* Stage subsections */
+.stage-sub{
+  margin-top:14px;padding-top:14px;
+  border-top:1px dashed var(--line);
+}
+.stage-sub-t{
+  font-family:var(--f-mono);font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--accent);margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.stage-sub-t .num{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--accent-bg);color:var(--accent);
+  font-size:10px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.stage-sub-hint{
+  font-size:11px;color:var(--ink-4);font-weight:400;
+  text-transform:none;letter-spacing:0;
+  font-family:var(--f-body);font-style:italic;
+  margin-left:auto;
+}
+
+/* Platform chip selector */
+.plat-grid{display:flex;flex-wrap:wrap;gap:5px}
+.plat-chip{
+  background:var(--paper);
+  border:1px solid var(--line-2);
+  border-radius:var(--r-pill);
+  padding:5px 11px;
+  font-size:11px;font-weight:600;
+  color:var(--ink-2);
+  cursor:pointer;
+  user-select:none;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:all .15s ease;
+}
+.plat-chip .pico{font-size:13px}
+.plat-chip:hover{border-color:var(--accent-l);color:var(--accent);background:var(--accent-bg)}
+.plat-chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.plat-chip.on .pico{filter:brightness(0) invert(1)}
+.plat-add{
+  background:transparent;border:1px dashed var(--line-2);
+  border-radius:var(--r-pill);padding:5px 11px;
+  font-size:11px;color:var(--ink-3);cursor:pointer;font-weight:500;
+}
+.plat-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* Mini doc table (inside stage card) */
+.doc-tbl{
+  width:100%;border-collapse:separate;border-spacing:0;
+  font-size:12px;background:var(--ifoc);border-radius:var(--r-2);
+  overflow:hidden;
+}
+.doc-tbl thead th{
+  background:var(--accent-bg);
+  font-size:9.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--accent-d);
+  padding:7px 9px;text-align:left;
+}
+.doc-tbl tbody td{
+  padding:5px 7px;border-bottom:1px solid var(--line);vertical-align:top;
+}
+.doc-tbl tbody tr:last-child td{border-bottom:0}
+.doc-tbl input,.doc-tbl select{
+  padding:5px 8px;font-size:11.5px;
+  background:var(--paper);
+}
+.doc-tbl .col-act{width:36px;text-align:right}
+.doc-add-btn{
+  width:100%;margin-top:6px;
+  background:transparent;
+  border:1px dashed var(--line-2);
+  border-radius:var(--r-2);
+  padding:6px;
+  color:var(--ink-3);font-size:11px;font-weight:600;
+  cursor:pointer;
+}
+.doc-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* Actor strip — visual summary at bottom of each stage card */
+.actor-strip{
+  margin-top:14px;padding:12px 14px;
+  background:linear-gradient(90deg,var(--accent-bg) 0%,var(--ifoc) 100%);
+  border-radius:var(--r-2);
+  border:1px solid var(--accent-br);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.actor-strip-block{display:flex;align-items:center;gap:6px}
+.actor-strip-lbl{
+  font-family:var(--f-mono);font-size:9.5px;font-weight:700;
+  color:var(--accent-d);text-transform:uppercase;letter-spacing:.08em;
+}
+.actor-av{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-size:10px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:2px solid var(--paper);
+  margin-left:-6px;
+}
+.actor-av:first-child{margin-left:0}
+.actor-plat{
+  background:var(--paper);
+  border:1px solid var(--line-2);
+  padding:2px 8px;
+  border-radius:var(--r-1);
+  font-size:10.5px;font-weight:600;
+  color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:4px;
+}
+.actor-doc{
+  background:var(--paper);
+  border:1px solid var(--accent-br);
+  padding:2px 8px;
+  border-radius:var(--r-1);
+  font-size:10.5px;font-weight:600;
+  color:var(--accent-d);
+  display:inline-flex;align-items:center;gap:4px;
+}
+.actor-doc .ico{font-family:var(--f-mono);color:var(--accent);font-weight:700}
+.actor-empty{font-size:11px;color:var(--ink-4);font-style:italic}
+
+.stage-pain{
+  background:#FEF3F2;
+  border:1px solid #FECACA;
+  border-left:3px solid var(--err);
+  border-radius:var(--r-2);
+  padding:10px 12px;
   font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:.08em;
 }
-.note{
-  margin-top:18px;
-  padding:14px 16px;
-  border-left:4px solid var(--teal);
-  background:var(--teal-soft);
-  border-radius:12px;
+.stage-pain textarea{background:transparent;border:0;padding:4px 0;color:#7f1d1d}
+.stage-pain textarea:focus{box-shadow:none;background:transparent}
+.stage-pain-t{
+  font-family:var(--f-mono);font-size:10px;font-weight:700;
+  color:var(--err);text-transform:uppercase;letter-spacing:.08em;
+  margin-bottom:5px;
 }
-.footer{
-  margin-top:18px;
-  color:var(--muted);
-  font-size:13px;
-  text-align:center;
+
+/* ─── TAB 3: PER-STAGE DATA ──────────────────── */
+.field-tbl{
+  width:100%;border-collapse:separate;border-spacing:0;
+  font-size:12px;
 }
-@media (max-width:860px){
-  h1{font-size:30px}
-  .grid{grid-template-columns:1fr}
+.field-tbl thead th{
+  background:var(--ifoc);
+  font-size:9.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-3);
+  padding:8px 10px;text-align:left;
+  border-bottom:1px solid var(--line);
+}
+.field-tbl tbody td{
+  padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;
+}
+.field-tbl tbody tr:last-child td{border-bottom:0}
+.field-tbl input,.field-tbl select{padding:6px 8px;font-size:12px}
+.field-tbl .col-name{width:32%}
+.field-tbl .col-type{width:18%}
+.field-tbl .col-req{width:14%}
+.field-tbl .col-fill{width:18%}
+.field-tbl .col-act{width:8%;text-align:right}
+.add-field-btn{
+  width:100%;margin-top:8px;
+  background:var(--ifoc);
+  border:1px dashed var(--line-2);
+  border-radius:var(--r-2);
+  padding:8px;
+  color:var(--ink-3);font-size:11.5px;font-weight:600;
+  cursor:pointer;transition:all .15s;
+}
+.add-field-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+/* ─── TAB 4: ROLES ───────────────────────────── */
+.role-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-3);
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:var(--sh-1);
+}
+.role-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;margin-bottom:14px;padding-bottom:12px;
+  border-bottom:1px dashed var(--line);
+}
+.role-hd-l{display:flex;align-items:center;gap:12px;flex:1}
+.role-av{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-family:var(--f-body);font-weight:700;font-size:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.role-name-in{
+  font-family:var(--f-body);font-weight:700;font-size:15px;
+  color:var(--ink);background:transparent;border:0;
+  padding:2px 0;border-bottom:1px dashed transparent;width:100%;
+}
+.role-name-in:hover{border-bottom-color:var(--line-2)}
+.role-name-in:focus{border-bottom-color:var(--accent);outline:none}
+.role-title-in{
+  font-size:11px;color:var(--ink-3);
+  background:transparent;border:0;width:100%;padding:1px 0;
+}
+.role-body{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.role-body{grid-template-columns:1fr}}
+.role-body .f-wide{grid-column:1/-1}
+
+/* ─── TAB 5: EMAIL ROUTING ───────────────────── */
+.rt-tbl{
+  width:100%;border-collapse:separate;border-spacing:0;
+  font-size:12px;
+}
+.rt-tbl thead th{
+  background:var(--ifoc);
+  font-size:9.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-3);
+  padding:9px 10px;text-align:left;
+  border-bottom:1px solid var(--line);
+}
+.rt-tbl tbody td{
+  padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;
+}
+.rt-tbl input,.rt-tbl select{padding:6px 8px;font-size:12px}
+.rt-tbl .col-act{width:50px;text-align:right}
+
+/* ─── TAB 6: VIEWS ───────────────────────────── */
+.view-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-3);
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:var(--sh-1);
+}
+.view-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:12px;
+}
+.view-hd-l{display:flex;align-items:center;gap:10px;flex:1}
+.view-role-chip{
+  background:var(--accent-bg);color:var(--accent);
+  padding:3px 10px;border-radius:var(--r-pill);
+  font-size:11px;font-weight:700;
+}
+.view-body{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+@media(max-width:760px){.view-body{grid-template-columns:1fr}}
+
+/* ─── TAB 7: BUILD SPEC ──────────────────────── */
+.spec-hero{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent-d) 100%);
+  color:#fff;
+  border-radius:var(--r-3);
+  padding:22px 24px;
+  margin-bottom:18px;
+  position:relative;overflow:hidden;
+}
+.spec-hero::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 90% 0%,rgba(255,255,255,.15),transparent 60%);
+  pointer-events:none;
+}
+.spec-hero > *{position:relative;z-index:1}
+.spec-hero-eb{
+  font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  opacity:.85;margin-bottom:6px;
+  font-family:var(--f-mono);
+}
+.spec-hero-t{
+  font-family:var(--f-body);font-weight:800;font-size:22px;
+  letter-spacing:-.01em;line-height:1.2;margin-bottom:5px;
+}
+.spec-hero-s{font-size:13px;opacity:.85;max-width:640px;line-height:1.55}
+
+.spec-block{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--r-3);
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:var(--sh-1);
+  position:relative;
+}
+.spec-block.locked{
+  border-color:var(--teal);
+  background:linear-gradient(0deg,var(--teal-bg) 0%,var(--paper) 30%);
+}
+.spec-block-hd{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;gap:12px;flex-wrap:wrap;
+}
+.spec-block-t{
+  font-family:var(--f-body);font-weight:800;font-size:14px;
+  color:var(--ink);letter-spacing:-.01em;
+  display:flex;align-items:center;gap:8px;
+}
+.spec-block-t .ct{
+  font-family:var(--f-mono);font-size:10px;font-weight:600;
+  color:var(--ink-4);
+}
+.spec-block-t .lock{
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--teal);
+  display:none;align-items:center;gap:4px;
+}
+.spec-block.locked .lock{display:inline-flex}
+.spec-block-r{display:flex;gap:6px}
+.spec-lock-btn{
+  background:var(--teal-bg);color:var(--teal);
+  border:1px solid var(--teal-br);
+  padding:5px 11px;border-radius:var(--r-2);
+  font-size:10.5px;font-weight:700;cursor:pointer;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.spec-lock-btn:hover{background:var(--teal);color:#fff}
+.spec-block.locked .spec-lock-btn{background:var(--teal);color:#fff;border-color:var(--teal)}
+.spec-source{
+  font-family:var(--f-mono);font-size:10px;
+  color:var(--ink-4);
+  margin-top:-6px;margin-bottom:10px;
+}
+
+.spec-list{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.spec-pill{
+  background:var(--accent-bg);
+  border:1px solid var(--accent-br);
+  color:var(--accent-d);
+  padding:5px 11px;border-radius:var(--r-pill);
+  font-size:12px;font-weight:600;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.spec-pill .n{
+  font-family:var(--f-mono);font-size:10px;
+  background:var(--accent);color:#fff;
+  padding:1px 5px;border-radius:var(--r-1);
+}
+.spec-pill.teal{background:var(--teal-bg);border-color:var(--teal-br);color:var(--teal-d)}
+.spec-pill.teal .n{background:var(--teal)}
+.spec-pill.gray{background:#F1F0EB;border-color:var(--line-2);color:var(--ink-2)}
+
+.spec-fields-tbl{
+  width:100%;border-collapse:separate;border-spacing:0;font-size:12px;
+}
+.spec-fields-tbl thead th{
+  background:var(--accent-bg);color:var(--accent-d);
+  font-size:9.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:7px 10px;text-align:left;border-bottom:1px solid var(--accent-br);
+}
+.spec-fields-tbl thead th:first-child{border-top-left-radius:var(--r-1)}
+.spec-fields-tbl thead th:last-child{border-top-right-radius:var(--r-1)}
+.spec-fields-tbl tbody td{padding:7px 10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink)}
+.spec-fields-tbl tbody tr:last-child td{border-bottom:0}
+.spec-fields-tbl .tm{font-family:var(--f-mono);font-size:11px;color:var(--ink-3)}
+.spec-empty{
+  text-align:center;padding:20px;
+  color:var(--ink-4);font-size:12px;font-style:italic;
+}
+
+.spec-space{
+  background:var(--ifoc);
+  border:1px solid var(--line);
+  border-radius:var(--r-2);
+  padding:12px 14px;
+  margin-bottom:8px;
+}
+.spec-space-hd{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin-bottom:8px;
+}
+.spec-space-name{
+  font-weight:700;font-size:13px;color:var(--ink);
+  background:transparent;border:0;
+  border-bottom:1px dashed transparent;padding:1px 0;flex:1;
+}
+.spec-space-name:hover{border-bottom-color:var(--line-2)}
+.spec-space-name:focus{border-bottom-color:var(--accent);outline:none}
+.spec-lists{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.spec-list-pill{
+  background:var(--paper);border:1px solid var(--line-2);
+  padding:3px 9px;border-radius:var(--r-1);
+  font-size:11px;color:var(--ink-2);font-weight:500;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.spec-list-pill .x{
+  cursor:pointer;color:var(--ink-4);font-size:10px;
+}
+.spec-list-pill .x:hover{color:var(--err)}
+.spec-list-add{
+  background:transparent;border:1px dashed var(--line-2);
+  padding:3px 9px;border-radius:var(--r-1);
+  font-size:11px;color:var(--ink-3);cursor:pointer;
+}
+.spec-list-add:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ─── TAB 8: DECISIONS ───────────────────────── */
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:760px){.dec-grid{grid-template-columns:1fr}}
+.dec-list{display:flex;flex-direction:column;gap:8px}
+.dec-i{
+  background:var(--ifoc);
+  border:1px solid var(--line);
+  border-left:3px solid var(--accent);
+  border-radius:var(--r-2);
+  padding:10px 12px;
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:12px;
+}
+.dec-i.locked{border-left-color:var(--teal);background:var(--teal-bg);border-color:var(--teal-br)}
+.dec-i.open{border-left-color:var(--warn)}
+.dec-i input[type=text]{
+  flex:1;background:transparent;border:0;padding:1px 0;font-size:12.5px;color:var(--ink);
+}
+.dec-i .meta{font-family:var(--f-mono);font-size:10px;color:var(--ink-4);flex-shrink:0}
+.dec-i .icon-btn{margin-top:-3px}
+
+.act-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 30px;
+  gap:6px;font-size:11.5px;
+  align-items:center;margin-bottom:6px;
+}
+.act-grid input[type=text],.act-grid select{padding:6px 9px;font-size:11.5px}
+
+.preflight{
+  background:var(--teal-bg);
+  border:1px solid var(--teal-br);
+  border-radius:var(--r-3);
+  padding:16px;
+  margin-top:16px;
+}
+.preflight-t{
+  font-family:var(--f-body);font-weight:800;font-size:14px;
+  color:var(--teal-d);margin-bottom:8px;
+}
+.preflight ul{margin-left:20px;color:var(--ink-2);font-size:12.5px;line-height:1.7}
+
+/* ─── TOAST ──────────────────────────────────── */
+.toast{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:var(--r-2);
+  font-size:12px;font-weight:600;
+  box-shadow:var(--sh-3);
+  opacity:0;transform:translateY(20px);
+  transition:all .25s;
+  z-index:100;
+  pointer-events:none;
+}
+.toast.on{opacity:1;transform:translateY(0)}
+
+/* ─── PRINT ──────────────────────────────────── */
+@media print{
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11px}
+  .chrome,.lifeline-wrap,.bsf,.tabs,.btn,.icon-btn,.add-field-btn,.spec-list-add,.lstage-add,.spec-lock-btn{display:none !important}
+  .sec{display:block !important;page-break-before:always}
+  .sec:first-child{page-break-before:auto}
+  main{padding:0;max-width:none}
+  .card,.stage-card,.role-card,.view-card,.spec-block{
+    box-shadow:none;page-break-inside:avoid;
+  }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="hero">
-    <div class="eyebrow">Plus 1 Technology • AI Discovery</div>
-    <h1>Everything Printing</h1>
-    <p class="sub">ClickUp implementation discovery for the Phase 1A foundation build. This live version captures the current workshop framing, scope, workflow structure, roles, routing plan, and pre-build checklist from the uploaded discovery document.</p>
-    <div class="meta">
-      <div class="meta-card"><b>Client</b>Everything Printing, Gilbertsville, PA</div>
-      <div class="meta-card"><b>Workshop Date</b>Thursday, May 21, 2026</div>
-      <div class="meta-card"><b>Attendees</b>Lee Levengood, Zach Ralph, Jessica Peaden</div>
-      <div class="meta-card"><b>Build Target</b>Phase 1A ClickUp Foundation, 10-18 hours</div>
+
+<!-- ─── PLUS 1 CHROME ─────────────────────────── -->
+<div class="chrome">
+  <div class="chrome-l">
+    <div class="p1-mark">+1</div>
+    <div class="chrome-title">
+      <b>Plus 1 Technology</b> · ClickUp Implementation Discovery
+      <span>v2 · Pre-Build Workshop</span>
     </div>
-  </section>
+  </div>
+  <div class="chrome-r">
+    <button class="btn btn-g btn-sm" onclick="exportJSON()">⬇ Export</button>
+    <button class="btn btn-g btn-sm" onclick="document.getElementById('import-in').click()">⬆ Import</button>
+    <input type="file" id="import-in" accept=".json" style="display:none" onchange="importJSON(event)">
+    <button class="btn btn-g btn-sm" onclick="window.print()">🖨 Print</button>
+    <button class="btn btn-w btn-sm" onclick="saveAll()">💾 Save</button>
+    <button class="btn btn-danger btn-sm" onclick="resetAll()">Reset</button>
+  </div>
+</div>
 
-  <div class="grid">
-    <div class="stack">
-      <section class="card">
-        <p class="kicker">Context</p>
-        <h2>What this build is meant to solve</h2>
-        <p>The discovery is centered on translating Everything Printing's real job lifecycle into a practical ClickUp structure. The goal is to create a system that handles intake, quoting, approvals, production handoff, readiness, invoicing, and internal visibility without overbuilding the first phase.</p>
-        <div class="note">Today's scope is the operating structure: Spaces, Lists, statuses, custom fields, views, role permissions, and starter email routing rules. Future integrations and later-phase automations stay out of scope for this version.</div>
-      </section>
-
-      <section class="card">
-        <p class="kicker">Committed Scope</p>
-        <h2>Phase 1 Deliverables</h2>
-        <ul class="list">
-          <li>Workspace setup with 2 Spaces and roughly 5-7 Lists.</li>
-          <li>Company directory import from InfoFlow for about 1,000 client records.</li>
-          <li>Contact directory with linked records and baseline custom fields.</li>
-          <li>Shared mailbox connection for <b>order@everythingprinting.com</b>.</li>
-          <li>Starter email-flow automation using sender and keyword rules.</li>
-          <li>Intake form support for missing job details like quantity, paper type, and color mode.</li>
-          <li>InfoFlow BCC routing for estimates and invoices.</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <p class="kicker">Workflow</p>
-        <h2>Default Job Lifecycle</h2>
-        <div class="pill-row">
-          <span class="pill">Inquiry</span>
-          <span class="pill">Quoting</span>
-          <span class="pill">Quote Sent</span>
-          <span class="pill">Approved</span>
-          <span class="pill">In Production</span>
-          <span class="pill">Ready</span>
-          <span class="pill">Delivered / Invoiced</span>
-        </div>
-        <p style="margin-top:14px">The uploaded workshop doc frames these statuses as the starting scaffold. Each stage is intended to map to the data the team needs before a job can move forward.</p>
-      </section>
-
-      <section class="card">
-        <p class="kicker">Build Structure</p>
-        <h2>Proposed Spaces and Views</h2>
-        <div class="mini-grid">
-          <div class="mini">
-            <b>Client Management</b>
-            <div>Active Clients</div>
-            <div>Prospects</div>
-            <div>Active Jobs</div>
-            <div>Quotes</div>
-            <div>Invoices</div>
-          </div>
-          <div class="mini">
-            <b>Internal Operations</b>
-            <div>Internal Tasks</div>
-            <div>SOPs</div>
-            <div>Follow-Ups</div>
-          </div>
-        </div>
-      </section>
+<!-- ─── DOC HEADER ────────────────────────────── -->
+<div class="hdr">
+  <div class="hdr-row">
+    <div class="hdr-l">
+      <span class="hdr-badge"><span class="dot"></span>Live Discovery Workshop</span>
+      <div class="hdr-title">Everything Printing — <em>ClickUp Implementation Discovery</em></div>
+      <div class="hdr-sub">Pre-build workshop · driven by job lifecycle, translated to system structure live.</div>
+      <div class="hdr-meta">
+        <div class="hdr-meta-i"><b>Client</b><span>Everything Printing · Gilbertsville, PA</span></div>
+        <div class="hdr-meta-i"><b>Call Date</b><span><input type="text" value="Thursday, May 21, 2026" id="call-date" style="background:transparent;border:0;border-bottom:1px dashed var(--line-2);font-size:11px;width:auto;padding:0;color:var(--ink);font-weight:500"></span></div>
+        <div class="hdr-meta-i"><b>Attendees</b><span>Lee Levengood · Zach Ralph · Jessica Peaden</span></div>
+        <div class="hdr-meta-i"><b>Build Target</b><span>Phase 1A ClickUp Foundation · 10–18 hrs</span></div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div class="stack">
-      <section class="card">
-        <p class="kicker">Team</p>
-        <h2>Core Roles</h2>
-        <table>
-          <tr><th>Name</th><th>Role</th></tr>
-          <tr><td>Lee Levengood</td><td>Owner and decision maker</td></tr>
-          <tr><td>Zach Ralph</td><td>Project manager and internal champion</td></tr>
-          <tr><td>Cady</td><td>Design and front desk</td></tr>
-          <tr><td>Ben</td><td>Ordering and pricing</td></tr>
-          <tr><td>Jason</td><td>Design, wide format, and EDDM</td></tr>
-        </table>
-      </section>
+<!-- ─── BUILD-SO-FAR STRIP ────────────────────── -->
+<div class="bsf">
+  <div class="bsf-inner">
+    <div class="bsf-l">
+      <span class="bsf-i">📊 Build So Far</span>
+      <span class="bsf-i"><b id="bsf-stages">0</b> stages</span>
+      <span class="bsf-i"><b id="bsf-fields">0</b> custom fields</span>
+      <span class="bsf-i"><b id="bsf-roles">0</b> roles</span>
+      <span class="bsf-i"><b id="bsf-routes">0</b> routing rules</span>
+      <span class="bsf-i"><b id="bsf-views">0</b> views</span>
+      <span class="bsf-i locked"><b id="bsf-locked">0</b> locked decisions</span>
+    </div>
+    <div class="bsf-r"><a href="#" onclick="goTab('spec');return false">View live spec →</a></div>
+  </div>
+</div>
 
-      <section class="card">
-        <p class="kicker">Tech Stack</p>
-        <h2>Systems in Play</h2>
-        <div class="pill-row">
-          <span class="pill teal">InfoFlow</span>
-          <span class="pill teal">Microsoft 365</span>
-          <span class="pill teal">Loyalty Loop</span>
-          <span class="pill teal">MPI4 Marketing</span>
-          <span class="pill teal">Fiery Controllers</span>
-          <span class="pill teal">N-ABLE File Server</span>
-          <span class="pill teal">ClickUp</span>
-        </div>
-      </section>
+<!-- ─── TAB BAR ───────────────────────────────── -->
+<div class="tabs">
+  <div class="tabs-inner">
+    <button class="tab on" data-tab="ctx">1 · Context</button>
+    <button class="tab" data-tab="life">2 · Lifecycle</button>
+    <button class="tab" data-tab="data">3 · Per-Stage Data <span class="tab-cnt" id="tcnt-data">0</span></button>
+    <button class="tab" data-tab="roles">4 · Roles <span class="tab-cnt" id="tcnt-roles">0</span></button>
+    <button class="tab" data-tab="email">5 · Email Routing <span class="tab-cnt" id="tcnt-email">0</span></button>
+    <button class="tab" data-tab="views">6 · Views <span class="tab-cnt" id="tcnt-views">0</span></button>
+    <button class="tab" data-tab="spec">7 · Build Spec 🎯</button>
+    <button class="tab" data-tab="dec">8 · Decisions <span class="tab-cnt" id="tcnt-dec">0</span></button>
+  </div>
+</div>
 
-      <section class="card">
-        <p class="kicker">Routing</p>
-        <h2>Starter Email Rules</h2>
-        <ul class="list">
-          <li><b>quote</b>: create or route to inquiry work and notify Cady.</li>
-          <li><b>rush</b>: tag as high priority and alert Lee plus Zach.</li>
-          <li><b>reorder</b>: match to an existing client and reuse prior job context when possible.</li>
-        </ul>
-      </section>
+<main>
 
-      <section class="card">
-        <p class="kicker">Pre-Build Checklist</p>
-        <h2>Client Inputs Needed</h2>
-        <ul class="list">
-          <li>InfoFlow client CSV export.</li>
-          <li>Microsoft 365 admin or delegated mailbox access.</li>
-          <li>Five or more common email senders and typical message types.</li>
-          <li>Confirmed ClickUp subscription tier.</li>
-          <li>Examples of wide-format or EDDM jobs that may need their own workflow.</li>
-          <li>Three to five representative recent job emails for routing tests.</li>
-        </ul>
-      </section>
+<!-- ═══════════════════════════════════════════════
+     TAB 1 · CONTEXT SNAPSHOT
+═══════════════════════════════════════════════ -->
+<section class="sec on" id="sec-ctx">
+  <div class="sec-hd">
+    <div class="sec-eb">01 · Context</div>
+    <div class="sec-title">What we already know</div>
+    <div class="sec-desc">A snapshot of what's pre-decided from the signed proposal. We're not re-asking these — we're building on top of them. Skim it together at the start of the call to anchor what's "in scope today."</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 Jessica's prep notes</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li>Open by acknowledging Lee + Zach's time and reminding them this is the *build* call — we're locking in HOW it's configured, not WHETHER we build it</li>
+        <li>Frame the doc: "Everything we agree on today goes straight into the build spec on the right tab — you'll see the system take shape as we talk"</li>
+        <li>If Lee gets in the weeds on email rules early → redirect: "Let's nail down what a job looks like first; routing falls out naturally from that"</li>
+      </ul>
     </div>
   </div>
 
-  <section class="card">
-    <p class="kicker">Next Steps</p>
-    <h2>What happens after sign-off</h2>
-    <p>After discovery confirmation, this document feeds the build kickoff spec for Phase 1A. The next implementation pass finalizes statuses, required fields, role-based views, notification hygiene, and email routing inside ClickUp, then returns the locked build structure for approval.</p>
-  </section>
+  <div class="g2">
+    <div class="card">
+      <div class="card-t"><div class="card-t-l"><div class="card-t-ico">EP</div>Client &amp; Decision Maker</div></div>
+      <div class="f"><label>Company</label><input type="text" value="Everything Printing"></div>
+      <div class="f"><label>Owner / Decision Maker</label><input type="text" value="Lee Levengood"></div>
+      <div class="f"><label>Internal Champion</label><input type="text" value="Zach Ralph (Project Manager)"></div>
+      <div class="f"><label>Location</label><input type="text" value="Gilbertsville, PA"></div>
+      <div class="f"><label>Workspace Tier (ClickUp)</label>
+        <select>
+          <option>Business Plan (typical SMB)</option>
+          <option>Business Plus</option>
+          <option>Enterprise</option>
+          <option>Unlimited</option>
+          <option>Free Forever</option>
+        </select>
+        <span class="hint">Confirm tier before build — affects custom field count, automation runs, and form features.</span>
+      </div>
+    </div>
 
-  <div class="footer">Prepared from the uploaded Everything Printing ClickUp discovery workshop document.</div>
-</div>
+    <div class="card">
+      <div class="card-t"><div class="card-t-l"><div class="card-t-ico teal">👥</div>Team Roster</div></div>
+      <div class="team-grid">
+        <div class="team-i"><div class="team-av">LL</div><div class="team-info"><div class="team-name">Lee Levengood</div><div class="team-role">Owner · Decision Maker</div></div></div>
+        <div class="team-i"><div class="team-av zach">ZR</div><div class="team-info"><div class="team-name">Zach Ralph</div><div class="team-role">Project Manager · Champion</div></div></div>
+        <div class="team-i"><div class="team-av cady">CC</div><div class="team-info"><div class="team-name">Cady</div><div class="team-role">Design · Front Desk</div></div></div>
+        <div class="team-i"><div class="team-av ben">BB</div><div class="team-info"><div class="team-name">Ben</div><div class="team-role">Ordering · Pricing</div></div></div>
+        <div class="team-i"><div class="team-av jason">JJ</div><div class="team-info"><div class="team-name">Jason</div><div class="team-role">Design · Wide Format · EDDM</div></div></div>
+      </div>
+      <div class="f" style="margin-top:12px"><label>Anyone else who'll use ClickUp?</label><textarea placeholder="Names + roles..."></textarea></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><div class="card-t-l"><div class="card-t-ico teal">📦</div>Scope Already Committed (Phase 1)</div></div>
+    <div class="scope-list">
+      <div class="scope-li"><div class="scope-li-n">1</div><div class="scope-li-body"><b>Workspace + 2 Spaces + 5–7 Lists</b> — Client Management space &amp; Internal Operations space. Status workflows per List, permission tiers for Lee vs team.</div></div>
+      <div class="scope-li"><div class="scope-li-n">2</div><div class="scope-li-body"><b>Company Directory</b> — ~1,000 client CSV import from InfoFlow with cleaned fields and tags.</div></div>
+      <div class="scope-li"><div class="scope-li-n">3</div><div class="scope-li-body"><b>Contact Directory + Custom Fields</b> — contacts linked to companies; 6–8 custom fields per task type. Baseline fields: quantity, paper type, color mode, contact email, job status, assigned rep, source.</div></div>
+      <div class="scope-li"><div class="scope-li-n">4</div><div class="scope-li-body"><b>Shared Mailbox</b> — order@everythingprinting.com connected to ClickUp; emails matched to client records by sender address.</div></div>
+      <div class="scope-li"><div class="scope-li-n">5</div><div class="scope-li-body"><b>Email Flow Automation</b> — keyword + sender-based routing rules (2–5 to start).</div></div>
+      <div class="scope-li"><div class="scope-li-n">6</div><div class="scope-li-body"><b>Intake Form</b> — auto-fires for missing job details (qty / paper / color), responses fill custom fields. Zach's request.</div></div>
+      <div class="scope-li"><div class="scope-li-n">7</div><div class="scope-li-body"><b>MIS BCC Routing</b> — InfoFlow estimates &amp; invoices auto-attach to ClickUp via BCC to order@.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><div class="card-t-l"><div class="card-t-ico">⚙️</div>Tech Stack</div></div>
+    <div class="tech-grid">
+      <div class="tech-i"><b>InfoFlow</b><span>Print MIS — estimates, invoices, BCC routing</span></div>
+      <div class="tech-i"><b>Microsoft 365</b><span>Outlook · shared mailbox · admin needed</span></div>
+      <div class="tech-i"><b>Loyalty Loop</b><span>Customer feedback / reviews</span></div>
+      <div class="tech-i"><b>MPI4 Marketing</b><span>Marketing platform</span></div>
+      <div class="tech-i"><b>Fiery Controllers</b><span>Production print controllers</span></div>
+      <div class="tech-i"><b>N-ABLE File Server</b><span>File storage / shared drive</span></div>
+      <div class="tech-i"><b>ClickUp</b><span>NEW — being built today</span></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ico">i</div>
+    <div><b>What we're deciding TODAY:</b> the structure (Spaces · Lists · Statuses · Custom Fields · Views · Routing rules · Roles &amp; permissions). What we are NOT deciding today: the automations beyond Phase 1B, future integrations (Monday.com, QuickBooks, etc), or any UI customization.</div>
+  </div>
+
+  <div class="today-grid">
+    <div class="today-col">
+      <div class="today-col-t">✓ In Scope Today</div>
+      <ul class="today-list">
+        <li>Job lifecycle stages (= statuses)</li>
+        <li>Custom fields per stage</li>
+        <li>Spaces &amp; Lists structure</li>
+        <li>Who sees what · permission tiers</li>
+        <li>Email routing rules &amp; senders</li>
+        <li>Default views per role</li>
+        <li>Lee's pre-work (InfoFlow CSV, M365 admin)</li>
+      </ul>
+    </div>
+    <div class="today-col out">
+      <div class="today-col-t">✗ Not Today (Future Phase)</div>
+      <ul class="today-list">
+        <li>QuickBooks deposit automation</li>
+        <li>Monday.com layer</li>
+        <li>InfoFlow API integration</li>
+        <li>Prospect research agent</li>
+        <li>SOPs &amp; connected search</li>
+        <li>Any wide-format-specific workflow</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Lifecycle preview anchor — sits at the bottom of Context to set the table for Tab 2 -->
+  <div class="lifeline-wrap" style="margin-top:18px">
+    <div class="lifeline-hd">
+      <div class="lifeline-hd-l">
+        <span class="lifeline-eb">📌 Job Lifecycle Preview</span>
+        <span style="font-size:10.5px;color:var(--ink-4)">This is our starting scaffold — we'll refine it together on the next tab</span>
+      </div>
+      <div class="lifeline-hd-r">
+        <button class="btn btn-p btn-xs" onclick="goTab('life')">Open Lifecycle Tab →</button>
+      </div>
+    </div>
+    <div class="lifeline" id="lifeline-ctx"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 2 · JOB LIFECYCLE
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-life">
+  <div class="sec-hd">
+    <div class="sec-eb">02 · Lifecycle</div>
+    <div class="sec-title">Walk me through a typical job</div>
+    <div class="sec-desc">From the moment an email or inquiry lands → to the job being closed and invoiced. Every stage becomes a ClickUp <b>status</b>. Edit names, add/remove stages, set who owns each step.</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 What to listen for</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li><b>Stage names should feel natural to Lee/Zach.</b> If they say "in the shop," use that — don't rename to "In Production"</li>
+        <li><b>Watch for parallel paths</b> — wide format vs digital vs EDDM may diverge. If so, may need multiple Lists, not just statuses</li>
+        <li><b>"Awaiting approval" usually deserves its own stage</b> — jobs can sit there for days</li>
+        <li>If Lee says "and then it's just done" → press: "Done how? Invoice sent? Or shipped? Or paid? Each one's a different signal"</li>
+        <li>Default scaffold: <span class="chip chip-mono chip-gray">INQUIRY</span> <span class="chip chip-mono chip-gray">QUOTING</span> <span class="chip chip-mono chip-gray">APPROVED</span> <span class="chip chip-mono chip-gray">IN PRODUCTION</span> <span class="chip chip-mono chip-gray">READY</span> <span class="chip chip-mono chip-gray">DELIVERED</span> <span class="chip chip-mono chip-gray">INVOICED / CLOSED</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Lifecycle ribbon — embedded inside Tab 2 -->
+  <div class="lifeline-wrap">
+    <div class="lifeline-hd">
+      <div class="lifeline-hd-l">
+        <span class="lifeline-eb">Job Lifecycle</span>
+        <span style="font-size:10.5px;color:var(--ink-4)">Click a stage to jump · double-click to rename</span>
+      </div>
+      <div class="lifeline-hd-r">
+        <button class="btn btn-p btn-xs" onclick="addStage()">+ Add Stage</button>
+      </div>
+    </div>
+    <div class="lifeline" id="lifeline-life"></div>
+  </div>
+
+  <div id="stages-host"></div>
+
+  <button class="add-field-btn" onclick="addStage()" style="max-width:300px;margin:0 auto;display:block">+ Add a stage</button>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 3 · PER-STAGE DATA
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-data">
+  <div class="sec-hd">
+    <div class="sec-eb">03 · Data Capture</div>
+    <div class="sec-title">What info needs to be on the job at each stage?</div>
+    <div class="sec-desc">For each stage, what data MUST exist before the job moves forward? Every field listed here becomes a <b>custom field</b> in ClickUp — and these are what the intake form auto-fills.</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 The "field elicitation" trick</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li>Ask: <i>"For Cady to quote this, what does she absolutely need to know?"</i> — not <i>"what custom fields do you want?"</i></li>
+        <li>If Lee says <i>"the usual stuff"</i> → press for specifics: <i>"What's the first email back when stuff is missing?"</i> = the required fields</li>
+        <li>Baseline from proposal: <b>Quantity · Paper Type · Color Mode · Contact Email · Source · Assigned Rep · Job Status</b> — already in the table below for stages where they typically apply</li>
+        <li>Mark a field <b>"Required from intake"</b> if the form should auto-prompt the client when missing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="data-host"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 4 · ROLES & VISIBILITY
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-roles">
+  <div class="sec-hd">
+    <div class="sec-eb">04 · Roles</div>
+    <div class="sec-title">Who sees what · who gets pinged · who owns what</div>
+    <div class="sec-desc">Defines ClickUp permission tiers and notification rules. The matrix below produces the permissions plan in the build spec.</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 Notification hygiene</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li><b>Notification fatigue kills adoption.</b> The proposal explicitly says "alerted on assignments — not everything in the inbox"</li>
+        <li>For each person ask: <i>"What do you want to know within 5 minutes?" vs "What can wait til morning?" vs "What never needs a ping?"</i></li>
+        <li>Lee likely wants exception-only pings (rush jobs, escalations). Zach wants ownership pings. Cady wants intake pings.</li>
+        <li>ClickUp permission tiers: <span class="chip chip-mono chip-gray">ADMIN</span> <span class="chip chip-mono chip-gray">MEMBER</span> <span class="chip chip-mono chip-gray">LIMITED</span> <span class="chip chip-mono chip-gray">GUEST</span> — Limited Members can't see Spaces marked private to them</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="roles-host"></div>
+
+  <button class="add-field-btn" onclick="addRole()" style="max-width:300px;margin:0 auto;display:block">+ Add a person</button>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 5 · EMAIL ROUTING
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-email">
+  <div class="sec-hd">
+    <div class="sec-eb">05 · Email Routing</div>
+    <div class="sec-title">Where do incoming emails go?</div>
+    <div class="sec-desc">The shared mailbox <span class="chip chip-mono chip-gray">ORDER@EVERYTHINGPRINTING.COM</span> is the entry point. Map known senders and keywords to where they should land. Start small — 2–3 of each — expand later.</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 Routing rule design</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li><b>Senders are more reliable than keywords.</b> Get 3–5 named senders first; keywords are fuzzier</li>
+        <li>For each sender, ask: <i>"When you see an email from them, what's the FIRST thing you do?"</i> = the routing rule</li>
+        <li>Keywords that are usually high-signal: <b>"quote"</b>, <b>"rush"</b>, <b>"reorder"</b>, <b>"PO"</b>, <b>"proof"</b></li>
+        <li>Edge cases worth flagging early: (a) reply-all chains, (b) auto-replies from InfoFlow, (c) Loyalty Loop notifications</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-t"><div class="card-t-l"><div class="card-t-ico">@</div>Known Senders</div></div>
+      <table class="rt-tbl" id="sender-tbl">
+        <thead><tr><th>Sender (name / email)</th><th>Typical message</th><th>→ Lands in (List / Stage)</th><th>Notify</th><th class="col-act"></th></tr></thead>
+        <tbody id="sender-host"></tbody>
+      </table>
+      <button class="add-field-btn" onclick="addSender()">+ Add sender</button>
+    </div>
+
+    <div class="card">
+      <div class="card-t"><div class="card-t-l"><div class="card-t-ico">🔑</div>Keywords / Patterns</div></div>
+      <table class="rt-tbl" id="kw-tbl">
+        <thead><tr><th>Keyword / pattern</th><th>Indicates</th><th>→ Action</th><th>Priority</th><th class="col-act"></th></tr></thead>
+        <tbody id="kw-host"></tbody>
+      </table>
+      <button class="add-field-btn" onclick="addKw()">+ Add keyword</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><div class="card-t-l"><div class="card-t-ico">⚠️</div>Edge Cases &amp; Things to Catch</div></div>
+    <div class="f"><label>Auto-reply senders to filter out</label><textarea placeholder="InfoFlow notifications, Loyalty Loop emails, calendar invites, etc. — these should not create new tasks." id="edge-filter"></textarea></div>
+    <div class="f"><label>Senders with multiple email addresses (matching fallback needed)</label><textarea placeholder="e.g. Ed sometimes emails from ed@acme.com and ed.smith@acme.com — both should match to the same client" id="edge-multi"></textarea></div>
+    <div class="f"><label>Edge cases that have burned us before</label><textarea placeholder="Anything tricky — reply-all chains, attached PDFs that need parsing, urgent rush jobs at 5pm, etc." id="edge-other"></textarea></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 6 · VIEWS PER ROLE
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-views">
+  <div class="sec-hd">
+    <div class="sec-eb">06 · Views</div>
+    <div class="sec-title">When [Role] logs in Monday morning, what do they want to see first?</div>
+    <div class="sec-desc">Each role gets a default landing view in ClickUp. This drives the View configs per List — and the home dashboard for each user.</div>
+  </div>
+
+  <div class="cheat" onclick="this.classList.toggle('open')">
+    <div class="cheat-hd"><span>🎯 View design</span></div>
+    <div class="cheat-body">
+      <ul>
+        <li>The right question isn't <i>"what view do you want?"</i> — it's <i>"when you sit down with coffee Monday at 8:30, what do you want to see?"</i></li>
+        <li>Zach's likely view: <b>Board</b> by status, filtered to "this week" — production sequencing</li>
+        <li>Cady's likely view: <b>List</b> filtered to "New / Quoting" — front desk triage</li>
+        <li>Lee's likely view: <b>Workload</b> view — capacity check across the team</li>
+        <li>ClickUp view types: <span class="chip chip-mono chip-gray">LIST</span> <span class="chip chip-mono chip-gray">BOARD</span> <span class="chip chip-mono chip-gray">CALENDAR</span> <span class="chip chip-mono chip-gray">GANTT</span> <span class="chip chip-mono chip-gray">WORKLOAD</span> <span class="chip chip-mono chip-gray">TIMELINE</span> <span class="chip chip-mono chip-gray">TABLE</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="views-host"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 7 · BUILD SPEC (LIVE)
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-spec">
+  <div class="spec-hero">
+    <div class="spec-hero-eb">🎯 LIVE BUILD SPEC</div>
+    <div class="spec-hero-t">What we're actually going to build</div>
+    <div class="spec-hero-s">This tab auto-assembles from everything filled in on tabs 2–6. Edit Spaces &amp; Lists structure directly here. Click <b>"Lock In"</b> on any block to mark it as agreed.</div>
+  </div>
+
+  <div class="callout">
+    <div class="ico">↻</div>
+    <div><b>Live updates.</b> Any change on Lifecycle / Per-Stage Data / Roles / Email / Views flows here. Switch back to this tab at any point during the call: <i>"Here's where we are."</i></div>
+  </div>
+
+  <!-- Spaces & Lists -->
+  <div class="spec-block" id="spec-blk-spaces">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">🗂️ Spaces &amp; Lists <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r">
+        <button class="spec-lock-btn" onclick="toggleLock('spaces')">Lock In</button>
+      </div>
+    </div>
+    <div class="spec-source">Source: manual — edit directly here</div>
+    <div id="spec-spaces-host"></div>
+    <button class="add-field-btn" onclick="addSpace()" style="max-width:280px">+ Add Space</button>
+  </div>
+
+  <!-- Statuses -->
+  <div class="spec-block" id="spec-blk-statuses">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">🚦 Statuses <span class="ct">(<span id="ct-statuses">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('statuses')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 2 · Lifecycle stages</div>
+    <div class="spec-list" id="spec-statuses-host"></div>
+  </div>
+
+  <!-- Custom Fields -->
+  <div class="spec-block" id="spec-blk-fields">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">📋 Custom Fields <span class="ct">(<span id="ct-fields">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('fields')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 3 · Per-Stage Data</div>
+    <div id="spec-fields-host"></div>
+  </div>
+
+  <!-- Platforms & Integrations -->
+  <div class="spec-block" id="spec-blk-plats">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">🔌 Platforms &amp; Integrations <span class="ct">(<span id="ct-plats">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('plats')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 2 · Lifecycle (platforms used per stage)</div>
+    <div id="spec-plats-host"></div>
+  </div>
+
+  <!-- Roles & Permissions -->
+  <div class="spec-block" id="spec-blk-roles">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">👥 Roles &amp; Permissions <span class="ct">(<span id="ct-roles">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('roles')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 4 · Roles &amp; Visibility</div>
+    <div id="spec-roles-host"></div>
+  </div>
+
+  <!-- Email Routing -->
+  <div class="spec-block" id="spec-blk-email">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">📨 Email Routing Rules <span class="ct">(<span id="ct-email">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('email')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 5 · Email Routing</div>
+    <div id="spec-email-host"></div>
+  </div>
+
+  <!-- Views -->
+  <div class="spec-block" id="spec-blk-views">
+    <div class="spec-block-hd">
+      <div class="spec-block-t">👁️ Views <span class="ct">(<span id="ct-views">0</span>)</span> <span class="lock">✓ Locked</span></div>
+      <div class="spec-block-r"><button class="spec-lock-btn" onclick="toggleLock('views')">Lock In</button></div>
+    </div>
+    <div class="spec-source">Source: Tab 6 · Views</div>
+    <div id="spec-views-host"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TAB 8 · DECISIONS / OPEN / ACTIONS
+═══════════════════════════════════════════════ -->
+<section class="sec" id="sec-dec">
+  <div class="sec-hd">
+    <div class="sec-eb">08 · Closeout</div>
+    <div class="sec-title">Decisions locked · open questions · who owns what next</div>
+    <div class="sec-desc">Standard closer. Auto-rolls the "locked" build spec items into the decisions panel; everything else gets tracked manually as open or action.</div>
+  </div>
+
+  <div class="dec-grid">
+    <div class="card">
+      <div class="card-t"><div class="card-t-l"><div class="card-t-ico teal">✓</div>Decisions Locked</div></div>
+      <div class="dec-list" id="dec-locked-host">
+        <div class="spec-empty">Lock blocks on Tab 7 (Build Spec) to populate this list.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t">
+        <div class="card-t-l"><div class="card-t-ico" style="background:var(--warn-bg);color:var(--warn)">?</div>Open Questions</div>
+        <button class="btn btn-p btn-xs" onclick="addOpen()">+ Add</button>
+      </div>
+      <div class="dec-list" id="dec-open-host"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t">
+      <div class="card-t-l"><div class="card-t-ico">⚡</div>Action Items</div>
+      <button class="btn btn-p btn-xs" onclick="addAction()">+ Add</button>
+    </div>
+    <div class="act-grid" style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding:0 6px 4px;border-bottom:1px solid var(--line)">
+      <div>Action</div><div>Owner</div><div>Due</div><div></div>
+    </div>
+    <div id="act-host" style="margin-top:8px"></div>
+  </div>
+
+  <div class="preflight">
+    <div class="preflight-t">📋 Lee &amp; Zach's Pre-Build Checklist</div>
+    <ul>
+      <li>Export InfoFlow client list as CSV (~1,000 records)</li>
+      <li>Provide Microsoft 365 admin credentials (or delegated access) for shared mailbox</li>
+      <li>List 5+ common email senders and the most common message types</li>
+      <li>Confirm ClickUp subscription tier (Business / Business Plus / Enterprise)</li>
+      <li>Identify wide-format / EDDM jobs that may need a separate workflow</li>
+      <li>Forward 3–5 recent representative job emails for routing rule testing</li>
+    </ul>
+  </div>
+
+  <div class="callout" style="margin-top:18px">
+    <div class="ico">→</div>
+    <div><b>Next steps after the call:</b> Jessica converts this doc into a build kickoff spec, confirms scope-of-work matches signed proposal, schedules Phase 1A build window (Week 1–2), and shares the locked Build Spec back to Lee for sign-off.</div>
+  </div>
+</section>
+
+</main>
+
+<div class="toast" id="toast">✓ Saved</div>
+
+<script>
+/* ====================================================
+   STATE
+==================================================== */
+var STORAGE_KEY = "ep_ckp_disc_v1";
+
+var state = {
+  callDate: "Thursday, May 21, 2026",
+  stages: [],
+  roles: [],
+  senders: [],
+  keywords: [],
+  edgeFilter: "",
+  edgeMulti: "",
+  edgeOther: "",
+  views: [],
+  spaces: [],
+  locks: { spaces:false, statuses:false, fields:false, roles:false, email:false, views:false },
+  openQs: [],
+  actions: []
+};
+
+/* Default seed if no localStorage */
+function seedDefault(){
+  state.stages = [
+    {
+      id:gid(), name:"Inquiry", owner:"Cady", dur:"~10 min",
+      people:"Cady, sometimes Zach if it's a known repeat client",
+      platforms:["outlook","shared","phone","inperson"],
+      entry:"Email lands in order@everythingprinting.com · phone call · walk-in",
+      exit:"Customer confirmed + enough detail captured to start quoting",
+      decisions:"Is this a real job? Known client or new? Does it need Lee's attention (e.g. complex / large)?",
+      docsCreated:[
+        { id:gid(), name:"Job intake notes", type:"Note", home:"Paper / physical folder" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Original customer email", home:"Outlook / shared mailbox" }
+      ],
+      handoff:"Cady passes to Ben for pricing, or kicks back to client if details are missing",
+      bottlenecks:"Customer emails are vague — quantity, paper, size often missing. Reply chains lose context.",
+      fields:[
+        { id:gid(), name:"Customer name / company", type:"text",   req:"yes", fill:"Auto from email" },
+        { id:gid(), name:"Contact email",           type:"text",   req:"yes", fill:"Auto from email" },
+        { id:gid(), name:"Source",                  type:"dropdown", req:"no",  fill:"Cady" }
+      ]
+    },
+    {
+      id:gid(), name:"Quoting", owner:"Cady / Ben", dur:"30 min – 2 hrs",
+      people:"Cady captures details, Ben prices outsourced items, Jason consults on wide-format",
+      platforms:["infoflow","outlook","fileserver","phone"],
+      entry:"Job details captured · ready to price",
+      exit:"Quote PDF generated in InfoFlow",
+      decisions:"Markup % · stock substitution OK? · rush surcharge? · which vendor for outsource?",
+      docsCreated:[
+        { id:gid(), name:"InfoFlow estimate", type:"Quote", home:"InfoFlow" },
+        { id:gid(), name:"Quote PDF",         type:"PDF",   home:"InfoFlow" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Previous similar jobs (for pricing)", home:"InfoFlow" },
+        { id:gid(), name:"Vendor pricing sheets",               home:"File Server (N-ABLE)" }
+      ],
+      handoff:"Cady emails quote to client; BCC to order@ so it lands in ClickUp automatically",
+      bottlenecks:"Ben out of office means quotes stall. Outsourced pricing takes 1–2 days. Some quotes don't get sent same-day.",
+      fields:[
+        { id:gid(), name:"Quantity",          type:"number",   req:"intake-required", fill:"Intake form" },
+        { id:gid(), name:"Paper type",        type:"dropdown", req:"intake-required", fill:"Intake form" },
+        { id:gid(), name:"Color mode",        type:"dropdown", req:"intake-required", fill:"Intake form" },
+        { id:gid(), name:"Size / dimensions", type:"text",     req:"no",  fill:"Intake form" },
+        { id:gid(), name:"Due date",          type:"date",     req:"no",  fill:"Intake form" }
+      ]
+    },
+    {
+      id:gid(), name:"Quote Sent", owner:"Cady", dur:"1 day – 2 weeks (waiting on client)",
+      people:"Cady follows up, Lee escalates on big jobs",
+      platforms:["outlook","shared","phone"],
+      entry:"Quote emailed to client",
+      exit:"Client says yes (approval / PO) or no (declined / abandoned)",
+      decisions:"How long do we wait before following up? Who follows up — Cady or Lee?",
+      docsCreated:[
+        { id:gid(), name:"Follow-up emails", type:"Email", home:"Outlook / shared mailbox" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Quote PDF (sent)", home:"Outlook / shared mailbox" }
+      ],
+      handoff:"Approved jobs → Zach for production scheduling. Declined → archive but keep client tagged.",
+      bottlenecks:"Quotes sit unanswered for weeks. No systematic follow-up. We lose visibility on what's stuck where.",
+      fields:[
+        { id:gid(), name:"Quote sent date", type:"date", req:"yes", fill:"Auto" },
+        { id:gid(), name:"Follow-up count", type:"number", req:"no", fill:"Auto" }
+      ]
+    },
+    {
+      id:gid(), name:"Approved", owner:"Zach", dur:"same day",
+      people:"Zach schedules, Lee approves anything >$5k or with credit issues",
+      platforms:["infoflow","outlook","phone"],
+      entry:"Client confirms via email / PO / verbal",
+      exit:"Job released to production with files + specs locked",
+      decisions:"Deposit required? · Production slot · Outsourced or in-house · Press assignment",
+      docsCreated:[
+        { id:gid(), name:"PO / approval email", type:"Email", home:"Outlook / shared mailbox" },
+        { id:gid(), name:"Production work order", type:"Work order", home:"Paper / physical folder" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Final approved quote", home:"InfoFlow" },
+        { id:gid(), name:"Customer print files", home:"File Server (N-ABLE)" }
+      ],
+      handoff:"Zach hands work order + files folder to Jason / production team",
+      bottlenecks:"PO numbers missing or wrong. Files arrive wrong size / wrong format and have to go back. Deposit collection delays start.",
+      fields:[
+        { id:gid(), name:"PO number",         type:"text",     req:"no", fill:"Cady / Lee" },
+        { id:gid(), name:"Deposit received?", type:"checkbox", req:"no", fill:"Cady / Lee" },
+        { id:gid(), name:"Production start date", type:"date", req:"no", fill:"Zach" }
+      ]
+    },
+    {
+      id:gid(), name:"In Production", owner:"Jason / Production", dur:"1–5 days",
+      people:"Jason for wide / EDDM, production team for digital, Zach monitors",
+      platforms:["fiery","fileserver","inperson","paper"],
+      entry:"Files prepped, on the press / cutter / finisher",
+      exit:"Print + cut + finish complete · QC pass",
+      decisions:"Substrate substitution on the fly · re-run if color off · which press to use",
+      docsCreated:[
+        { id:gid(), name:"Proof (if applicable)", type:"Proof", home:"File Server (N-ABLE)" },
+        { id:gid(), name:"Production notes", type:"Note", home:"Paper / physical folder" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Approved files", home:"File Server (N-ABLE)" },
+        { id:gid(), name:"Work order", home:"Paper / physical folder" }
+      ],
+      handoff:"Production hands finished job + work order to Zach for QC + delivery scheduling",
+      bottlenecks:"Press downtime · paper out of stock · color matching issues · rush jobs jumping the queue",
+      fields:[
+        { id:gid(), name:"Press / equipment",  type:"dropdown", req:"no", fill:"Zach" },
+        { id:gid(), name:"Production notes",   type:"text",     req:"no", fill:"Production team" }
+      ]
+    },
+    {
+      id:gid(), name:"Ready for Delivery", owner:"Zach", dur:"same day – 1 day",
+      people:"Zach packages, Cady calls customer, sometimes Lee personally drops off VIPs",
+      platforms:["outlook","phone","inperson"],
+      entry:"Job finished + QC passed",
+      exit:"Customer picks up · shipment booked · delivery scheduled",
+      decisions:"Pickup vs ship vs we-deliver? · Shipping carrier · Partial vs full delivery",
+      docsCreated:[
+        { id:gid(), name:"Shipping label / packing slip", type:"PDF", home:"Outlook / shared mailbox" },
+        { id:gid(), name:"Ready notification email", type:"Email", home:"Outlook / shared mailbox" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Customer contact / delivery address", home:"InfoFlow" }
+      ],
+      handoff:"Customer takes possession. Cady confirms delivery in InfoFlow to trigger the invoice.",
+      bottlenecks:"Customer unresponsive to pickup notifications. Address / contact info out of date. Partial deliveries lose track.",
+      fields:[
+        { id:gid(), name:"Pickup / ship method", type:"dropdown", req:"yes", fill:"Zach" },
+        { id:gid(), name:"Delivered date", type:"date", req:"yes", fill:"Auto" }
+      ]
+    },
+    {
+      id:gid(), name:"Invoiced / Closed", owner:"Cady / Ben", dur:"same day – 60 days",
+      people:"Cady sends invoice, Ben tracks payment, Lee follows up on aging",
+      platforms:["infoflow","outlook","quickbooks"],
+      entry:"Customer has the job",
+      exit:"Invoice sent + payment received + reconciled in QuickBooks",
+      decisions:"Payment terms · credit card vs check · how aggressive to be on aging · write-off threshold",
+      docsCreated:[
+        { id:gid(), name:"InfoFlow invoice", type:"Invoice", home:"InfoFlow" },
+        { id:gid(), name:"Invoice PDF",      type:"PDF",     home:"Outlook / shared mailbox" },
+        { id:gid(), name:"Payment receipt",  type:"PDF",     home:"QuickBooks" }
+      ],
+      docsRef:[
+        { id:gid(), name:"Final approved quote", home:"InfoFlow" },
+        { id:gid(), name:"Deposit (if any)", home:"QuickBooks" }
+      ],
+      handoff:"Job closes once paid + reconciled. Loyalty Loop triggers customer feedback request.",
+      bottlenecks:"Aging A/R · credit card deposit reconciliation in QuickBooks is manual · disputed invoices stall closeout",
+      fields:[
+        { id:gid(), name:"Invoice PDF",       type:"attachment", req:"yes", fill:"InfoFlow BCC" },
+        { id:gid(), name:"Payment status",    type:"dropdown",   req:"no",  fill:"Ben" },
+        { id:gid(), name:"Payment received date", type:"date",    req:"no",  fill:"Ben" }
+      ]
+    }
+  ];
+
+  state.roles = [
+    { id:gid(), name:"Lee Levengood", title:"Owner · Decision Maker", tier:"Admin",   stages:"All stages — exception-only", daily:"Workload view across the team", notify:"Rush jobs · escalations · job > $5k", noNotify:"Routine status changes · routine emails" },
+    { id:gid(), name:"Zach Ralph",    title:"Project Manager",         tier:"Admin",   stages:"Approved → Ready",          daily:"Board view by status, this week",   notify:"New approvals · production blockers · QC fails", noNotify:"Quotes in progress" },
+    { id:gid(), name:"Cady",          title:"Design · Front Desk",     tier:"Member",  stages:"Inquiry → Quote Sent",      daily:"List view: New + Quoting",          notify:"Every new email-to-task · client replies", noNotify:"Production-only updates" },
+    { id:gid(), name:"Ben",           title:"Ordering · Pricing",      tier:"Member",  stages:"Quoting · Invoicing",       daily:"List view: Quoting + Invoicing",    notify:"Quote requests · pricing questions", noNotify:"Design / production" },
+    { id:gid(), name:"Jason",         title:"Design · Wide Format · EDDM", tier:"Member", stages:"Production",            daily:"Board view: Wide format / EDDM",    notify:"Jobs assigned to him", noNotify:"Digital / small format" }
+  ];
+
+  state.senders = [
+    { id:gid(), sender:"", msg:"", lands:"", notify:"" },
+    { id:gid(), sender:"", msg:"", lands:"", notify:"" },
+    { id:gid(), sender:"", msg:"", lands:"", notify:"" }
+  ];
+  state.keywords = [
+    { id:gid(), kw:"quote", indicates:"New estimate request", action:"→ Inquiry stage · notify Cady", priority:"normal" },
+    { id:gid(), kw:"rush",  indicates:"Urgent timing",        action:"→ Tag as RUSH · notify Lee + Zach",  priority:"high" },
+    { id:gid(), kw:"reorder", indicates:"Repeat job",          action:"→ Match to existing client + clone last job", priority:"normal" }
+  ];
+  state.views = [
+    { id:gid(), role:"Lee Levengood",  name:"Owner Workload",     type:"Workload",  filter:"All Lists · all team · this & next week" },
+    { id:gid(), role:"Zach Ralph",     name:"Production Pipeline", type:"Board",     filter:"By status · this week" },
+    { id:gid(), role:"Cady",           name:"Front Desk Triage",  type:"List",      filter:"Status = New OR Quoting · sort by due date" },
+    { id:gid(), role:"Ben",            name:"Pricing Queue",      type:"List",      filter:"Status = Quoting · sort by due date" },
+    { id:gid(), role:"Jason",          name:"My Jobs (Wide / EDDM)", type:"Board",  filter:"Assigned to me · status In Production / Ready" }
+  ];
+  state.spaces = [
+    { id:gid(), name:"Client Management", lists:["Active Clients","Prospects","Active Jobs","Quotes","Invoices"] },
+    { id:gid(), name:"Internal Operations", lists:["Internal Tasks","SOPs","Follow-Ups"] }
+  ];
+}
+
+function gid(){ return "id"+Math.random().toString(36).slice(2,9); }
+
+/* ====================================================
+   PERSISTENCE
+==================================================== */
+function gatherData(){
+  return {
+    callDate: document.getElementById("call-date").value,
+    state: state
+  };
+}
+function saveAll(){
+  try {
+    state.callDate = document.getElementById("call-date").value;
+    state.edgeFilter = document.getElementById("edge-filter").value;
+    state.edgeMulti  = document.getElementById("edge-multi").value;
+    state.edgeOther  = document.getElementById("edge-other").value;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast("✓ Saved");
+  } catch(e){ showToast("⚠ Save failed"); }
+}
+function loadData(){
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    var parsed = JSON.parse(raw);
+    if (parsed && parsed.stages) {
+      state = parsed;
+      return true;
+    }
+  } catch(e){}
+  return false;
+}
+function autosave(){
+  try {
+    state.callDate = (document.getElementById("call-date")||{}).value || state.callDate;
+    state.edgeFilter = (document.getElementById("edge-filter")||{}).value || "";
+    state.edgeMulti  = (document.getElementById("edge-multi") ||{}).value || "";
+    state.edgeOther  = (document.getElementById("edge-other") ||{}).value || "";
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e){}
+}
+
+function exportJSON(){
+  state.callDate = document.getElementById("call-date").value;
+  state.edgeFilter = document.getElementById("edge-filter").value;
+  state.edgeMulti  = document.getElementById("edge-multi").value;
+  state.edgeOther  = document.getElementById("edge-other").value;
+  var blob = new Blob([JSON.stringify(state, null, 2)], { type:"application/json" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "EP_ClickUp_Discovery_" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("⬇ Exported");
+}
+function importJSON(ev){
+  var f = ev.target.files[0]; if (!f) return;
+  var r = new FileReader();
+  r.onload = function(e){
+    try {
+      var parsed = JSON.parse(e.target.result);
+      if (parsed && parsed.stages) {
+        state = parsed;
+        renderAll();
+        showToast("⬆ Imported");
+      } else { alert("Invalid file format"); }
+    } catch(err){ alert("Invalid JSON file"); }
+  };
+  r.readAsText(f);
+  ev.target.value = "";
+}
+function resetAll(){
+  if (!confirm("Reset everything? This wipes all answers and goes back to the default scaffold. Cannot be undone (unless you exported a JSON backup).")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  seedDefault();
+  renderAll();
+  showToast("⟳ Reset to default");
+}
+
+function showToast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg || "✓ Saved";
+  t.classList.add("on");
+  setTimeout(function(){ t.classList.remove("on"); }, 1800);
+}
+
+/* ====================================================
+   TAB SWITCHING
+==================================================== */
+function goTab(id){
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("on", t.dataset.tab===id); });
+  document.querySelectorAll(".sec").forEach(function(s){ s.classList.toggle("on", s.id==="sec-"+id); });
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ goTab(t.dataset.tab); });
+});
+
+/* ====================================================
+   LIFECYCLE RIBBON
+==================================================== */
+function renderLifeline(){
+  // Render into both hosts: Context tab preview AND Lifecycle tab top
+  var hostIds = ["lifeline-ctx", "lifeline-life"];
+  hostIds.forEach(function(hid){
+    var host = document.getElementById(hid);
+    if (!host) return;
+    host.innerHTML = "";
+    state.stages.forEach(function(s, i){
+      var w = document.createElement("div");
+      w.className = "lstage";
+      w.innerHTML = '<div class="lstage-chip" onclick="jumpStage(\''+s.id+'\')" ondblclick="renameStage(\''+s.id+'\')">'
+        + '<span class="lstage-num">'+(i+1)+'</span>'
+        + '<span class="lstage-name">'+escHtml(s.name)+'</span>'
+        + '</div>';
+      if (i < state.stages.length-1) {
+        w.innerHTML += '<span class="lstage-arr">→</span>';
+      }
+      host.appendChild(w);
+    });
+    var add = document.createElement("button");
+    add.className = "lstage-add";
+    add.textContent = "+ stage";
+    add.onclick = addStage;
+    host.appendChild(add);
+  });
+}
+function jumpStage(id){
+  goTab("life");
+  setTimeout(function(){
+    var el = document.getElementById("stagecard-"+id);
+    if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+  }, 50);
+}
+function renameStage(id){
+  var s = state.stages.find(function(x){ return x.id===id; });
+  if (!s) return;
+  var n = prompt("Rename stage:", s.name);
+  if (n && n.trim()) {
+    s.name = n.trim();
+    renderAll();
+    autosave();
+  }
+}
+function addStage(){
+  state.stages.push({
+    id:gid(), name:"New Stage", owner:"", dur:"",
+    people:"", platforms:[],
+    entry:"", exit:"", decisions:"",
+    docsCreated:[], docsRef:[],
+    handoff:"", bottlenecks:"",
+    fields:[]
+  });
+  renderAll();
+  autosave();
+}
+function delStage(id){
+  if (!confirm("Delete this stage? All its data fields will also be removed.")) return;
+  state.stages = state.stages.filter(function(s){ return s.id!==id; });
+  renderAll();
+  autosave();
+}
+function moveStage(id, dir){
+  var i = state.stages.findIndex(function(s){ return s.id===id; });
+  if (i < 0) return;
+  var j = i + dir;
+  if (j < 0 || j >= state.stages.length) return;
+  var tmp = state.stages[i]; state.stages[i] = state.stages[j]; state.stages[j] = tmp;
+  renderAll();
+  autosave();
+}
+
+/* ====================================================
+   STAGE CARDS (Tab 2)
+==================================================== */
+function renderStages(){
+  var host = document.getElementById("stages-host");
+  host.innerHTML = "";
+  state.stages.forEach(function(s, i){
+    // Ensure new fields exist on legacy state objects
+    if (!s.platforms) s.platforms = [];
+    if (!s.docsCreated) s.docsCreated = [];
+    if (!s.docsRef) s.docsRef = [];
+
+    var c = document.createElement("div");
+    c.className = "stage-card";
+    c.id = "stagecard-"+s.id;
+    c.innerHTML =
+      // ─── Header ───
+      '<div class="stage-hd">'
+      + '<div class="stage-hd-l">'
+      + '<div class="stage-num">'+(i+1)+'</div>'
+      + '<input class="stage-name-in" type="text" value="'+escAttr(s.name)+'" data-id="'+s.id+'" data-k="name">'
+      + '</div>'
+      + '<div class="stage-act">'
+      + '<button class="icon-btn" title="Move up" onclick="moveStage(\''+s.id+'\',-1)">↑</button>'
+      + '<button class="icon-btn" title="Move down" onclick="moveStage(\''+s.id+'\',1)">↓</button>'
+      + '<button class="icon-btn del" title="Delete" onclick="delStage(\''+s.id+'\')">✕</button>'
+      + '</div>'
+      + '</div>'
+
+      // ─── SECTION 1: Basics (owner + duration) ───
+      + '<div class="stage-sub" style="border-top:0;padding-top:0;margin-top:0">'
+      +   '<div class="stage-sub-t"><span class="num">1</span>The Basics<span class="stage-sub-hint">who owns this stage, how long it takes</span></div>'
+      +   '<div class="stage-body">'
+      +     '<div class="f"><label>Stage Owner</label><select data-id="'+s.id+'" data-k="owner">'+ownerOpts(s.owner)+'</select></div>'
+      +     '<div class="f"><label>Typical Duration</label><input type="text" placeholder="e.g. 1–2 hrs · same day · 2–5 days" value="'+escAttr(s.dur||"")+'" data-id="'+s.id+'" data-k="dur"></div>'
+      +   '</div>'
+      + '</div>'
+
+      // ─── SECTION 2: Who & What (people + platforms) ───
+      + '<div class="stage-sub">'
+      +   '<div class="stage-sub-t"><span class="num">2</span>Who &amp; What Touches This<span class="stage-sub-hint">people involved · systems they use</span></div>'
+      +   '<div class="f"><label>Other people involved (besides the owner)</label>'
+      +     '<input type="text" placeholder="e.g. Cady passes to Ben for pricing, then back to Cady" value="'+escAttr(s.people||"")+'" data-id="'+s.id+'" data-k="people">'
+      +     '<span class="hint">Comma-separate names. Captures the real flow when more than one person handles a stage.</span>'
+      +   '</div>'
+      +   '<div class="f"><label>Platforms / tools used at this stage</label>'
+      +     '<div class="plat-grid">'+platChips(s)+'</div>'
+      +     '<span class="hint">Click to toggle. These flow into the Build Spec as the integrations ClickUp needs to touch.</span>'
+      +   '</div>'
+      + '</div>'
+
+      // ─── SECTION 3: Triggers & Movement ───
+      + '<div class="stage-sub">'
+      +   '<div class="stage-sub-t"><span class="num">3</span>Triggers &amp; Movement<span class="stage-sub-hint">what kicks it off · what ends it · what decisions get made</span></div>'
+      +   '<div class="stage-body">'
+      +     '<div class="f f-wide"><label>What kicks this stage off? <i style="color:var(--ink-4);font-weight:400">(entry trigger)</i></label>'
+      +       '<textarea data-id="'+s.id+'" data-k="entry" placeholder="e.g. Email comes in to order@ / quote approved by client / customer calls / scheduled date hits">'+escHtml(s.entry||"")+'</textarea>'
+      +     '</div>'
+      +     '<div class="f f-wide"><label>What signals it\'s done? <i style="color:var(--ink-4);font-weight:400">(exit trigger)</i></label>'
+      +       '<textarea data-id="'+s.id+'" data-k="exit" placeholder="e.g. Quote sent / PO received / files prepped and on press / invoice sent">'+escHtml(s.exit||"")+'</textarea>'
+      +     '</div>'
+      +     '<div class="f f-wide"><label>What decisions get made here?</label>'
+      +       '<textarea data-id="'+s.id+'" data-k="decisions" placeholder="e.g. Pricing approval · stock substitution OK? · rush surcharge applied · proof revision needed">'+escHtml(s.decisions||"")+'</textarea>'
+      +       '<span class="hint">Decision points often need an approval gate or assigned owner in ClickUp.</span>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>'
+
+      // ─── SECTION 4: Documents & Files ───
+      + '<div class="stage-sub">'
+      +   '<div class="stage-sub-t"><span class="num">4</span>Documents &amp; Files<span class="stage-sub-hint">what gets created vs referenced · where files live</span></div>'
+      +   '<div class="g2">'
+      +     '<div>'
+      +       '<div class="fl" style="margin-bottom:6px">📄 Docs CREATED at this stage</div>'
+      +       '<table class="doc-tbl">'
+      +         '<thead><tr><th>Name</th><th>Type</th><th>Where it lives</th><th class="col-act"></th></tr></thead>'
+      +         '<tbody>'+renderDocsCreatedRows(s)+'</tbody>'
+      +       '</table>'
+      +       '<button class="doc-add-btn" onclick="addDocCreated(\''+s.id+'\')">+ Add doc created</button>'
+      +     '</div>'
+      +     '<div>'
+      +       '<div class="fl" style="margin-bottom:6px">📂 Docs REFERENCED at this stage</div>'
+      +       '<table class="doc-tbl">'
+      +         '<thead><tr><th>Name</th><th>Source / where from</th><th class="col-act"></th></tr></thead>'
+      +         '<tbody>'+renderDocsRefRows(s)+'</tbody>'
+      +       '</table>'
+      +       '<button class="doc-add-btn" onclick="addDocRef(\''+s.id+'\')">+ Add doc referenced</button>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>'
+
+      // ─── SECTION 5: Handoff & Pain ───
+      + '<div class="stage-sub">'
+      +   '<div class="stage-sub-t"><span class="num">5</span>Handoff &amp; Pain Points<span class="stage-sub-hint">what passes to the next stage · where things break</span></div>'
+      +   '<div class="g2">'
+      +     '<div class="f"><label>Handoff out — when this stage ends, who hands what to whom?</label>'
+      +       '<textarea data-id="'+s.id+'" data-k="handoff" placeholder="e.g. Cady hands the quote PDF + job folder to Zach for production scheduling">'+escHtml(s.handoff||"")+'</textarea>'
+      +     '</div>'
+      +     '<div class="stage-pain">'
+      +       '<div class="stage-pain-t">⚠️ Bottlenecks / what goes wrong here</div>'
+      +       '<textarea data-id="'+s.id+'" data-k="bottlenecks" placeholder="e.g. Jobs get stuck here when client doesn\'t reply · missing PO numbers · paper out of stock">'+escHtml(s.bottlenecks||"")+'</textarea>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>'
+
+      // ─── Actor Strip Visual ───
+      + '<div class="actor-strip">'+renderActorStrip(s)+'</div>';
+
+    host.appendChild(c);
+  });
+
+  // bind inputs
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var s = state.stages.find(function(x){ return x.id===el.dataset.id; });
+      if (s) {
+        s[el.dataset.k] = el.value;
+        if (el.dataset.k === "name") { renderLifeline(); renderDataTab(); renderSpec(); }
+        if (el.dataset.k === "owner" || el.dataset.k === "people") { renderStagesActorStrips(); renderSpec(); }
+        autosave();
+      }
+    });
+  });
+}
+
+/* ────── Platforms / Tools chip selector ────── */
+var PLATFORMS = [
+  { id:"infoflow",   name:"InfoFlow",       icon:"📋" },
+  { id:"outlook",    name:"Outlook",        icon:"📧" },
+  { id:"shared",     name:"Shared Mailbox", icon:"📨" },
+  { id:"clickup",    name:"ClickUp",        icon:"✅" },
+  { id:"fiery",      name:"Fiery",          icon:"🖨" },
+  { id:"fileserver", name:"File Server",    icon:"🗄" },
+  { id:"loyaltyloop",name:"Loyalty Loop",   icon:"♻️" },
+  { id:"mpi4",       name:"MPI4",           icon:"📣" },
+  { id:"quickbooks", name:"QuickBooks",     icon:"💵" },
+  { id:"phone",      name:"Phone",          icon:"📞" },
+  { id:"inperson",   name:"In Person",      icon:"🤝" },
+  { id:"paper",      name:"Paper / Hand",   icon:"📝" }
+];
+function platChips(s){
+  var html = PLATFORMS.map(function(p){
+    var on = (s.platforms||[]).indexOf(p.id) >= 0;
+    return '<div class="plat-chip'+(on?' on':'')+'" onclick="togglePlat(\''+s.id+'\',\''+p.id+'\')">'
+      + '<span class="pico">'+p.icon+'</span>'+escHtml(p.name)+'</div>';
+  }).join("");
+  // Custom platforms (any in state that aren't in PLATFORMS list)
+  (s.platforms||[]).forEach(function(pid){
+    if (!PLATFORMS.find(function(p){ return p.id===pid; })) {
+      html += '<div class="plat-chip on" onclick="togglePlat(\''+s.id+'\',\''+escAttr(pid)+'\')">'
+        + '<span class="pico">⊕</span>'+escHtml(pid)+'</div>';
+    }
+  });
+  html += '<button class="plat-add" onclick="addPlat(\''+s.id+'\')">+ Custom</button>';
+  return html;
+}
+function togglePlat(sid, pid){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  if (!s.platforms) s.platforms = [];
+  var i = s.platforms.indexOf(pid);
+  if (i >= 0) s.platforms.splice(i, 1);
+  else s.platforms.push(pid);
+  renderStages(); renderSpec(); autosave();
+}
+function addPlat(sid){
+  var n = prompt("Custom platform / tool name:");
+  if (!n || !n.trim()) return;
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  if (!s.platforms) s.platforms = [];
+  s.platforms.push(n.trim());
+  renderStages(); renderSpec(); autosave();
+}
+function platLabel(pid){
+  var p = PLATFORMS.find(function(x){ return x.id===pid; });
+  return p ? p : { name:pid, icon:"⊕" };
+}
+
+/* ────── Docs created / referenced ────── */
+function renderDocsCreatedRows(s){
+  if (!s.docsCreated || s.docsCreated.length === 0) {
+    return '<tr><td colspan="4" style="text-align:center;color:var(--ink-4);font-style:italic;padding:8px">— none yet —</td></tr>';
+  }
+  return s.docsCreated.map(function(d){
+    return '<tr>'
+      + '<td><input type="text" value="'+escAttr(d.name||"")+'" data-sid="'+s.id+'" data-did="'+d.id+'" data-dk="name" data-coll="docsCreated" placeholder="e.g. Quote PDF"></td>'
+      + '<td>'+docTypeSelect(d.type, s.id, d.id, "docsCreated")+'</td>'
+      + '<td>'+docHomeSelect(d.home, s.id, d.id, "docsCreated")+'</td>'
+      + '<td class="col-act"><button class="icon-btn del" onclick="delDoc(\''+s.id+'\',\''+d.id+'\',\'docsCreated\')">✕</button></td>'
+      + '</tr>';
+  }).join("");
+}
+function renderDocsRefRows(s){
+  if (!s.docsRef || s.docsRef.length === 0) {
+    return '<tr><td colspan="3" style="text-align:center;color:var(--ink-4);font-style:italic;padding:8px">— none yet —</td></tr>';
+  }
+  return s.docsRef.map(function(d){
+    return '<tr>'
+      + '<td><input type="text" value="'+escAttr(d.name||"")+'" data-sid="'+s.id+'" data-did="'+d.id+'" data-dk="name" data-coll="docsRef" placeholder="e.g. Previous order"></td>'
+      + '<td>'+docHomeSelect(d.home, s.id, d.id, "docsRef")+'</td>'
+      + '<td class="col-act"><button class="icon-btn del" onclick="delDoc(\''+s.id+'\',\''+d.id+'\',\'docsRef\')">✕</button></td>'
+      + '</tr>';
+  }).join("");
+}
+function docTypeSelect(sel, sid, did, coll){
+  var t = ["PDF", "Email", "Form", "Spreadsheet", "Print file", "Photo", "Note", "Invoice", "Quote", "Work order", "Proof", "Other"];
+  return '<select data-sid="'+sid+'" data-did="'+did+'" data-dk="type" data-coll="'+coll+'">'+
+    t.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+escHtml(o)+'</option>'; }).join("")
+    +'</select>';
+}
+function docHomeSelect(sel, sid, did, coll){
+  var h = ["", "InfoFlow", "Outlook / shared mailbox", "File Server (N-ABLE)", "ClickUp (NEW)", "QuickBooks", "Paper / physical folder", "Loyalty Loop", "Production folder", "Customer", "Other"];
+  return '<select data-sid="'+sid+'" data-did="'+did+'" data-dk="home" data-coll="'+coll+'">'+
+    h.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+escHtml(o)+'</option>'; }).join("")
+    +'</select>';
+}
+function addDocCreated(sid){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  if (!s.docsCreated) s.docsCreated = [];
+  s.docsCreated.push({ id:gid(), name:"", type:"PDF", home:"" });
+  renderStages(); renderSpec(); autosave();
+}
+function addDocRef(sid){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  if (!s.docsRef) s.docsRef = [];
+  s.docsRef.push({ id:gid(), name:"", home:"" });
+  renderStages(); renderSpec(); autosave();
+}
+function delDoc(sid, did, coll){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  s[coll] = (s[coll]||[]).filter(function(d){ return d.id !== did; });
+  renderStages(); renderSpec(); autosave();
+}
+
+/* Bind doc cell inputs (called from renderStages event binding) */
+document.addEventListener("input", function(e){
+  var el = e.target;
+  if (!el.dataset || !el.dataset.sid || !el.dataset.did) return;
+  var s = state.stages.find(function(x){ return x.id===el.dataset.sid; });
+  if (!s) return;
+  var coll = el.dataset.coll;
+  if (!coll) return;
+  var d = (s[coll]||[]).find(function(x){ return x.id===el.dataset.did; });
+  if (!d) return;
+  d[el.dataset.dk] = el.value;
+  renderSpec();
+  autosave();
+});
+
+/* ────── Actor strip visual ────── */
+function renderActorStrip(s){
+  // People avatars
+  var allPeople = [s.owner].concat((s.people||"").split(",").map(function(p){ return p.trim(); })).filter(function(p){ return p; });
+  var unique = [];
+  allPeople.forEach(function(p){ if (unique.indexOf(p) < 0) unique.push(p); });
+  var avs = unique.length === 0 ? '<span class="actor-empty">no one assigned</span>'
+    : unique.slice(0,5).map(function(p, i){
+        var initials = p.split(/\s+/).map(function(x){return x[0]||""}).join("").slice(0,2).toUpperCase();
+        return '<span class="actor-av" style="background:'+roleColor(i)+'" title="'+escAttr(p)+'">'+escHtml(initials)+'</span>';
+      }).join("");
+
+  // Platforms
+  var plats = (s.platforms||[]).length === 0
+    ? '<span class="actor-empty">no platforms</span>'
+    : (s.platforms||[]).map(function(pid){
+        var p = platLabel(pid);
+        return '<span class="actor-plat"><span>'+p.icon+'</span>'+escHtml(p.name)+'</span>';
+      }).join("");
+
+  // Doc counts
+  var dc = (s.docsCreated||[]).filter(function(d){ return d.name; }).length;
+  var dr = (s.docsRef||[]).filter(function(d){ return d.name; }).length;
+  var docHtml = (dc === 0 && dr === 0)
+    ? '<span class="actor-empty">no docs</span>'
+    : '<span class="actor-doc"><span class="ico">+</span>'+dc+' created</span>'
+      + '<span class="actor-doc"><span class="ico">↳</span>'+dr+' referenced</span>';
+
+  return ''
+    + '<div class="actor-strip-block"><span class="actor-strip-lbl">👥 Who</span>'+avs+'</div>'
+    + '<div class="actor-strip-block"><span class="actor-strip-lbl">⚙️ On</span>'+plats+'</div>'
+    + '<div class="actor-strip-block"><span class="actor-strip-lbl">📄 Docs</span>'+docHtml+'</div>';
+}
+function renderStagesActorStrips(){
+  // Cheap re-render of just the actor strips (called when owner/people change without full re-render)
+  document.querySelectorAll(".actor-strip").forEach(function(el, i){
+    var s = state.stages[i];
+    if (s) el.innerHTML = renderActorStrip(s);
+  });
+}
+function ownerOpts(sel){
+  var opts = ["", "Cady", "Zach", "Ben", "Jason", "Lee", "Production team", "Cady / Ben", "Cady / Lee", "Jason / Production"];
+  return opts.map(function(o){
+    return '<option'+(o===sel?' selected':'')+'>'+escHtml(o)+'</option>';
+  }).join("");
+}
+
+/* ====================================================
+   PER-STAGE DATA (Tab 3)
+==================================================== */
+function renderDataTab(){
+  var host = document.getElementById("data-host");
+  host.innerHTML = "";
+  if (state.stages.length === 0) {
+    host.innerHTML = '<div class="card"><div class="spec-empty">Add lifecycle stages on Tab 2 first.</div></div>';
+    return;
+  }
+  state.stages.forEach(function(s, idx){
+    var c = document.createElement("div");
+    c.className = "card";
+    var rows = "";
+    (s.fields||[]).forEach(function(f){
+      rows +=
+        '<tr>'
+        + '<td><input type="text" value="'+escAttr(f.name||"")+'" data-sid="'+s.id+'" data-fid="'+f.id+'" data-k="name" placeholder="Field name"></td>'
+        + '<td>'+typeSelect(f.type, s.id, f.id)+'</td>'
+        + '<td>'+reqSelect(f.req, s.id, f.id)+'</td>'
+        + '<td>'+fillSelect(f.fill, s.id, f.id)+'</td>'
+        + '<td class="col-act"><button class="icon-btn del" onclick="delField(\''+s.id+'\',\''+f.id+'\')">✕</button></td>'
+        + '</tr>';
+    });
+    c.innerHTML =
+      '<div class="card-t">'
+      + '<div class="card-t-l"><div class="card-t-ico">'+(idx+1)+'</div>'
+      + escHtml(s.name)
+      + ' <span class="chip chip-purple" style="margin-left:6px">'+escHtml(s.owner||"—")+'</span></div>'
+      + '<span class="chip chip-mono chip-gray">'+(s.fields ? s.fields.length : 0)+' fields</span>'
+      + '</div>'
+      + '<table class="field-tbl">'
+      + '<thead><tr><th class="col-name">Field name</th><th class="col-type">Type</th><th class="col-req">Required?</th><th class="col-fill">Filled by</th><th class="col-act"></th></tr></thead>'
+      + '<tbody>'+rows+'</tbody>'
+      + '</table>'
+      + '<button class="add-field-btn" onclick="addField(\''+s.id+'\')">+ Add a field to this stage</button>';
+    host.appendChild(c);
+  });
+
+  // bind
+  host.querySelectorAll("[data-sid][data-fid]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var s = state.stages.find(function(x){ return x.id===el.dataset.sid; });
+      if (!s) return;
+      var f = (s.fields||[]).find(function(x){ return x.id===el.dataset.fid; });
+      if (!f) return;
+      f[el.dataset.k] = el.value;
+      renderSpec();
+      autosave();
+    });
+  });
+}
+function typeSelect(sel, sid, fid){
+  var t = ["text","dropdown","number","date","checkbox","attachment","email","phone","money","people"];
+  return '<select data-sid="'+sid+'" data-fid="'+fid+'" data-k="type">'+
+    t.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+o+'</option>'; }).join("")
+    +'</select>';
+}
+function reqSelect(sel, sid, fid){
+  var r = ["yes","no","intake-required"];
+  return '<select data-sid="'+sid+'" data-fid="'+fid+'" data-k="req">'+
+    r.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+o+'</option>'; }).join("")
+    +'</select>';
+}
+function fillSelect(sel, sid, fid){
+  var f = ["", "Auto from email", "Intake form", "Cady", "Zach", "Ben", "Jason", "Lee", "Cady / Lee", "Cady / Ben", "Production team", "InfoFlow BCC", "Manual", "Auto"];
+  return '<select data-sid="'+sid+'" data-fid="'+fid+'" data-k="fill">'+
+    f.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+escHtml(o)+'</option>'; }).join("")
+    +'</select>';
+}
+function addField(sid){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  if (!s.fields) s.fields = [];
+  s.fields.push({ id:gid(), name:"", type:"text", req:"no", fill:"" });
+  renderDataTab();
+  renderSpec();
+  autosave();
+}
+function delField(sid, fid){
+  var s = state.stages.find(function(x){ return x.id===sid; });
+  if (!s) return;
+  s.fields = (s.fields||[]).filter(function(f){ return f.id!==fid; });
+  renderDataTab();
+  renderSpec();
+  autosave();
+}
+
+/* ====================================================
+   ROLES (Tab 4)
+==================================================== */
+function renderRoles(){
+  var host = document.getElementById("roles-host");
+  host.innerHTML = "";
+  state.roles.forEach(function(r, i){
+    var initials = (r.name||"?").split(/\s+/).map(function(x){return x[0]||""}).join("").slice(0,2).toUpperCase();
+    var c = document.createElement("div");
+    c.className = "role-card";
+    c.innerHTML =
+      '<div class="role-hd">'
+      + '<div class="role-hd-l">'
+      + '<div class="role-av" style="background:'+roleColor(i)+'">'+initials+'</div>'
+      + '<div style="flex:1">'
+      +   '<input class="role-name-in" type="text" value="'+escAttr(r.name||"")+'" data-id="'+r.id+'" data-k="name" placeholder="Name">'
+      +   '<input class="role-title-in" type="text" value="'+escAttr(r.title||"")+'" data-id="'+r.id+'" data-k="title" placeholder="Role / title">'
+      + '</div>'
+      + '</div>'
+      + '<div class="stage-act">'
+      + '<button class="icon-btn del" onclick="delRole(\''+r.id+'\')">✕</button>'
+      + '</div>'
+      + '</div>'
+      + '<div class="role-body">'
+      +   '<div class="f"><label>Permission Tier</label>'+tierSelect(r.tier, r.id)+'</div>'
+      +   '<div class="f"><label>Which stages do they own / touch?</label>'
+      +     '<input type="text" value="'+escAttr(r.stages||"")+'" data-id="'+r.id+'" data-k="stages" placeholder="e.g. Approved → Ready">'
+      +   '</div>'
+      +   '<div class="f f-wide"><label>Daily landing view — what do they want to see first?</label>'
+      +     '<textarea data-id="'+r.id+'" data-k="daily" placeholder="e.g. Board view by status, jobs due this week">'+escHtml(r.daily||"")+'</textarea>'
+      +   '</div>'
+      +   '<div class="f"><label>Notify within 5 minutes when...</label>'
+      +     '<textarea data-id="'+r.id+'" data-k="notify" placeholder="Rush jobs / escalations / specific assignments">'+escHtml(r.notify||"")+'</textarea>'
+      +   '</div>'
+      +   '<div class="f"><label>Don\'t notify them about...</label>'
+      +     '<textarea data-id="'+r.id+'" data-k="noNotify" placeholder="Things they don\'t need to see in real time">'+escHtml(r.noNotify||"")+'</textarea>'
+      +   '</div>'
+      + '</div>';
+    host.appendChild(c);
+  });
+
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var r = state.roles.find(function(x){ return x.id===el.dataset.id; });
+      if (r) { r[el.dataset.k] = el.value; renderSpec(); autosave(); }
+    });
+  });
+}
+function tierSelect(sel, id){
+  var t = ["Admin","Member","Limited Member","Guest"];
+  return '<select data-id="'+id+'" data-k="tier">'+
+    t.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+o+'</option>'; }).join("")
+    +'</select>';
+}
+function roleColor(i){
+  var c = ["#7B3FBF","#0AADA8","#0369a1","#7c2d12","#0f766e","#1419A0","#b45309","#7c3aed"];
+  return c[i % c.length];
+}
+function addRole(){
+  state.roles.push({ id:gid(), name:"New Person", title:"", tier:"Member", stages:"", daily:"", notify:"", noNotify:"" });
+  renderRoles(); renderSpec(); autosave();
+}
+function delRole(id){
+  if (!confirm("Remove this role?")) return;
+  state.roles = state.roles.filter(function(r){ return r.id!==id; });
+  renderRoles(); renderSpec(); autosave();
+}
+
+/* ====================================================
+   EMAIL ROUTING (Tab 5)
+==================================================== */
+function renderSenders(){
+  var host = document.getElementById("sender-host");
+  host.innerHTML = "";
+  state.senders.forEach(function(s){
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td><input type="text" value="'+escAttr(s.sender||"")+'" data-id="'+s.id+'" data-k="sender" placeholder="Name / email"></td>'
+      + '<td><input type="text" value="'+escAttr(s.msg||"")+'" data-id="'+s.id+'" data-k="msg" placeholder="Quote, reorder, etc."></td>'
+      + '<td><input type="text" value="'+escAttr(s.lands||"")+'" data-id="'+s.id+'" data-k="lands" placeholder="e.g. Quoting list"></td>'
+      + '<td><input type="text" value="'+escAttr(s.notify||"")+'" data-id="'+s.id+'" data-k="notify" placeholder="Cady / Zach"></td>'
+      + '<td class="col-act"><button class="icon-btn del" onclick="delSender(\''+s.id+'\')">✕</button></td>';
+    host.appendChild(tr);
+  });
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var s = state.senders.find(function(x){ return x.id===el.dataset.id; });
+      if (s) { s[el.dataset.k] = el.value; renderSpec(); autosave(); }
+    });
+  });
+}
+function addSender(){ state.senders.push({ id:gid(), sender:"", msg:"", lands:"", notify:"" }); renderSenders(); renderSpec(); autosave(); }
+function delSender(id){ state.senders = state.senders.filter(function(s){ return s.id!==id; }); renderSenders(); renderSpec(); autosave(); }
+
+function renderKw(){
+  var host = document.getElementById("kw-host");
+  host.innerHTML = "";
+  state.keywords.forEach(function(k){
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td><input type="text" value="'+escAttr(k.kw||"")+'" data-id="'+k.id+'" data-k="kw" placeholder="e.g. rush"></td>'
+      + '<td><input type="text" value="'+escAttr(k.indicates||"")+'" data-id="'+k.id+'" data-k="indicates" placeholder="What it means"></td>'
+      + '<td><input type="text" value="'+escAttr(k.action||"")+'" data-id="'+k.id+'" data-k="action" placeholder="What to do"></td>'
+      + '<td>'+prioritySelect(k.priority, k.id)+'</td>'
+      + '<td class="col-act"><button class="icon-btn del" onclick="delKw(\''+k.id+'\')">✕</button></td>';
+    host.appendChild(tr);
+  });
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var k = state.keywords.find(function(x){ return x.id===el.dataset.id; });
+      if (k) { k[el.dataset.k] = el.value; renderSpec(); autosave(); }
+    });
+  });
+}
+function prioritySelect(sel, id){
+  var p = ["normal","high","urgent","low"];
+  return '<select data-id="'+id+'" data-k="priority">'+
+    p.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+o+'</option>'; }).join("")+'</select>';
+}
+function addKw(){ state.keywords.push({ id:gid(), kw:"", indicates:"", action:"", priority:"normal" }); renderKw(); renderSpec(); autosave(); }
+function delKw(id){ state.keywords = state.keywords.filter(function(k){ return k.id!==id; }); renderKw(); renderSpec(); autosave(); }
+
+/* ====================================================
+   VIEWS (Tab 6)
+==================================================== */
+function renderViews(){
+  var host = document.getElementById("views-host");
+  host.innerHTML = "";
+  state.views.forEach(function(v){
+    var c = document.createElement("div");
+    c.className = "view-card";
+    c.innerHTML =
+      '<div class="view-hd">'
+      + '<div class="view-hd-l">'
+      + '<span class="view-role-chip">'+escHtml(v.role||"—")+'</span>'
+      + '<input type="text" value="'+escAttr(v.name||"")+'" data-id="'+v.id+'" data-k="name" placeholder="View name" style="font-weight:700;font-size:14px;background:transparent;border:0;border-bottom:1px dashed var(--line-2);padding:2px 0;flex:1">'
+      + '</div>'
+      + '<button class="icon-btn del" onclick="delView(\''+v.id+'\')">✕</button>'
+      + '</div>'
+      + '<div class="view-body">'
+      +   '<div class="f"><label>Filter / what shows up</label>'
+      +     '<textarea data-id="'+v.id+'" data-k="filter" placeholder="e.g. Status = New OR Quoting · sort by due date">'+escHtml(v.filter||"")+'</textarea>'
+      +   '</div>'
+      +   '<div class="f"><label>View Type</label>'+viewTypeSelect(v.type, v.id)+'</div>'
+      + '</div>';
+    host.appendChild(c);
+  });
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var v = state.views.find(function(x){ return x.id===el.dataset.id; });
+      if (v) { v[el.dataset.k] = el.value; renderSpec(); autosave(); }
+    });
+  });
+
+  // Re-render the view cards header role chips based on state.roles
+  // Allow user to assign each view to a role
+  document.querySelectorAll(".view-role-chip").forEach(function(chip, idx){
+    chip.style.cursor = "pointer";
+    chip.title = "Click to reassign role";
+    chip.onclick = function(){
+      var v = state.views[idx];
+      var roles = state.roles.map(function(r){ return r.name; });
+      var current = v.role;
+      var prompt2 = "Assign view to which role?\n" + roles.map(function(r,i){ return (i+1)+". "+r; }).join("\n") + "\nOr type a new name:";
+      var picked = prompt(prompt2, current);
+      if (picked) {
+        var num = parseInt(picked, 10);
+        v.role = (!isNaN(num) && num>=1 && num<=roles.length) ? roles[num-1] : picked;
+        renderViews(); renderSpec(); autosave();
+      }
+    };
+  });
+}
+function viewTypeSelect(sel, id){
+  var t = ["List","Board","Calendar","Gantt","Workload","Timeline","Table","Mind Map","Activity"];
+  return '<select data-id="'+id+'" data-k="type">'+
+    t.map(function(o){ return '<option'+(o===sel?' selected':'')+'>'+o+'</option>'; }).join("")+'</select>';
+}
+function delView(id){ state.views = state.views.filter(function(v){ return v.id!==id; }); renderViews(); renderSpec(); autosave(); }
+function addView(){
+  state.views.push({ id:gid(), role:"", name:"New View", type:"List", filter:"" });
+  renderViews(); renderSpec(); autosave();
+}
+
+/* ====================================================
+   BUILD SPEC (Tab 7)
+==================================================== */
+function renderSpec(){
+  // Spaces
+  var sh = document.getElementById("spec-spaces-host");
+  sh.innerHTML = "";
+  state.spaces.forEach(function(sp){
+    var d = document.createElement("div");
+    d.className = "spec-space";
+    var lists = (sp.lists||[]).map(function(l){
+      return '<span class="spec-list-pill">'+escHtml(l)+' <span class="x" onclick="delList(\''+sp.id+'\',\''+escAttr(l)+'\')">✕</span></span>';
+    }).join("");
+    d.innerHTML =
+      '<div class="spec-space-hd">'
+      + '<input class="spec-space-name" type="text" value="'+escAttr(sp.name)+'" data-id="'+sp.id+'" data-k="name">'
+      + '<button class="icon-btn del" onclick="delSpace(\''+sp.id+'\')">✕</button>'
+      + '</div>'
+      + '<div class="spec-lists">'+lists+'<button class="spec-list-add" onclick="addList(\''+sp.id+'\')">+ list</button></div>';
+    sh.appendChild(d);
+  });
+  sh.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var sp = state.spaces.find(function(x){ return x.id===el.dataset.id; });
+      if (sp) { sp[el.dataset.k] = el.value; autosave(); }
+    });
+  });
+
+  // Statuses (from stages)
+  var stHost = document.getElementById("spec-statuses-host");
+  document.getElementById("ct-statuses").textContent = state.stages.length;
+  if (state.stages.length === 0) {
+    stHost.innerHTML = '<div class="spec-empty">No statuses yet — add stages on Tab 2.</div>';
+  } else {
+    stHost.innerHTML = state.stages.map(function(s, i){
+      return '<span class="spec-pill"><span class="n">'+(i+1)+'</span>'+escHtml(s.name)+'</span>';
+    }).join("");
+  }
+
+  // Custom Fields (aggregated from all stages)
+  var fHost = document.getElementById("spec-fields-host");
+  var allFields = [];
+  state.stages.forEach(function(s){
+    (s.fields||[]).forEach(function(f){
+      if (f.name && f.name.trim()) {
+        allFields.push({ name:f.name, type:f.type, req:f.req, fill:f.fill, stage:s.name });
+      }
+    });
+  });
+  document.getElementById("ct-fields").textContent = allFields.length;
+  if (allFields.length === 0) {
+    fHost.innerHTML = '<div class="spec-empty">No fields yet — add to stages on Tab 3.</div>';
+  } else {
+    fHost.innerHTML =
+      '<table class="spec-fields-tbl"><thead><tr>'
+      + '<th>Field</th><th>Type</th><th>Req</th><th>First seen at</th><th>Filled by</th>'
+      + '</tr></thead><tbody>'
+      + allFields.map(function(f){
+          return '<tr><td><b>'+escHtml(f.name)+'</b></td>'
+            + '<td class="tm">'+escHtml(f.type)+'</td>'
+            + '<td>'+reqChip(f.req)+'</td>'
+            + '<td class="tm">'+escHtml(f.stage)+'</td>'
+            + '<td class="tm">'+escHtml(f.fill||"—")+'</td></tr>';
+        }).join("")
+      + '</tbody></table>';
+  }
+
+  // Platforms / Integrations (aggregated across stages)
+  var pHost = document.getElementById("spec-plats-host");
+  var platUsage = {}; // platform id -> [stage names]
+  state.stages.forEach(function(s){
+    (s.platforms||[]).forEach(function(pid){
+      if (!platUsage[pid]) platUsage[pid] = [];
+      platUsage[pid].push(s.name);
+    });
+  });
+  var platIds = Object.keys(platUsage);
+  document.getElementById("ct-plats").textContent = platIds.length;
+  if (platIds.length === 0) {
+    pHost.innerHTML = '<div class="spec-empty">No platforms tagged yet — add on each stage on Tab 2.</div>';
+  } else {
+    // Sort by usage count desc
+    platIds.sort(function(a,b){ return platUsage[b].length - platUsage[a].length; });
+    pHost.innerHTML =
+      '<table class="spec-fields-tbl"><thead><tr>'
+      + '<th>Platform / Tool</th><th>Used at</th><th># stages</th><th>Integration need</th>'
+      + '</tr></thead><tbody>'
+      + platIds.map(function(pid){
+          var p = platLabel(pid);
+          var stages = platUsage[pid];
+          var integ = inferIntegration(pid, stages.length);
+          return '<tr>'
+            + '<td><b>'+escHtml(p.icon)+' '+escHtml(p.name)+'</b></td>'
+            + '<td class="tm">'+escHtml(stages.join(", "))+'</td>'
+            + '<td>'+stages.length+'</td>'
+            + '<td>'+integ+'</td></tr>';
+        }).join("")
+      + '</tbody></table>';
+  }
+
+  // Roles
+  var rHost = document.getElementById("spec-roles-host");
+  document.getElementById("ct-roles").textContent = state.roles.length;
+  if (state.roles.length === 0) {
+    rHost.innerHTML = '<div class="spec-empty">No roles yet — add on Tab 4.</div>';
+  } else {
+    rHost.innerHTML =
+      '<table class="spec-fields-tbl"><thead><tr>'
+      + '<th>Person</th><th>Tier</th><th>Notify on</th><th>Don\'t notify</th>'
+      + '</tr></thead><tbody>'
+      + state.roles.map(function(r){
+          return '<tr><td><b>'+escHtml(r.name)+'</b><br><span class="tm">'+escHtml(r.title||"")+'</span></td>'
+            + '<td>'+tierChip(r.tier)+'</td>'
+            + '<td>'+escHtml(truncate(r.notify,60))+'</td>'
+            + '<td>'+escHtml(truncate(r.noNotify,60))+'</td></tr>';
+        }).join("")
+      + '</tbody></table>';
+  }
+
+  // Email
+  var eHost = document.getElementById("spec-email-host");
+  var senders = state.senders.filter(function(s){ return s.sender || s.lands; });
+  var keywords = state.keywords.filter(function(k){ return k.kw; });
+  var totalRules = senders.length + keywords.length;
+  document.getElementById("ct-email").textContent = totalRules;
+  if (totalRules === 0) {
+    eHost.innerHTML = '<div class="spec-empty">No routing rules yet — add on Tab 5.</div>';
+  } else {
+    var rules = senders.map(function(s){
+      return '<span class="spec-pill"><span class="n">@</span>'+escHtml(s.sender||"(unnamed)")+' → '+escHtml(s.lands||"—")+'</span>';
+    }).concat(keywords.map(function(k){
+      return '<span class="spec-pill teal"><span class="n">"</span>'+escHtml(k.kw)+' → '+escHtml(truncate(k.action,40))+'</span>';
+    }));
+    eHost.innerHTML = '<div class="spec-list">'+rules.join("")+'</div>';
+  }
+
+  // Views
+  var vHost = document.getElementById("spec-views-host");
+  document.getElementById("ct-views").textContent = state.views.length;
+  if (state.views.length === 0) {
+    vHost.innerHTML = '<div class="spec-empty">No views yet — add on Tab 6.</div>';
+  } else {
+    vHost.innerHTML =
+      '<table class="spec-fields-tbl"><thead><tr>'
+      + '<th>Role</th><th>View Name</th><th>Type</th><th>Filter</th>'
+      + '</tr></thead><tbody>'
+      + state.views.map(function(v){
+          return '<tr><td><b>'+escHtml(v.role||"—")+'</b></td>'
+            + '<td>'+escHtml(v.name||"")+'</td>'
+            + '<td>'+viewChip(v.type)+'</td>'
+            + '<td class="tm">'+escHtml(truncate(v.filter,80))+'</td></tr>';
+        }).join("")
+      + '</tbody></table>';
+  }
+
+  // Apply locks visually
+  Object.keys(state.locks).forEach(function(k){
+    var el = document.getElementById("spec-blk-"+k);
+    if (el) el.classList.toggle("locked", !!state.locks[k]);
+  });
+
+  // Update Build-So-Far chips
+  document.getElementById("bsf-stages").textContent = state.stages.length;
+  document.getElementById("bsf-fields").textContent = allFields.length;
+  document.getElementById("bsf-roles").textContent = state.roles.length;
+  document.getElementById("bsf-routes").textContent = totalRules;
+  document.getElementById("bsf-views").textContent = state.views.length;
+  var lockedCt = Object.values(state.locks).filter(function(x){ return x; }).length;
+  document.getElementById("bsf-locked").textContent = lockedCt;
+
+  // Tab counts
+  document.getElementById("tcnt-data").textContent = allFields.length;
+  document.getElementById("tcnt-roles").textContent = state.roles.length;
+  document.getElementById("tcnt-email").textContent = totalRules;
+  document.getElementById("tcnt-views").textContent = state.views.length;
+  document.getElementById("tcnt-dec").textContent = (state.openQs||[]).length + (state.actions||[]).length;
+
+  // Sync Tab 8 locked decisions
+  renderLocked();
+}
+
+function reqChip(r){
+  if (r==="yes") return '<span class="chip chip-ok chip-mono">YES</span>';
+  if (r==="intake-required") return '<span class="chip chip-warn chip-mono">INTAKE</span>';
+  return '<span class="chip chip-gray chip-mono">NO</span>';
+}
+function tierChip(t){
+  if (t==="Admin") return '<span class="chip chip-purple chip-mono">ADMIN</span>';
+  if (t==="Member") return '<span class="chip chip-blue chip-mono">MEMBER</span>';
+  if (t==="Limited Member") return '<span class="chip chip-gray chip-mono">LIMITED</span>';
+  if (t==="Guest") return '<span class="chip chip-gray chip-mono">GUEST</span>';
+  return escHtml(t||"");
+}
+function viewChip(t){ return '<span class="chip chip-mono chip-blue">'+escHtml((t||"").toUpperCase())+'</span>'; }
+function inferIntegration(pid, count){
+  // Quick heuristic: which platforms need a real integration vs. are already covered
+  var coveredIn = {
+    "outlook":      '<span class="chip chip-teal chip-mono">IN SCOPE · Phase 1B</span>',
+    "shared":       '<span class="chip chip-teal chip-mono">IN SCOPE · Phase 1A</span>',
+    "infoflow":     '<span class="chip chip-warn chip-mono">BCC ONLY · API not available</span>',
+    "clickup":      '<span class="chip chip-ok chip-mono">NATIVE</span>',
+    "fileserver":   '<span class="chip chip-gray chip-mono">MANUAL LINK</span>',
+    "quickbooks":   '<span class="chip chip-purple chip-mono">FUTURE PHASE</span>',
+    "loyaltyloop":  '<span class="chip chip-gray chip-mono">SEPARATE</span>',
+    "mpi4":         '<span class="chip chip-gray chip-mono">SEPARATE</span>',
+    "fiery":        '<span class="chip chip-gray chip-mono">NO INTEGRATION</span>',
+    "phone":        '<span class="chip chip-gray chip-mono">MANUAL CAPTURE</span>',
+    "inperson":     '<span class="chip chip-gray chip-mono">MANUAL CAPTURE</span>',
+    "paper":        '<span class="chip chip-gray chip-mono">MANUAL CAPTURE</span>'
+  };
+  return coveredIn[pid] || '<span class="chip chip-warn chip-mono">REVIEW</span>';
+}
+
+function addSpace(){
+  state.spaces.push({ id:gid(), name:"New Space", lists:[] });
+  renderSpec(); autosave();
+}
+function delSpace(id){
+  if (!confirm("Delete this Space and all its Lists?")) return;
+  state.spaces = state.spaces.filter(function(s){ return s.id!==id; });
+  renderSpec(); autosave();
+}
+function addList(sid){
+  var sp = state.spaces.find(function(x){ return x.id===sid; });
+  if (!sp) return;
+  var n = prompt("New List name:");
+  if (n && n.trim()) {
+    if (!sp.lists) sp.lists = [];
+    sp.lists.push(n.trim());
+    renderSpec(); autosave();
+  }
+}
+function delList(sid, name){
+  var sp = state.spaces.find(function(x){ return x.id===sid; });
+  if (!sp) return;
+  sp.lists = (sp.lists||[]).filter(function(l){ return l!==name; });
+  renderSpec(); autosave();
+}
+function toggleLock(key){
+  state.locks[key] = !state.locks[key];
+  renderSpec(); autosave();
+  showToast(state.locks[key] ? "✓ Locked: " + key : "↺ Unlocked: " + key);
+}
+
+/* ====================================================
+   DECISIONS (Tab 8)
+==================================================== */
+function renderLocked(){
+  var host = document.getElementById("dec-locked-host");
+  var items = [];
+  if (state.locks.spaces) items.push({ block:"Spaces & Lists", detail: state.spaces.length+" Spaces · "+state.spaces.reduce(function(a,s){return a+(s.lists||[]).length;},0)+" Lists" });
+  if (state.locks.statuses) items.push({ block:"Statuses", detail: state.stages.map(function(s){return s.name}).join(" → ") });
+  if (state.locks.fields) {
+    var cf = 0;
+    state.stages.forEach(function(s){ cf += (s.fields||[]).filter(function(f){return f.name && f.name.trim();}).length; });
+    items.push({ block:"Custom Fields", detail: cf+" fields locked" });
+  }
+  if (state.locks.plats) {
+    var allPlats = {};
+    state.stages.forEach(function(s){ (s.platforms||[]).forEach(function(p){ allPlats[p] = true; }); });
+    items.push({ block:"Platforms & Integrations", detail: Object.keys(allPlats).length+" systems identified" });
+  }
+  if (state.locks.roles) items.push({ block:"Roles & Permissions", detail: state.roles.length+" roles configured" });
+  if (state.locks.email) {
+    var s = state.senders.filter(function(x){return x.sender;}).length;
+    var k = state.keywords.filter(function(x){return x.kw;}).length;
+    items.push({ block:"Email Routing", detail: s+" senders · "+k+" keywords" });
+  }
+  if (state.locks.views) items.push({ block:"Views", detail: state.views.length+" views configured" });
+
+  if (items.length === 0) {
+    host.innerHTML = '<div class="spec-empty">Lock blocks on Tab 7 (Build Spec) to populate this list.</div>';
+    return;
+  }
+  host.innerHTML = items.map(function(it){
+    return '<div class="dec-i locked">'
+      + '<span style="color:var(--teal);font-weight:700;flex-shrink:0">✓</span>'
+      + '<div style="flex:1"><b>'+escHtml(it.block)+'</b><br><span style="font-size:11px;color:var(--ink-3)">'+escHtml(it.detail)+'</span></div>'
+      + '</div>';
+  }).join("");
+}
+
+function renderOpen(){
+  var host = document.getElementById("dec-open-host");
+  if (!state.openQs || state.openQs.length === 0) {
+    host.innerHTML = '<div class="spec-empty">No open questions logged yet.</div>';
+    return;
+  }
+  host.innerHTML = "";
+  state.openQs.forEach(function(q){
+    var d = document.createElement("div");
+    d.className = "dec-i open";
+    d.innerHTML =
+      '<span style="color:var(--warn);font-weight:700;flex-shrink:0">?</span>'
+      + '<input type="text" value="'+escAttr(q.text||"")+'" data-id="'+q.id+'" placeholder="Open question — needs answer before build">'
+      + '<button class="icon-btn del" onclick="delOpen(\''+q.id+'\')">✕</button>';
+    host.appendChild(d);
+  });
+  host.querySelectorAll("[data-id]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var q = state.openQs.find(function(x){ return x.id===el.dataset.id; });
+      if (q) { q.text = el.value; autosave(); }
+    });
+  });
+}
+function addOpen(){
+  if (!state.openQs) state.openQs = [];
+  state.openQs.push({ id:gid(), text:"" });
+  renderOpen(); autosave();
+}
+function delOpen(id){
+  state.openQs = state.openQs.filter(function(q){ return q.id!==id; });
+  renderOpen(); autosave();
+}
+
+function renderActions(){
+  var host = document.getElementById("act-host");
+  if (!state.actions) state.actions = [];
+  if (state.actions.length === 0) {
+    host.innerHTML = '<div class="spec-empty" style="text-align:left">No action items yet. Add one with the button above.</div>';
+    return;
+  }
+  host.innerHTML = "";
+  state.actions.forEach(function(a){
+    var d = document.createElement("div");
+    d.className = "act-grid";
+    d.innerHTML =
+      '<input type="text" value="'+escAttr(a.action||"")+'" data-id="'+a.id+'" data-k="action" placeholder="What needs to happen">'
+      + '<select data-id="'+a.id+'" data-k="owner">'+ownerOpts(a.owner)+'</select>'
+      + '<input type="text" value="'+escAttr(a.due||"")+'" data-id="'+a.id+'" data-k="due" placeholder="e.g. before build">'
+      + '<button class="icon-btn del" onclick="delAction(\''+a.id+'\')">✕</button>';
+    host.appendChild(d);
+  });
+  host.querySelectorAll("[data-id][data-k]").forEach(function(el){
+    el.addEventListener("input", function(){
+      var a = state.actions.find(function(x){ return x.id===el.dataset.id; });
+      if (a) { a[el.dataset.k] = el.value; autosave(); }
+    });
+  });
+}
+function addAction(){
+  state.actions.push({ id:gid(), action:"", owner:"", due:"" });
+  renderActions(); autosave();
+}
+function delAction(id){
+  state.actions = state.actions.filter(function(a){ return a.id!==id; });
+  renderActions(); autosave();
+}
+
+/* ====================================================
+   UTILITY
+==================================================== */
+function escHtml(s){
+  if (s === null || s === undefined) return "";
+  return String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function escAttr(s){
+  if (s === null || s === undefined) return "";
+  return String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/\n/g," ");
+}
+function truncate(s, n){
+  if (!s) return "";
+  return s.length > n ? s.slice(0, n-1) + "…" : s;
+}
+
+/* ====================================================
+   RENDER ALL
+==================================================== */
+function renderAll(){
+  renderLifeline();
+  renderStages();
+  renderDataTab();
+  renderRoles();
+  renderSenders();
+  renderKw();
+  renderViews();
+  renderSpec();
+  renderOpen();
+  renderActions();
+  // Restore freeform fields
+  var cd = document.getElementById("call-date"); if (cd && state.callDate) cd.value = state.callDate;
+  var ef = document.getElementById("edge-filter"); if (ef) ef.value = state.edgeFilter || "";
+  var em = document.getElementById("edge-multi");  if (em) em.value = state.edgeMulti  || "";
+  var eo = document.getElementById("edge-other");  if (eo) eo.value = state.edgeOther  || "";
+}
+
+/* Bind edge case fields to autosave */
+document.addEventListener("input", function(e){
+  if (e.target.id === "edge-filter" || e.target.id === "edge-multi" || e.target.id === "edge-other" || e.target.id === "call-date") {
+    autosave();
+  }
+});
+
+/* Auto-save every 30s as a safety net */
+setInterval(autosave, 30000);
+
+/* ====================================================
+   BOOT
+==================================================== */
+(function(){
+  var loaded = loadData();
+  if (!loaded) {
+    seedDefault();
+  }
+  // Ensure shape (for old saves missing newer fields)
+  if (!state.locks) state.locks = { spaces:false, statuses:false, fields:false, plats:false, roles:false, email:false, views:false };
+  if (state.locks && state.locks.plats === undefined) state.locks.plats = false;
+  if (!state.openQs) state.openQs = [];
+  if (!state.actions) state.actions = [];
+  if (!state.spaces) state.spaces = [];
+  // Per-stage migration: add new discovery fields if missing, ensure field IDs exist
+  (state.stages||[]).forEach(function(s){
+    if (s.people === undefined)      s.people = "";
+    if (!s.platforms)                s.platforms = [];
+    if (s.decisions === undefined)   s.decisions = "";
+    if (!s.docsCreated)              s.docsCreated = [];
+    if (!s.docsRef)                  s.docsRef = [];
+    if (s.handoff === undefined)     s.handoff = "";
+    if (s.bottlenecks === undefined) s.bottlenecks = "";
+    if (!s.fields)                   s.fields = [];
+    s.fields.forEach(function(f){ if (!f.id) f.id = gid(); });
+    s.docsCreated.forEach(function(d){ if (!d.id) d.id = gid(); });
+    s.docsRef.forEach(function(d){ if (!d.id) d.id = gid(); });
+  });
+  renderAll();
+})();
+</script>
 </body>
 </html>
