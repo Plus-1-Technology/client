@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PhaseAlpha — Project Update | Plus 1 Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:   #0F1E35;
+    --blue:   #1A3A5C;
+    --accent: #2563EB;
+    --sky:    #EFF6FF;
+    --ink:    #1E293B;
+    --muted:  #64748B;
+    --rule:   #CBD5E1;
+    --white:  #FFFFFF;
+    --green:  #059669;
+    --green-bg: #ECFDF5;
+    --amber:  #B45309;
+    --amber-bg: #FFFBEB;
+    --page-max: 860px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F7F8FB;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    background: var(--navy);
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, #60A5FA 60%, transparent 100%);
+  }
+  .header-inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #60A5FA;
+    margin-bottom: 16px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 52px);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .header-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+  }
+  .header-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,0.35); font-weight: 500; }
+  .meta-value { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 400; }
+
+  /* ── NAV ── */
+  .doc-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    overflow-x: auto;
+  }
+  .nav-inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    display: flex;
+    padding: 0 40px;
+    gap: 0;
+  }
+  .nav-link {
+    display: block;
+    padding: 14px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .nav-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── BODY ── */
+  .doc-body {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding-top: 64px;
+  }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 36px 0 10px;
+  }
+
+  p {
+    color: var(--ink);
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 48px 0 0;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--sky);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .callout-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .callout p { margin: 0; font-size: 14.5px; }
+
+  .callout.green {
+    background: var(--green-bg);
+    border-color: var(--green);
+  }
+  .callout.green .callout-label { color: var(--green); }
+
+  /* ── STATUS TABLE ── */
+  .status-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14px;
+  }
+  .status-table thead tr {
+    background: var(--navy);
+  }
+  .status-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+  .status-table tbody tr:nth-child(odd) { background: var(--white); }
+  .status-table tbody tr:nth-child(even) { background: #F8FAFC; }
+  .status-table td {
+    padding: 13px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid #EEF2F7;
+  }
+  .status-table .phase-name {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 13.5px;
+  }
+  .status-table .phase-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-done   { background: var(--green-bg); color: var(--green); }
+  .badge-active { background: var(--sky); color: var(--accent); }
+  .badge-next   { background: #FFF7ED; color: #C2410C; }
+
+  /* ── COMPARISON GRID ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 28px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+  .compare-col {
+    padding: 24px 24px 28px;
+  }
+  .compare-col.before { background: #F8FAFC; }
+  .compare-col.after  { background: var(--green-bg); }
+  .compare-col-head {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .compare-col.before .compare-col-head { color: var(--muted); }
+  .compare-col.after  .compare-col-head { color: var(--green); }
+  .compare-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13.5px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .compare-item .icon { flex-shrink: 0; margin-top: 1px; font-size: 12px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    margin: 28px 0;
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--rule);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--white);
+  }
+  .tl-item.done::before { background: var(--accent); border-color: var(--accent); }
+  .tl-item.current::before { background: var(--white); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+  .tl-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .tl-label { font-weight: 600; font-size: 14px; color: var(--navy); }
+  .tl-est { font-size: 12px; color: var(--muted); }
+  .tl-note { font-size: 13.5px; color: var(--ink); line-height: 1.6; }
+
+  /* ── PLAIN TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 20px 0;
+  }
+  .data-table thead th {
+    background: var(--navy);
+    color: rgba(255,255,255,0.75);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .data-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .data-table tbody tr:nth-child(even) { background: #F8FAFC; }
+  .data-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #EEF2F7;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .data-table td:first-child { font-weight: 600; color: var(--navy); white-space: nowrap; }
+
+  /* ── RETIRED LIST ── */
+  .retired-box {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .retired-box-head {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #92400E;
+    margin-bottom: 14px;
+  }
+  .retired-item {
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .retired-item .ri-name { font-weight: 600; min-width: 130px; }
+  .retired-item .ri-arrow { color: var(--muted); }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    background: var(--navy);
+    padding: 32px 40px;
+    margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-brand { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .footer-brand strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+  .footer-conf { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+
+  @media (max-width: 600px) {
+    .doc-header, .doc-body { padding-left: 20px; padding-right: 20px; }
+    .nav-inner { padding: 0 20px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 26px; }
+  }
+
+  @media print {
+    .doc-nav { display: none; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="doc-header">
+  <div class="header-inner">
+    <div class="header-label">Plus 1 Technology — Client Update</div>
+    <h1 class="header-title">PhaseAlpha<br>Project Update</h1>
+    <div class="header-sub">Proposal, What Changed, and Where We Are</div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Prepared By</span>
+        <span class="meta-value">Plus 1 Technology</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared For</span>
+        <span class="meta-value">PhaseAlpha</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">June 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Classification</span>
+        <span class="meta-value">Confidential</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="doc-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#proposal">The Proposal</a>
+    <a class="nav-link" href="#what-changed">What Changed</a>
+    <a class="nav-link" href="#why">Why We Transitioned</a>
+    <a class="nav-link" href="#timeline">Timeline</a>
+    <a class="nav-link" href="#cost">Cost</a>
+  </div>
+</nav>
+
+<!-- BODY -->
+<main class="doc-body">
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-number">01 — Overview</div>
+    <h2>Where Things Stand</h2>
+    <p class="lead">The original proposal laid out a path from proof-of-concept to production. We followed that path, and made one significant decision along the way: instead of a multi-step migration through .NET, we moved directly to Microsoft Azure. The system is live, processing real PDFs, and ready for final handoff to your environment.</p>
+
+    <div class="callout green">
+      <div class="callout-label">Current Status</div>
+      <p>The Azure-native service is live and verified as of June 2026. The service runs entirely within the Microsoft ecosystem — your data stays in Microsoft infrastructure, not spread across third-party platforms.</p>
+    </div>
+
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th style="width:34%">Phase</th>
+          <th style="width:16%">Status</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="phase-name">Phase 0 — n8n Pilot</div>
+          </td>
+          <td><span class="badge badge-done">Done</span></td>
+          <td>Built and tested the full extraction workflow in n8n against real HVAC schedule PDFs from all three engineering firms. Proved the concept worked.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="phase-name">Architecture Decision</div>
+          </td>
+          <td><span class="badge badge-done">Done</span></td>
+          <td>After pilot results, we moved directly to Azure instead of the planned .NET intermediate step. Fewer steps, same destination.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="phase-name">Azure Build and Deployment</div>
+          </td>
+          <td><span class="badge badge-done">Done</span></td>
+          <td>Service running in Azure Container Apps with Azure Document Intelligence, Azure OpenAI, Blob Storage, Key Vault, and Managed Identity.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="phase-name">Production Validation</div>
+          </td>
+          <td><span class="badge badge-active">In Progress</span></td>
+          <td>Final document testing underway. Results will be complete before this document is distributed.</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="phase-name">Client Tenant Cutover</div>
+          </td>
+          <td><span class="badge badge-next">Up Next</span></td>
+          <td>Once testing is signed off, we provision the service in your Azure environment and validate the full setup.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="rule"/>
+
+  <!-- THE PROPOSAL -->
+  <section class="section" id="proposal">
+    <div class="section-number">02 — The Proposal</div>
+    <h2>What We Proposed</h2>
+    <p class="lead">The original proposal described a staged build from proof-of-concept through production. Here's what that looked like on paper, and the time estimates attached to each phase.</p>
+
+    <h3>Original Phases and Estimates</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Description</th>
+          <th>Days</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Phase 0 — n8n Pilot</td>
+          <td>Build and test the extraction pipeline in n8n against real PDFs.</td>
+          <td>15–25 days</td>
+          <td>~120–200 hrs</td>
+        </tr>
+        <tr>
+          <td>Phase 1 — API Hardening</td>
+          <td>Harden n8n into a stable API with retry logic, monitoring, and alerting.</td>
+          <td>5–7 days</td>
+          <td>~40–56 hrs</td>
+        </tr>
+        <tr>
+          <td>Phase 2 — .NET Integration</td>
+          <td>Migrate the proven pipeline into the PhaseAlpha .NET application.</td>
+          <td>15–25 days</td>
+          <td>~120–200 hrs</td>
+        </tr>
+        <tr>
+          <td>Phase 3 — Production Hardening</td>
+          <td>Load testing, threshold calibration, monitoring, and handoff documentation.</td>
+          <td>10–15 days</td>
+          <td>~80–120 hrs</td>
+        </tr>
+        <tr style="background:#F1F5F9;font-weight:600;">
+          <td>Total (original path)</td>
+          <td></td>
+          <td>45–72 days</td>
+          <td>~360–576 hrs</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="rule"/>
+
+  <!-- WHAT CHANGED -->
+  <section class="section" id="what-changed">
+    <div class="section-number">03 — What Changed</div>
+    <h2>What Actually Happened</h2>
+    <p class="lead">The pilot went as planned. The decision after the pilot did not follow the original script — and that turned out to be the right call.</p>
+
+    <div class="compare-grid">
+      <div class="compare-col before">
+        <div class="compare-col-head">Original Plan</div>
+        <div class="compare-item"><span class="icon">→</span> n8n pilot (120–200 hrs)</div>
+        <div class="compare-item"><span class="icon">→</span> API hardening (40–56 hrs)</div>
+        <div class="compare-item"><span class="icon">→</span> .NET integration (120–200 hrs)</div>
+        <div class="compare-item"><span class="icon">→</span> Production hardening (80–120 hrs)</div>
+        <div class="compare-item"><span class="icon">→</span> <strong>Total: ~360–576 hrs</strong></div>
+      </div>
+      <div class="compare-col after">
+        <div class="compare-col-head">What Happened</div>
+        <div class="compare-item"><span class="icon">✓</span> n8n pilot completed</div>
+        <div class="compare-item"><span class="icon">✓</span> Azure build (replaced Phase 1 + 2)</div>
+        <div class="compare-item"><span class="icon">✓</span> Hardening built into Azure from day one</div>
+        <div class="compare-item"><span class="icon">✓</span> Validation underway</div>
+        <div class="compare-item"><span class="icon">→</span> Client tenant cutover remaining</div>
+      </div>
+    </div>
+
+    <h3>What's No Longer in the Stack</h3>
+    <p>The following tools were part of the pilot phase. They served their purpose and have been retired.</p>
+
+    <div class="retired-box">
+      <div class="retired-box-head">Retired from Production</div>
+      <div class="retired-item">
+        <span class="ri-name">n8n</span>
+        <span class="ri-arrow">→</span>
+        <span>Replaced by Azure Container Apps. Workflow orchestration now runs natively inside the FastAPI service — no external tool needed.</span>
+      </div>
+      <div class="retired-item">
+        <span class="ri-name">Railway</span>
+        <span class="ri-arrow">→</span>
+        <span>Replaced by Azure Container Apps. Python hosting is now fully inside Microsoft infrastructure.</span>
+      </div>
+      <div class="retired-item">
+        <span class="ri-name">LlamaParse</span>
+        <span class="ri-arrow">→</span>
+        <span>Replaced by Azure Document Intelligence and PyMuPDF. Both run natively in Azure with no third-party cloud dependency.</span>
+      </div>
+      <div class="retired-item">
+        <span class="ri-name">Anthropic Claude</span>
+        <span class="ri-arrow">→</span>
+        <span>Replaced by Azure OpenAI. Keeps AI review entirely within your Microsoft tenant and existing compliance posture.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule"/>
+
+  <!-- WHY -->
+  <section class="section" id="why">
+    <div class="section-number">04 — The Decision</div>
+    <h2>Why We Transitioned to Azure</h2>
+    <p class="lead">Once the n8n pilot confirmed the extraction logic worked, we had a decision: follow the original path through .NET, or move directly to Azure. We chose Azure, and here's why.</p>
+
+    <h3>The .NET step became unnecessary</h3>
+    <p>The original reason for a .NET migration was to get the proven pipeline into the PhaseAlpha application stack. Azure Container Apps gives us a production-grade, managed runtime without rewriting the service in a different language. Adding a .NET port on top of a working service would have added 120–200 hours with no functional benefit.</p>
+
+    <h3>Everything under one roof</h3>
+    <p>The pilot stack had components across three platforms: n8n for orchestration, Railway for hosting, and third-party APIs for parsing and AI. That means three vendor relationships, three billing accounts, and three places for something to go wrong. The Azure build puts all of it into one environment that already fits inside PhaseAlpha's Microsoft ecosystem.</p>
+
+    <h3>Security and ownership</h3>
+    <p>The pilot used API keys across multiple services. The current setup uses Azure Key Vault and Managed Identity — no credentials in code, and access controlled at the resource level. When the service moves to your Azure tenant, you own it outright with no ongoing dependency on Plus 1 infrastructure.</p>
+
+    <h3>Cost</h3>
+    <p>The original proposal estimated $0.054–$0.91 per schedule page depending on the approach. The Azure-native build is running at roughly $0.02 per job in current testing. That reduction comes from removing LlamaParse (a paid third-party tier) and consolidating AI review into a single Azure OpenAI call instead of multiple passes.</p>
+  </section>
+
+  <hr class="rule"/>
+
+  <!-- TIMELINE -->
+  <section class="section" id="timeline">
+    <div class="section-number">05 — Timeline</div>
+    <h2>Time Estimates: Original Plan vs. What Was Built</h2>
+    <p class="lead">The original plan estimated 135–183 hours across all phases. The table below shows each phase from the proposal, its estimated hours, and what replaced or covered it in the actual build.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Phase</th>
+          <th style="width:18%">Original Estimate</th>
+          <th style="width:20%">What Happened</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Phase 0A — n8n Pilot<br><small style="color:var(--muted);font-weight:400;">Fast path build</small></td>
+          <td>~80–100 hrs<br><small style="color:var(--muted);">~2 weeks</small></td>
+          <td><span style="color:var(--green);font-weight:600;">Completed</span><br><small style="color:var(--muted);">April 1–13, 2026</small></td>
+          <td>Delivered in ~2 weeks. Full pipeline tested against Bluestone, MODUS, Shive, and Advent PDFs.</td>
+        </tr>
+        <tr>
+          <td>Phase 0B — Dual Detector<br><small style="color:var(--muted);font-weight:400;">Docling fallback option</small></td>
+          <td>+~32 hrs<br><small style="color:var(--muted);">+1 week</small></td>
+          <td><span style="color:var(--green);font-weight:600;">Resolved early</span></td>
+          <td>Testing showed Claude discovery outperformed LlamaParse as primary detector. Docling was evaluated but not needed. Decision made without a full separate phase.</td>
+        </tr>
+        <tr>
+          <td>Phase 1 — API Hardening<br><small style="color:var(--muted);font-weight:400;">n8n → stable API</small></td>
+          <td>~40–56 hrs<br><small style="color:var(--muted);">1–2 weeks</small></td>
+          <td><span style="color:var(--accent);font-weight:600;">Moved to Phase 4</span></td>
+          <td>Delivered as part of the Microsoft build and transition. Not a separate phase.</td>
+        </tr>
+        <tr>
+          <td>Phase 2 — .NET Integration<br><small style="color:var(--muted);font-weight:400;">n8n → PhaseAlpha .NET</small></td>
+          <td>~120–200 hrs<br><small style="color:var(--muted);">3–5 weeks</small></td>
+          <td><span style="color:var(--accent);font-weight:600;">Replaced by Phase 4</span></td>
+          <td>Eliminated. The Microsoft Azure build delivered the same production-grade result without a .NET rewrite.</td>
+        </tr>
+        <tr>
+          <td>Phase 3 — Production Hardening<br><small style="color:var(--muted);font-weight:400;">Load testing, monitoring, handoff</small></td>
+          <td>~80–120 hrs<br><small style="color:var(--muted);">2–3 weeks</small></td>
+          <td><span style="color:var(--accent);font-weight:600;">Moved to Phase 4</span></td>
+          <td>Monitoring, security, artifact lifecycle, Key Vault, and Managed Identity were built into the Azure service from the start. Not a separate phase.</td>
+        </tr>
+        <tr style="background:#EFF6FF;">
+          <td><strong>Phase 4 — Microsoft Build &amp; Transition</strong><br><small style="color:var(--muted);font-weight:400;">Includes API hardening + production hardening</small></td>
+          <td><strong>~270–640 hrs</strong></td>
+          <td><span style="color:var(--green);font-weight:600;">Completed</span></td>
+          <td>New scope — not in the original proposal. Carried over rules, prompts, and data from Phase 0. Replaced Phases 1, 2, and 3 in a single integrated build. Workstreams: vendor card/rule curation (60–160 hrs), core pipeline + specialists + merge logic (90–240 hrs), scoring contract (30–60 hrs), DI custom model + autoretrain (30–60 hrs), Azure migration — Container Apps, MI, Key Vault, Blob, deploy (30–60 hrs), testing and documentation (30–60 hrs).</td>
+        </tr>
+        <tr style="background:#F1F5F9;">
+          <td><strong>Original Plan Total</strong><br><small style="color:var(--muted);font-weight:400;">Phases 0–3 as proposed</small></td>
+          <td><strong>~375–576 hrs</strong></td>
+          <td colspan="2" style="color:var(--muted);">Phase 0A (~80–100) + Phase 0B (+32) + Phase 1 (~40–56) + Phase 2 (~120–200) + Phase 3 (~80–120). Excludes scope reductions from Layers 1–2 handoff.</td>
+        </tr>
+        <tr style="background:#EFF6FF;">
+          <td><strong>Actual Total</strong><br><small style="color:var(--muted);font-weight:400;">Phase 0 + Phase 4</small></td>
+          <td><strong>~350–800 hrs</strong></td>
+          <td colspan="2" style="color:var(--muted);">Phase 0 (~80–100) + Phase 4 Microsoft build (~270–640). Phases 1–3 absorbed into Phase 4. Does not include client tenant cutover.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout green">
+      <div class="callout-label">Client Tenant Cutover</div>
+      <p>The service currently runs in the Plus 1 Azure environment. The final step is provisioning it in your Azure tenant. Timeline to be confirmed after validation is complete.</p>
+    </div>
+  </section>
+
+  <hr class="rule"/>
+
+  <!-- COST -->
+  <section class="section" id="cost">
+    <div class="section-number">06 — Cost</div>
+    <h2>Processing Cost</h2>
+    <p class="lead">The original proposal estimated processing costs based on the n8n plus LlamaParse plus Claude stack. The Azure build changes those inputs significantly.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Cost Driver</th>
+          <th>Original Estimate</th>
+          <th>Current Stack</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Per schedule page (standard)</td>
+          <td>$0.054–$0.19</td>
+          <td>~$0.02 per job in current testing</td>
+        </tr>
+        <tr>
+          <td>Per schedule page (dense, with fallback)</td>
+          <td>$0.19–$0.91</td>
+          <td>No fallback service — one consolidated review pass</td>
+        </tr>
+        <tr>
+          <td>LlamaParse (document parsing)</td>
+          <td>Paid tier for heavy use</td>
+          <td>Removed — replaced by Azure Document Intelligence</td>
+        </tr>
+        <tr>
+          <td>Third-party AI review</td>
+          <td>Anthropic API per-token pricing</td>
+          <td>Azure OpenAI — inside your Microsoft agreement</td>
+        </tr>
+        <tr>
+          <td>Orchestration platform</td>
+          <td>n8n Cloud subscription</td>
+          <td>Removed — runs natively in Container Apps</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The cost reduction comes from two structural changes: removing LlamaParse as a paid dependency, and replacing the multi-call Anthropic review with a single Azure OpenAI pass. Actual per-document costs will vary with PDF complexity and the number of schedule tables that need AI review. Simpler documents will be cheaper; dense multi-schedule plans will cost more. Final per-page numbers will be confirmed once production testing is complete.</p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="doc-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><strong>Plus 1 Technology</strong> — plus1technology.com — 610-792-5660</div>
+    <div class="footer-conf">Confidential — Prepared for PhaseAlpha — June 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
