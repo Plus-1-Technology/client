@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClickUp Setup Guide — Everything Printing | Plus 1 Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1419A0; --navy-dark: #0c1080; --navy-dim: #eaecf8; --navy-mid: #b8bcdf;
+  --cyan: #00B9FF; --cyan-dim: #e0f5ff;
+  --bg: #f5f6fb; --bg2: #fff; --border: #e2e6f0;
+  --text: #181f3a; --muted: #596080; --subtle: #909bbf;
+  --green: #0f9056; --green-bg: #edfaf3; --green-bd: #ade5c5;
+  --yellow: #b05e0a; --yellow-bg: #fff8ed; --yellow-bd: #f9d89a;
+  --red: #d12b2b; --red-bg: #fef2f2; --red-bd: #f9b8b8;
+  --purple: #6c2fd6; --purple-bg: #f4f0fd;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 10px; --r2: 14px;
+  --sh: 0 1px 4px rgba(20,25,160,.07), 0 1px 2px rgba(0,0,0,.04);
+  --sh2: 0 4px 20px rgba(20,25,160,.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+/* ── HEADER ── */
+.doc-header { background: linear-gradient(135deg, #08095c 0%, #1419A0 55%, #1a5fa8 100%); border-bottom: 4px solid var(--cyan); padding: 36px 48px 30px; color: #fff; position: relative; overflow: hidden; }
+.doc-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 0%, rgba(0,185,255,.18) 0%, transparent 55%); pointer-events: none; }
+.doc-header-eyebrow { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 700; margin-bottom: 8px; }
+.doc-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 6px; }
+.doc-header-sub { font-size: 14px; color: rgba(255,255,255,.72); max-width: 680px; }
+.doc-header-meta { display: flex; gap: 28px; margin-top: 22px; flex-wrap: wrap; }
+.meta-item label { font-size: 9px; text-transform: uppercase; letter-spacing: .13em; color: rgba(255,255,255,.4); font-weight: 700; display: block; margin-bottom: 3px; }
+.meta-item span { font-size: 13px; font-weight: 700; color: #fff; }
+
+/* ── MAIN ── */
+.doc-body { max-width: 980px; margin: 0 auto; padding: 40px 32px 80px; }
+
+/* ── SECTION LABEL ── */
+.section-label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); font-weight: 800; margin-bottom: 6px; }
+.section-title { font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--text); margin-bottom: 6px; }
+.section-desc { font-size: 13.5px; color: var(--muted); max-width: 780px; line-height: 1.6; margin-bottom: 24px; }
+.section-block { margin-bottom: 52px; }
+
+/* ── CALLOUT ── */
+.callout { border-radius: var(--r); padding: 14px 18px; margin: 14px 0 20px; border-left: 4px solid; font-size: 13px; line-height: 1.55; }
+.callout.blue { background: var(--navy-dim); border-color: var(--navy); }
+.callout.green { background: var(--green-bg); border-color: var(--green); }
+.callout.yellow { background: var(--yellow-bg); border-color: var(--yellow); }
+.callout.red { background: var(--red-bg); border-color: var(--red); }
+.callout b { font-weight: 700; }
+.callout a { color: var(--navy); font-weight: 600; }
+
+/* ── STEP ── */
+.step-block { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; margin-bottom: 36px; }
+.step-block.reverse { direction: rtl; }
+.step-block.reverse > * { direction: ltr; }
+.step-block.full { grid-template-columns: 1fr; }
+.step-info { }
+.step-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--navy); color: #fff; border-radius: 50%; font-family: var(--mono); font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+.step-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.step-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.step-body p { margin-bottom: 8px; }
+.step-body ul { margin: 8px 0 8px 18px; }
+.step-body li { margin-bottom: 4px; }
+.step-body strong { color: var(--text); font-weight: 700; }
+.step-tip { background: var(--cyan-dim); border-left: 3px solid var(--cyan); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #0a5a80; margin-top: 10px; }
+.step-tip b { font-weight: 700; }
+
+/* ── SCREENSHOT MOCKUP ── */
+.mockup { border-radius: var(--r2); overflow: hidden; box-shadow: var(--sh2); border: 1px solid var(--border); background: #1e1e2e; }
+.mockup-bar { background: #2a2a3e; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.mockup-dots { display: flex; gap: 5px; }
+.mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mockup-dot.r { background: #ff5f57; }
+.mockup-dot.y { background: #febc2e; }
+.mockup-dot.g { background: #28c840; }
+.mockup-url { flex: 1; background: rgba(255,255,255,.07); border-radius: 5px; padding: 5px 12px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.5); }
+.mockup-body { padding: 0; }
+
+/* ── MOCKUP COMPONENTS ── */
+.cu-signup { padding: 40px 30px; background: #fff; display: flex; flex-direction: column; align-items: center; }
+.cu-logo { font-weight: 800; font-size: 18px; color: #7b68ee; margin-bottom: 28px; }
+.cu-heading { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-bottom: 6px; text-align: center; }
+.cu-sub { font-size: 12px; color: #777; margin-bottom: 22px; text-align: center; }
+.cu-field { width: 100%; border: 1.5px solid #e0e0ea; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 10px; color: #1a1a2e; background: #fafafa; }
+.cu-field.filled { background: #f4f0ff; border-color: #b0a0f0; color: #1a1a2e; }
+.cu-btn { width: 100%; padding: 12px; border-radius: 8px; background: #7b68ee; color: #fff; font-weight: 700; font-size: 14px; border: none; cursor: pointer; margin-top: 4px; }
+.cu-btn.outline { background: #fff; color: #7b68ee; border: 2px solid #7b68ee; }
+.cu-divider { width: 100%; text-align: center; color: #aaa; font-size: 12px; margin: 12px 0; position: relative; }
+.cu-divider::before { content: ''; position: absolute; left: 0; top: 50%; width: 42%; height: 1px; background: #e0e0ea; }
+.cu-divider::after { content: ''; position: absolute; right: 0; top: 50%; width: 42%; height: 1px; background: #e0e0ea; }
+.cu-link { font-size: 12px; color: #7b68ee; text-align: center; margin-top: 12px; }
+.cu-promo { background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 12px; font-size: 11.5px; color: #92400e; font-weight: 600; margin-bottom: 14px; width: 100%; text-align: center; }
+.cu-referral-tag { background: #f0fdf4; border: 1px solid #ade5c5; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #0f9056; font-weight: 600; margin-bottom: 14px; width: 100%; text-align: center; }
+
+/* plan select mockup */
+.plan-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; background: #f9f9fc; }
+.plan-card { background: #fff; border: 2px solid #e0e0ea; border-radius: 12px; padding: 14px; text-align: center; }
+.plan-card.selected { border-color: #7b68ee; background: #f4f0ff; }
+.plan-card .plan-name { font-weight: 800; font-size: 13px; color: #1a1a2e; margin-bottom: 4px; }
+.plan-card .plan-price { font-family: var(--mono); font-size: 18px; font-weight: 700; color: #7b68ee; margin-bottom: 2px; }
+.plan-card .plan-per { font-size: 10px; color: #aaa; margin-bottom: 8px; }
+.plan-card .plan-badge { display: inline-block; background: #7b68ee; color: #fff; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+.plan-card .plan-feature { font-size: 10.5px; color: #666; text-align: left; margin-bottom: 3px; }
+.plan-card .plan-feature::before { content: '✓ '; color: #0f9056; font-weight: 700; }
+
+/* workspace name mockup */
+.cu-workspace { padding: 36px 28px; background: #fff; }
+.cu-ws-step { font-size: 10px; color: #aaa; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.cu-ws-title { font-size: 18px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+.cu-ws-desc { font-size: 12px; color: #888; margin-bottom: 18px; }
+.cu-ws-label { font-size: 12px; font-weight: 700; color: #444; margin-bottom: 5px; }
+.cu-ws-input { width: 100%; border: 2px solid #7b68ee; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #1a1a2e; background: #f9f8ff; margin-bottom: 16px; }
+.cu-ws-progress { display: flex; gap: 5px; margin-bottom: 20px; }
+.cu-ws-dot { flex: 1; height: 4px; border-radius: 2px; background: #e0e0ea; }
+.cu-ws-dot.done { background: #7b68ee; }
+
+/* settings mockup */
+.cu-settings { display: grid; grid-template-columns: 180px 1fr; min-height: 200px; background: #fff; }
+.cu-settings-nav { background: #f5f5fc; border-right: 1px solid #e8e8f0; padding: 14px 0; }
+.cu-settings-nav-item { padding: 8px 14px; font-size: 12px; font-weight: 600; color: #666; display: flex; align-items: center; gap: 7px; }
+.cu-settings-nav-item.active { background: #ede9fc; color: #7b68ee; font-weight: 700; }
+.cu-settings-nav-icon { font-size: 12px; }
+.cu-settings-nav-section { padding: 8px 14px 4px; font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: #bbb; font-weight: 700; }
+.cu-settings-main { padding: 20px; }
+.cu-settings-title { font-size: 16px; font-weight: 800; color: #1a1a2e; margin-bottom: 14px; }
+
+/* people table mockup */
+.cu-people-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.cu-invite-btn { background: #7b68ee; color: #fff; padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 700; border: none; }
+.cu-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cu-table th { text-align: left; padding: 7px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: #aaa; font-weight: 700; border-bottom: 1px solid #f0f0f5; }
+.cu-table td { padding: 9px 10px; border-bottom: 1px solid #f5f5f8; vertical-align: middle; }
+.cu-table tr:last-child td { border-bottom: none; }
+.cu-avatar { width: 26px; height: 26px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 10px; color: #fff; margin-right: 7px; }
+.cu-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.cu-tag.owner { background: #fef9c3; color: #92400e; }
+.cu-tag.admin { background: #ede9fc; color: #6d28d9; }
+.cu-tag.member { background: #e8ecf8; color: #3730a3; }
+
+/* invite modal mockup */
+.cu-modal { background: #fff; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,0,0,.18); padding: 24px; margin: 20px; }
+.cu-modal-title { font-size: 16px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+.cu-modal-sub { font-size: 12px; color: #888; margin-bottom: 16px; }
+.cu-modal-field { border: 1.5px solid #e0e0ea; border-radius: 8px; padding: 9px 14px; font-size: 12.5px; width: 100%; margin-bottom: 10px; }
+.cu-modal-field.filled { border-color: #7b68ee; background: #f9f8ff; color: #1a1a2e; font-weight: 600; }
+.cu-role-select { border: 1.5px solid #7b68ee; border-radius: 8px; padding: 9px 14px; font-size: 12.5px; width: 100%; margin-bottom: 14px; background: #f4f0ff; color: #1a1a2e; font-weight: 700; }
+.cu-modal-actions { display: flex; gap: 10px; }
+.cu-modal-btn { flex: 1; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; border: none; cursor: pointer; }
+.cu-modal-btn.primary { background: #7b68ee; color: #fff; }
+.cu-modal-btn.secondary { background: #f0f0f5; color: #666; }
+.cu-check-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; padding: 8px 12px; background: #edfaf3; border-radius: 7px; margin-bottom: 10px; }
+.cu-check-row::before { content: '✓'; color: #0f9056; font-weight: 800; }
+
+/* plan recommendation */
+.plan-rec-card { border: 2px solid var(--navy); border-radius: var(--r2); background: var(--bg2); overflow: hidden; box-shadow: var(--sh2); margin-bottom: 24px; }
+.plan-rec-header { background: linear-gradient(135deg, #1419A0, #2030c8); color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 14px; }
+.plan-rec-badge { background: var(--cyan); color: var(--navy-dark); font-family: var(--mono); font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; }
+.plan-rec-name { font-size: 20px; font-weight: 800; }
+.plan-rec-tagline { font-size: 13px; opacity: .8; }
+.plan-rec-body { padding: 22px 24px; }
+.plan-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.plan-price-big { font-family: var(--mono); font-size: 36px; font-weight: 800; color: var(--navy); }
+.plan-price-per { font-size: 13px; color: var(--muted); }
+.plan-price-note { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+.plan-features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.plan-feature-item { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.4; }
+.plan-feature-item::before { content: '✓'; color: var(--green); font-weight: 800; font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+.plan-add-on { border: 1px solid var(--border); border-radius: var(--r); padding: 12px 16px; background: var(--cyan-dim); margin-bottom: 14px; }
+.plan-add-on-title { font-weight: 800; font-size: 13px; color: #056fa0; margin-bottom: 6px; }
+.plan-add-on-features { display: flex; flex-wrap: wrap; gap: 6px; }
+.plan-add-on-tag { background: #fff; border: 1px solid var(--cyan-mid, #9adcf7); border-radius: 6px; padding: 3px 9px; font-size: 11px; font-family: var(--mono); color: #056fa0; }
+
+/* pill */
+.pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+.pill-blue { background: var(--navy-dim); color: var(--navy); border: 1px solid var(--navy-mid); }
+.pill-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+.pill-yellow { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-bd); }
+.pill-cyan { background: var(--cyan-dim); color: #056fa0; border: 1px solid #9adcf7; }
+
+/* numbered list */
+.step-list { counter-reset: steps; list-style: none; }
+.step-list li { counter-increment: steps; padding: 10px 0 10px 44px; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.55; position: relative; }
+.step-list li:last-child { border-bottom: none; }
+.step-list li::before { counter-increment: steps; content: counter(steps); position: absolute; left: 0; top: 8px; width: 28px; height: 28px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; font-family: var(--mono); }
+.step-list li strong { color: var(--text); font-weight: 700; }
+
+/* divider */
+hr.section-hr { border: none; border-top: 2px solid var(--border); margin: 40px 0; }
+
+/* affiliate link box */
+.aff-box { background: linear-gradient(135deg, var(--navy-dim), #e8f5ff); border: 2px solid var(--navy-mid); border-radius: var(--r2); padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 18px; }
+.aff-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.aff-text { flex: 1; }
+.aff-title { font-weight: 800; font-size: 15px; color: var(--navy); margin-bottom: 4px; }
+.aff-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+.aff-link { font-family: var(--mono); font-size: 11px; color: var(--navy); word-break: break-all; background: #fff; border: 1px solid var(--navy-mid); border-radius: 6px; padding: 6px 10px; display: block; }
+.aff-btn { background: var(--navy); color: #fff; font-weight: 800; font-size: 13px; padding: 10px 20px; border-radius: 9px; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+/* footer */
+.doc-footer { background: var(--navy-dark); color: rgba(255,255,255,.5); font-size: 12px; text-align: center; padding: 20px; margin-top: 60px; }
+.doc-footer b { color: rgba(255,255,255,.8); }
+
+@media (max-width: 720px) {
+  .step-block { grid-template-columns: 1fr; }
+  .step-block.reverse { direction: ltr; }
+  .plan-features-grid { grid-template-columns: 1fr; }
+  .plan-cards { grid-template-columns: 1fr; }
+  .doc-header { padding: 24px 20px; }
+  .doc-body { padding: 24px 16px 60px; }
+  .aff-box { flex-direction: column; align-items: flex-start; }
+}
+@media print {
+  .mockup-bar .mockup-dot { print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="doc-header">
+  <div style="position:relative;z-index:1;">
+    <div class="doc-header-eyebrow">Plus 1 Technology · Client Onboarding Guide</div>
+    <h1>ClickUp Account Setup<br>Step-by-Step Guide</h1>
+    <div class="doc-header-sub">Complete walkthrough for creating your ClickUp account, selecting the right plan, and adding your team admin — prepared for Everything Printing.</div>
+    <div class="doc-header-meta">
+      <div class="meta-item"><label>Prepared for</label><span>Everything Printing</span></div>
+      <div class="meta-item"><label>Prepared by</label><span>Plus 1 Technology</span></div>
+      <div class="meta-item"><label>Referral promo</label><span>SHARE10 — 10% off</span></div>
+      <div class="meta-item"><label>Recommended plan</label><span>Business + Brain AI or Everything AI</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BODY ══ -->
+<div class="doc-body">
+
+  <!-- SECTION 0 · AFFILIATE LINK -->
+  <div class="section-block">
+    <div class="section-label">Before You Start</div>
+    <div class="section-title">Use This Link to Sign Up</div>
+    <div class="section-desc">This referral link applies a promotional discount automatically. <strong>Do not navigate to clickup.com directly</strong> — use the link below so the discount is applied at checkout.</div>
+
+    <div class="aff-box">
+      <div class="aff-icon">🔗</div>
+      <div class="aff-text">
+        <div class="aff-title">Plus 1 Technology · ClickUp Referral Link</div>
+        <div class="aff-sub">Includes promo code <strong>SHARE10</strong> for 10% off. Click the button or copy the link below.</div>
+        <a class="aff-link" href="https://app.clickup.com/signup?utm_source=in-app&utm_medium=owned&utm_campaign=inapp_owned_ar_ref_x_promo_all-devices_x_lp_in-app-referral_all-departments_x_settings&utm_term=9017426462_95171147&promo=SHARE10" target="_blank">
+          https://app.clickup.com/signup?...&promo=SHARE10
+        </a>
+      </div>
+      <a class="aff-btn" href="https://app.clickup.com/signup?utm_source=in-app&utm_medium=owned&utm_campaign=inapp_owned_ar_ref_x_promo_all-devices_x_lp_in-app-referral_all-departments_x_settings&utm_term=9017426462_95171147&promo=SHARE10" target="_blank">Open Sign-Up →</a>
+    </div>
+
+    <div class="callout yellow">
+      <b>⚠ Important:</b> If you land on a page that does NOT show the promo code <strong>SHARE10</strong> or a discount badge, close the tab and re-click the link above. The discount should apply automatically at checkout.
+    </div>
+  </div>
+
+  <hr class="section-hr">
+
+  <!-- SECTION 1 · PLAN RECOMMENDATION -->
+  <div class="section-block">
+    <div class="section-label">Step 0 · Plan Selection</div>
+    <div class="section-title">Choose Your Plan</div>
+    <div class="section-desc">The ClickUp <strong>Business plan</strong> is the confirmed base for Everything Printing. The decision below is which AI tier to add on top. Both options are laid out with full feature breakdowns and pricing so you can decide what's right for Phase 1.</div>
+
+    <!-- BASE PLAN CARD -->
+    <div class="plan-rec-card" style="margin-bottom:24px;">
+      <div class="plan-rec-header">
+        <div>
+          <div class="plan-rec-badge">✓ BASE PLAN — CONFIRMED</div>
+          <div class="plan-rec-name" style="margin-top:6px;">Business Plan</div>
+          <div class="plan-rec-tagline">Required for EP's automation volume, permissions, and reporting needs</div>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--cyan);">$12</div>
+          <div style="font-size:12px;opacity:.7;">/user/mo · billed annually</div>
+        </div>
+      </div>
+      <div class="plan-rec-body">
+        <div class="callout blue" style="margin-top:0;">
+          <b>Why Business — not Unlimited:</b> Everything Printing needs <strong>25,000 automations/mo</strong> (vs. 1,000 on Unlimited), <strong>advanced permissions</strong> per Space, <strong>workload view</strong> for production scheduling, <strong>timeline view</strong> for job due-date visibility, and <strong>advanced reporting</strong> for Lee's dashboards. Unlimited hits a ceiling fast for the workflow we're building.
+        </div>
+        <div class="plan-features-grid">
+          <div class="plan-feature-item">Unlimited Spaces, Folders, Lists, and Tasks</div>
+          <div class="plan-feature-item">25,000 Automations per month</div>
+          <div class="plan-feature-item">Advanced permissions per Space/Folder</div>
+          <div class="plan-feature-item">Workload View — production capacity planning</div>
+          <div class="plan-feature-item">Timeline View — job due-date visualization</div>
+          <div class="plan-feature-item">Advanced Time Tracking with reporting</div>
+          <div class="plan-feature-item">Custom Field Manager (unlimited fields)</div>
+          <div class="plan-feature-item">Advanced reporting &amp; dashboards</div>
+          <div class="plan-feature-item">Guest access management</div>
+          <div class="plan-feature-item">Priority support</div>
+        </div>
+        <div style="background:#f0f8ff;border:1px solid #9adcf7;border-radius:var(--r);padding:11px 14px;font-size:12.5px;color:#056fa0;font-weight:600;">
+          ℹ️ The Business plan does <strong>not</strong> include AI features. You must choose one of the two AI add-ons below to enable automations, AI fields, and smart routing.
+        </div>
+      </div>
+    </div>
+
+    <!-- AI CHOICE HEADER -->
+    <div style="text-align:center;margin:32px 0 20px;">
+      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:6px;">Now choose your AI tier</div>
+      <div style="font-size:20px;font-weight:800;color:var(--text);">Which AI Add-On is Right for You?</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px;">Both are add-ons on top of the Business plan. Pick one.</div>
+    </div>
+
+    <!-- SIDE BY SIDE AI COMPARISON -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+
+      <!-- OPTION A: Brain AI -->
+      <div style="border:2px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);background:var(--bg2);">
+        <div style="background:linear-gradient(135deg,#1419A0,#2030c8);padding:16px 20px;color:#fff;">
+          <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:4px;">Option A · Phase 1 Focused</div>
+          <div style="font-size:18px;font-weight:800;margin-bottom:2px;">Brain AI</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px;">
+            <span style="font-family:var(--mono);font-size:26px;font-weight:800;color:var(--cyan);">$9</span>
+            <span style="font-size:12px;opacity:.7;">/user/mo · annual</span>
+          </div>
+          <div style="font-size:12px;opacity:.65;margin-top:2px;">+ $12 Business = <strong style="color:#fff;">$21/user/mo total</strong></div>
+        </div>
+        <div style="padding:18px 20px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">What's included</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;">
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>AI Assistant (Brain)</strong> — write, summarize, answer questions from tasks &amp; docs</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>AI Writing</strong> — generate task descriptions, emails, updates</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>AI Custom Fields</strong> — auto-summarize job status, priorities (Standard limits)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Autopilot Agents</strong> — automated standups, reports, recurring tasks (Standard limits)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>AI Assign &amp; Prioritize</strong> — auto-assign tasks based on workload and rules (Standard)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Image Generation</strong> — generate graphics inside ClickUp (Standard)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Project Summaries &amp; Updates</strong> — one-click status reports for Lee</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Premium AI Models</strong> — GPT-4o, Claude, Gemini access</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Web Search from ClickUp</strong> — research without leaving the platform</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#f59e0b;font-weight:800;flex-shrink:0;">◎</span><span style="color:var(--muted);"><strong>AI Notetaker</strong> — trial only (meeting transcription not included)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#f59e0b;font-weight:800;flex-shrink:0;">◎</span><span style="color:var(--muted);"><strong>Enterprise Search</strong> — trial only (cross-app Outlook search not included)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#f59e0b;font-weight:800;flex-shrink:0;">◎</span><span style="color:var(--muted);"><strong>Talk to Text</strong> — trial only (voice dictation not included)</span></div>
+          </div>
+          <div style="background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--r);padding:11px 14px;font-size:12px;color:var(--green);font-weight:600;margin-bottom:12px;">
+            ✓ <strong>Covers everything needed for Phase 1</strong> — automations, AI fields, auto-assign, intake routing, and project summaries all work at this tier.
+          </div>
+          <div style="background:#f9fafd;border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;">
+            <div style="font-weight:800;font-size:12px;margin-bottom:8px;color:var(--text);">5-User Cost · Annual Billing</div>
+            <div style="display:grid;grid-template-columns:1fr auto;gap:3px;font-size:12px;">
+              <span>Business · 5 × $12</span><span style="font-weight:700;">$60/mo</span>
+              <span>Brain AI · 5 × $9</span><span style="font-weight:700;">$45/mo</span>
+              <span style="border-top:1px solid var(--border);padding-top:5px;font-weight:800;">Total</span><span style="border-top:1px solid var(--border);padding-top:5px;font-weight:800;color:var(--navy);">$105/mo</span>
+              <span style="color:var(--green);font-weight:700;">After SHARE10 (10% off)</span><span style="color:var(--green);font-weight:800;">~$94.50/mo</span>
+            </div>
+            <div style="font-size:10.5px;color:var(--muted);margin-top:6px;">Billed annually ≈ $1,134/yr</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION B: Everything AI -->
+      <div style="border:2px solid #7c3aed;border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh2);background:var(--bg2);position:relative;">
+        <div style="position:absolute;top:12px;right:12px;background:#7c3aed;color:#fff;font-size:9px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;">Full AI Stack</div>
+        <div style="background:linear-gradient(135deg,#5b21b6,#7c3aed);padding:16px 20px;color:#fff;">
+          <div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700;margin-bottom:4px;">Option B · Fully Loaded</div>
+          <div style="font-size:18px;font-weight:800;margin-bottom:2px;">Everything AI</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:8px;">
+            <span style="font-family:var(--mono);font-size:26px;font-weight:800;color:#e9d5ff;">$28</span>
+            <span style="font-size:12px;opacity:.7;">/user/mo · annual</span>
+          </div>
+          <div style="font-size:12px;opacity:.65;margin-top:2px;">+ $12 Business = <strong style="color:#fff;">$40/user/mo total</strong></div>
+        </div>
+        <div style="padding:18px 20px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">Everything in Brain AI, plus:</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;">
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:var(--green);font-weight:800;flex-shrink:0;">✓</span><span><strong>Everything in Brain AI</strong> — all features above, fully included</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>AI Notetaker (Unlimited)</strong> — auto-records and transcribes meetings, generates summaries and action items. Lee and Zach walk out of every call with tasks already created.</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Enterprise Search (Unlimited)</strong> — searches across ClickUp <em>and</em> connected apps including Outlook, Google Drive, and more in one query. Ask "what did we quote ABC last month?" and get the answer.</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Talk to Text (Unlimited)</strong> — unlimited voice dictation anywhere in ClickUp. Create tasks, write descriptions, add comments by voice — useful for Zach or Jason on the production floor.</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Unlimited Autopilot Agents</strong> — no usage cap on automated agents (vs. Standard limits in Brain AI)</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Unlimited AI Fields</strong> — every task and list can have unlimited AI-powered custom fields</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Brain MAX Desktop App</strong> — full AI assistant that works outside of ClickUp, across your whole computer</span></div>
+            <div style="display:flex;gap:8px;font-size:12.5px;"><span style="color:#7c3aed;font-weight:800;flex-shrink:0;">★</span><span><strong>Flexible Super Agents</strong> — more powerful AI agents for complex multi-step workflows</span></div>
+          </div>
+          <div style="background:#f4f0fd;border:1px solid #c4b5fd;border-radius:var(--r);padding:11px 14px;font-size:12px;color:#6c2fd6;font-weight:600;margin-bottom:12px;">
+            ★ <strong>Best if:</strong> Lee and Zach want meeting transcription, the team will use voice input, and connected search across Outlook + ClickUp is important for Phase 2 workflows.
+          </div>
+          <div style="background:#f9fafd;border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;">
+            <div style="font-weight:800;font-size:12px;margin-bottom:8px;color:var(--text);">5-User Cost · Annual Billing</div>
+            <div style="display:grid;grid-template-columns:1fr auto;gap:3px;font-size:12px;">
+              <span>Business · 5 × $12</span><span style="font-weight:700;">$60/mo</span>
+              <span>Everything AI · 5 × $28</span><span style="font-weight:700;">$140/mo</span>
+              <span style="border-top:1px solid var(--border);padding-top:5px;font-weight:800;">Total</span><span style="border-top:1px solid var(--border);padding-top:5px;font-weight:800;color:#7c3aed;">$200/mo</span>
+              <span style="color:var(--green);font-weight:700;">After SHARE10 (10% off)</span><span style="color:var(--green);font-weight:800;">~$180/mo</span>
+            </div>
+            <div style="font-size:10.5px;color:var(--muted);margin-top:6px;">Billed annually ≈ $2,160/yr</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURE COMPARISON TABLE -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);margin-bottom:20px;">
+      <div style="background:var(--navy);padding:12px 18px;">
+        <div style="font-weight:800;font-size:13px;color:#fff;">Side-by-Side Feature Comparison</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;">Business plan base is identical in both options</div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+          <thead>
+            <tr style="background:#f5f6fb;">
+              <th style="padding:10px 16px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--border);width:46%;">Feature</th>
+              <th style="padding:10px 14px;text-align:center;font-size:11px;font-weight:800;color:var(--navy);border-bottom:1px solid var(--border);width:27%;">Brain AI<br><span style="font-family:var(--mono);font-weight:700;font-size:12px;">$9/user/mo</span></th>
+              <th style="padding:10px 14px;text-align:center;font-size:11px;font-weight:800;color:#7c3aed;border-bottom:1px solid var(--border);width:27%;">Everything AI<br><span style="font-family:var(--mono);font-weight:700;font-size:12px;">$28/user/mo</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f9f9ff;"><td colspan="3" style="padding:7px 16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Core AI</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">AI Assistant (Brain) — chat, write, summarize</td><td style="text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-size:16px;font-weight:800;">✓</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">✓</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">Premium AI Models (GPT-4o, Claude, Gemini)</td><td style="text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-size:16px;font-weight:800;">✓</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">✓</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">AI Writing &amp; Content Generation</td><td style="text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-size:16px;font-weight:800;">✓</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">✓</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">Web Search from ClickUp</td><td style="text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-size:16px;font-weight:800;">✓</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">✓</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">Project Summaries &amp; Status Updates</td><td style="text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-size:16px;font-weight:800;">✓</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">✓</td></tr>
+            <tr style="background:#f9f9ff;"><td colspan="3" style="padding:7px 16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Automation &amp; Workflow AI</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">AI Custom Fields (auto-summary, priority, status)</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--yellow);">Standard limits</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">Autopilot Agents (automated standups, reports)</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--yellow);">Standard limits</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">AI Assign &amp; Prioritize (auto-route tasks by rules)</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--yellow);">Standard limits</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">Image Generation inside ClickUp</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--yellow);">Standard limits</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr style="background:#f9f9ff;"><td colspan="3" style="padding:7px 16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Everything AI Exclusive Features</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">🎙️ <strong>AI Notetaker</strong> — meeting recording, transcription, auto-tasks</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:#d1d5db;">Trial only</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">🔍 <strong>Enterprise Search</strong> — search ClickUp + Outlook + connected apps</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:#d1d5db;">Trial only</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">🎤 <strong>Talk to Text</strong> — unlimited voice dictation anywhere in ClickUp</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:#d1d5db;">Trial only</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr style="background:#fafbfe;"><td style="padding:9px 16px;border-bottom:1px solid var(--border);">🖥️ <strong>Brain MAX Desktop App</strong> — AI assistant across your whole computer</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:#d1d5db;">Trial only</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Unlimited</td></tr>
+            <tr><td style="padding:9px 16px;border-bottom:1px solid var(--border);">🤖 <strong>Flexible Super Agents</strong> — complex multi-step AI workflows</td><td style="text-align:center;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--yellow);">Standard</td><td style="text-align:center;border-bottom:1px solid var(--border);color:#7c3aed;font-size:16px;font-weight:800;">Flexible</td></tr>
+            <tr style="background:#f9f9ff;"><td colspan="3" style="padding:7px 16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Pricing (5 users · annual billing)</td></tr>
+            <tr>
+              <td style="padding:12px 16px;font-weight:700;">Total per month</td>
+              <td style="text-align:center;padding:12px 14px;font-family:var(--mono);font-size:15px;font-weight:800;color:var(--navy);">$105/mo<br><span style="font-size:10px;color:var(--green);font-weight:700;">~$94.50 after SHARE10</span></td>
+              <td style="text-align:center;padding:12px 14px;font-family:var(--mono);font-size:15px;font-weight:800;color:#7c3aed;">$200/mo<br><span style="font-size:10px;color:var(--green);font-weight:700;">~$180 after SHARE10</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DECISION HELPER -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:6px;">
+      <div style="background:var(--navy-dim);border:1px solid var(--navy-mid);border-radius:var(--r2);padding:16px 18px;">
+        <div style="font-weight:800;font-size:13px;color:var(--navy);margin-bottom:10px;">✓ Choose Brain AI ($9) if…</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--muted);">
+          <div>→ Phase 1 is the priority — get the build running first</div>
+          <div>→ Meeting transcription is not a current need</div>
+          <div>→ You want to start lean and upgrade later</div>
+          <div>→ The team doesn't regularly use voice input</div>
+          <div>→ Budget-conscious entry: ~$94.50/mo for 5 users</div>
+        </div>
+      </div>
+      <div style="background:#f4f0fd;border:1px solid #c4b5fd;border-radius:var(--r2);padding:16px 18px;">
+        <div style="font-weight:800;font-size:13px;color:#6c2fd6;margin-bottom:10px;">★ Choose Everything AI ($28) if…</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--muted);">
+          <div>→ Lee and Zach want every meeting auto-transcribed with action items</div>
+          <div>→ The team wants to search Outlook + ClickUp in one place</div>
+          <div>→ Jason or Zach would benefit from voice-to-task on the floor</div>
+          <div>→ You want unlimited AI agents from day one — no caps</div>
+          <div>→ Phase 2 AI features (Universal Search, Prospect Agent) are a near-term priority</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout blue">
+      <b>Plus 1 recommendation:</b> Start with <strong>Brain AI ($9)</strong> for Phase 1 — it covers everything in the build spec. Upgrade to Everything AI when the team is comfortable and the Phase 2 AI workflows (connected search, meeting notetaker, voice input) become the focus. You can switch tiers at any time.
+    </div>
+  </div>
+
+  <hr class="section-hr">
+
+  <!-- SECTION 2 · ACCOUNT CREATION -->
+  <div class="section-block">
+    <div class="section-label">Section 1 · Account Creation</div>
+    <div class="section-title">Create Your ClickUp Account</div>
+    <div class="section-desc">Follow these steps in order. Screenshots below show what each screen looks like — personal info has been replaced with placeholders.</div>
+
+    <!-- STEP 1 -->
+    <div class="step-block">
+      <div class="step-info">
+        <div class="step-num">1</div>
+        <div class="step-title">Open the Sign-Up Link</div>
+        <div class="step-body">
+          <p>Click the <strong>Open Sign-Up →</strong> button in the affiliate box above, or copy and paste the full URL into a new browser tab. You should land on ClickUp's signup page.</p>
+          <p>Look for the <strong>referral promo banner</strong> or the SHARE10 code pre-applied. If you don't see it, close the tab and use the link again.</p>
+        </div>
+        <div class="step-tip"><b>Pro tip:</b> Use Google Chrome or Edge for best compatibility with ClickUp's setup wizard.</div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/signup?...&promo=SHARE10</div>
+        </div>
+        <div class="mockup-body">
+          <div class="cu-signup">
+            <div class="cu-logo">ClickUp</div>
+            <div class="cu-referral-tag">🎉 Referral link active — you were referred by Plus 1 Technology</div>
+            <div class="cu-promo">Promo code SHARE10 applied — 10% off your first plan</div>
+            <div class="cu-heading">Create your account</div>
+            <div class="cu-sub">Get started — it's free</div>
+            <input class="cu-field" placeholder="Work email address" readonly>
+            <button class="cu-btn">Continue with Email</button>
+            <div class="cu-divider">or</div>
+            <button class="cu-btn outline">Continue with Google</button>
+            <div class="cu-link">Already have an account? Log in</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-block reverse">
+      <div class="step-info">
+        <div class="step-num">2</div>
+        <div class="step-title">Enter Your Email & Create a Password</div>
+        <div class="step-body">
+          <p>Enter the <strong>work email address</strong> you want to use as the primary owner of the workspace. This will be the Owner account.</p>
+          <p>On the next screen, create a strong password (8+ characters, mix of letters, numbers, and symbols). ClickUp will send a <strong>verification email</strong> — check your inbox and click the link to confirm.</p>
+          <ul>
+            <li>Use your <strong>business email</strong>, not a personal Gmail</li>
+            <li>Save your password in a password manager</li>
+            <li>Check spam if the verification email doesn't arrive within 2 minutes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/signup</div>
+        </div>
+        <div class="mockup-body">
+          <div class="cu-signup">
+            <div class="cu-logo">ClickUp</div>
+            <div class="cu-heading">Enter your details</div>
+            <div class="cu-sub">Create your ClickUp account</div>
+            <input class="cu-field filled" value="owner@yourcompany.com" readonly>
+            <input class="cu-field" placeholder="Full name" readonly>
+            <input class="cu-field" placeholder="Create a password" type="password" readonly>
+            <button class="cu-btn">Create Account</button>
+            <div class="cu-link" style="margin-top:10px;font-size:11px;color:#aaa;">By creating an account you agree to the Terms of Service &amp; Privacy Policy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-block">
+      <div class="step-info">
+        <div class="step-num">3</div>
+        <div class="step-title">Name Your Workspace</div>
+        <div class="step-body">
+          <p>ClickUp will walk you through a short setup wizard. The most important step is <strong>naming your Workspace</strong>.</p>
+          <p>Use your company name exactly as you want it to appear in ClickUp. This is what team members will see when they log in.</p>
+          <p><strong>Recommended name:</strong> <code style="background:#f0f2f8;padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;">Everything Printing</code></p>
+          <p>You can change this later under Settings → General.</p>
+        </div>
+        <div class="step-tip"><b>Skip the rest of the wizard</b> for now — Plus 1 will configure Spaces, Folders, and Lists as part of the build. Click through or skip any other setup prompts.</div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/setup</div>
+        </div>
+        <div class="mockup-body">
+          <div class="cu-workspace">
+            <div class="cu-ws-progress">
+              <div class="cu-ws-dot done"></div>
+              <div class="cu-ws-dot done"></div>
+              <div class="cu-ws-dot done"></div>
+              <div class="cu-ws-dot"></div>
+              <div class="cu-ws-dot"></div>
+            </div>
+            <div class="cu-ws-step">Step 3 of 5</div>
+            <div class="cu-ws-title">Name your Workspace</div>
+            <div class="cu-ws-desc">This is the name your whole team will see when they log in.</div>
+            <div class="cu-ws-label">Workspace Name</div>
+            <input class="cu-ws-input" value="Everything Printing" readonly>
+            <button class="cu-btn" style="width:100%;">Continue →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-block reverse">
+      <div class="step-info">
+        <div class="step-num">4</div>
+        <div class="step-title">Select Your Plan</div>
+        <div class="step-body">
+          <p>When prompted to choose a plan, select <strong>Business</strong>. Do not select Free or Unlimited.</p>
+          <p>After selecting Business, you'll be prompted to add a <strong>ClickUp Brain AI tier</strong> — choose either <strong>Brain AI ($9/user/mo)</strong> or <strong>Everything AI ($28/user/mo)</strong> based on the comparison in Step 0 above.</p>
+          <p>At checkout, verify that:</p>
+          <ul>
+            <li>Plan = <strong>Business ($12/user/mo)</strong></li>
+            <li>Billing = <strong>Annual</strong> (not monthly — saves ~17%)</li>
+            <li>Promo code <strong>SHARE10</strong> is applied</li>
+            <li>Your chosen AI add-on (Brain AI or Everything AI) is included</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/pricing</div>
+        </div>
+        <div class="mockup-body">
+          <div class="plan-cards">
+            <div class="plan-card">
+              <div class="plan-name">Unlimited</div>
+              <div class="plan-price">$7</div>
+              <div class="plan-per">/user/mo · annual</div>
+              <div class="plan-feature">1,000 automations/mo</div>
+              <div class="plan-feature">Unlimited storage</div>
+              <div class="plan-feature">Basic permissions</div>
+            </div>
+            <div class="plan-card selected">
+              <div class="plan-badge">✓ RECOMMENDED</div>
+              <div class="plan-name">Business</div>
+              <div class="plan-price">$12</div>
+              <div class="plan-per">/user/mo · annual</div>
+              <div class="plan-feature">25,000 automations/mo</div>
+              <div class="plan-feature">Workload &amp; Timeline</div>
+              <div class="plan-feature">Advanced permissions</div>
+              <div class="plan-feature">Advanced reporting</div>
+            </div>
+            <div class="plan-card">
+              <div class="plan-name">Enterprise</div>
+              <div class="plan-price">Custom</div>
+              <div class="plan-per">contact sales</div>
+              <div class="plan-feature">SSO / SAML</div>
+              <div class="plan-feature">Custom contracts</div>
+              <div class="plan-feature">Dedicated CSM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-hr">
+
+  <!-- SECTION 3 · ADD JESSICA AS ADMIN -->
+  <div class="section-block">
+    <div class="section-label">Section 2 · User Management</div>
+    <div class="section-title">Add Jessica as Admin</div>
+    <div class="section-desc">Once your account is created and you're logged in, follow these steps to invite Jessica Peaden and set her role to Admin. This gives her full access to manage the workspace alongside you.</div>
+
+    <!-- STEP 5 -->
+    <div class="step-block">
+      <div class="step-info">
+        <div class="step-num">5</div>
+        <div class="step-title">Open Settings</div>
+        <div class="step-body">
+          <p>Once logged in, look at the <strong>top-left corner</strong> of the ClickUp interface. You'll see your <strong>Workspace name</strong> (e.g., "Everything Printing") with a small dropdown arrow next to it.</p>
+          <p><strong>Click your workspace name</strong> or look for the gear/settings icon. From the dropdown menu that appears, select <strong>Settings</strong>.</p>
+        </div>
+        <div class="step-tip"><b>Keyboard shortcut:</b> Press <code style="font-family:var(--mono);background:#f0f2f8;padding:1px 5px;border-radius:4px;">G</code> then <code style="font-family:var(--mono);background:#f0f2f8;padding:1px 5px;border-radius:4px;">S</code> to jump to Settings from anywhere in ClickUp.</div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/[workspace-id]</div>
+        </div>
+        <div class="mockup-body">
+          <div style="display:grid;grid-template-columns:44px 1fr;background:#fff;min-height:160px;">
+            <div style="background:#2a2a3e;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px;">
+              <div style="width:28px;height:28px;border-radius:8px;background:#7b68ee;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;">EP</div>
+              <div style="width:22px;height:22px;background:rgba(255,255,255,.1);border-radius:6px;"></div>
+              <div style="width:22px;height:22px;background:rgba(255,255,255,.1);border-radius:6px;"></div>
+              <div style="width:22px;height:22px;background:rgba(255,255,255,.1);border-radius:6px;"></div>
+            </div>
+            <div style="padding:12px;">
+              <div style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:#f0eeff;border-radius:8px;margin-bottom:8px;cursor:pointer;">
+                <div style="width:24px;height:24px;border-radius:6px;background:#7b68ee;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">EP</div>
+                <span style="font-weight:700;font-size:12px;color:#1a1a2e;">Everything Printing</span>
+                <span style="margin-left:auto;font-size:11px;color:#888;">▾</span>
+              </div>
+              <div style="background:#fff;border:1px solid #e8e8f0;border-radius:10px;padding:10px;box-shadow:0 4px 16px rgba(0,0,0,.1);">
+                <div style="padding:6px 10px;font-size:12px;color:#555;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;">⚙️ <strong>Settings</strong></div>
+                <div style="padding:6px 10px;font-size:12px;color:#888;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;">👥 Members</div>
+                <div style="padding:6px 10px;font-size:12px;color:#888;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;">💳 Billing</div>
+                <div style="padding:6px 10px;font-size:12px;color:#888;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;">🚪 Log out</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-block reverse">
+      <div class="step-info">
+        <div class="step-num">6</div>
+        <div class="step-title">Navigate to People</div>
+        <div class="step-body">
+          <p>Inside Settings, look at the <strong>left sidebar</strong>. Under the <strong>Admin</strong> section, click <strong>People</strong>.</p>
+          <p>This opens the Manage People screen where you can see all current workspace members and invite new ones.</p>
+          <p>You'll see the current list of users with their roles, emails, and last-active dates.</p>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/[workspace-id]/settings</div>
+        </div>
+        <div class="mockup-body">
+          <div class="cu-settings">
+            <div class="cu-settings-nav">
+              <div class="cu-settings-nav-section">Admin</div>
+              <div class="cu-settings-nav-item"><span class="cu-settings-nav-icon">⚙</span> General</div>
+              <div class="cu-settings-nav-item active"><span class="cu-settings-nav-icon">👥</span> <strong>People</strong></div>
+              <div class="cu-settings-nav-item"><span class="cu-settings-nav-icon">🏷</span> Teams</div>
+              <div class="cu-settings-nav-item"><span class="cu-settings-nav-icon">💳</span> Billing</div>
+              <div class="cu-settings-nav-section">Features</div>
+              <div class="cu-settings-nav-item"><span class="cu-settings-nav-icon">🤖</span> Automations</div>
+              <div class="cu-settings-nav-item"><span class="cu-settings-nav-icon">📋</span> Custom Fields</div>
+            </div>
+            <div class="cu-settings-main">
+              <div class="cu-people-header">
+                <div class="cu-settings-title">Manage People</div>
+                <button class="cu-invite-btn">+ Invite people</button>
+              </div>
+              <table class="cu-table">
+                <thead><tr><th>Name</th><th>Role</th><th>Last active</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cu-avatar" style="background:#7b68ee;">WO</span> <strong>Workspace Owner</strong></td>
+                    <td><span class="cu-tag owner">Owner</span></td>
+                    <td>Today</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step-block">
+      <div class="step-info">
+        <div class="step-num">7</div>
+        <div class="step-title">Click "Invite People"</div>
+        <div class="step-body">
+          <p>In the top-right area of the People screen, click the <strong>+ Invite people</strong> button (it's purple/violet colored).</p>
+          <p>An invite dialog box will appear where you can enter an email address and assign a role.</p>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/settings/people</div>
+        </div>
+        <div class="mockup-body">
+          <div style="padding:20px;background:#fff;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-size:16px;font-weight:800;color:#1a1a2e;">Manage People</div>
+              <button class="cu-invite-btn" style="font-size:13px;padding:9px 18px;border-radius:9px;display:flex;align-items:center;gap:6px;cursor:pointer;">
+                <span style="font-size:16px;font-weight:300;">+</span> Invite people
+              </button>
+            </div>
+            <div style="border:2px dashed #c4b5fd;border-radius:10px;padding:16px;text-align:center;color:#7b68ee;font-size:13px;font-weight:600;">
+              👆 Click the "Invite people" button above
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="step-block reverse">
+      <div class="step-info">
+        <div class="step-num">8</div>
+        <div class="step-title">Enter Jessica's Email & Set Role to Admin</div>
+        <div class="step-body">
+          <p>In the invite dialog:</p>
+          <ul>
+            <li><strong>Email field:</strong> Type <code style="background:#f0f2f8;padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;">jpeaden@plus1technology.com</code></li>
+            <li><strong>Role dropdown:</strong> Change from "Member" to <strong>Admin</strong></li>
+          </ul>
+          <p>The Admin role gives Jessica full access to manage workspace settings, invite and remove users, configure billing, and build out the ClickUp structure as part of the Plus 1 implementation.</p>
+          <p>Click <strong>Send Invite</strong> to send her the invite email.</p>
+        </div>
+        <div class="step-tip"><b>Note:</b> Jessica will receive an email invite. She must click the link in that email to join. Until she accepts, her status will show as "Pending."</div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/settings/people — Invite modal</div>
+        </div>
+        <div class="mockup-body" style="background:rgba(0,0,0,.3);padding:0;">
+          <div class="cu-modal">
+            <div class="cu-modal-title">Invite to Workspace</div>
+            <div class="cu-modal-sub">Enter an email and assign a role</div>
+            <input class="cu-modal-field filled" value="jpeaden@plus1technology.com" readonly>
+            <div style="font-size:11px;font-weight:700;color:#666;margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em;">Role</div>
+            <select class="cu-role-select" disabled>
+              <option>Admin — Can manage Spaces, People, Billing, and other Workspace settings.</option>
+            </select>
+            <div class="cu-check-row">Admin can manage all workspace settings and invite users</div>
+            <div class="cu-modal-actions">
+              <button class="cu-modal-btn primary">Send Invite</button>
+              <button class="cu-modal-btn secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 9 -->
+    <div class="step-block">
+      <div class="step-info">
+        <div class="step-num">9</div>
+        <div class="step-title">Confirm Jessica Appears as Admin</div>
+        <div class="step-body">
+          <p>After sending the invite, you'll return to the People screen. Jessica should now appear in the list with:</p>
+          <ul>
+            <li>Role label: <strong>Admin</strong> (purple badge)</li>
+            <li>Status: <strong>Pending</strong> until she accepts the invite</li>
+          </ul>
+          <p>Once she accepts, her status will change to "Active" and she'll have full Admin access.</p>
+          <p>At that point, <strong>notify Plus 1 Technology</strong> — Jessica can then coordinate directly on the workspace build.</p>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div></div>
+          <div class="mockup-url">app.clickup.com/settings/people</div>
+        </div>
+        <div class="mockup-body">
+          <div style="padding:16px;background:#fff;">
+            <table class="cu-table">
+              <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="cu-avatar" style="background:#7b68ee;">WO</span> <strong>Workspace Owner</strong></td>
+                  <td style="color:#aaa;font-size:11px;">owner@yourcompany.com</td>
+                  <td><span class="cu-tag owner">Owner</span></td>
+                  <td><span style="color:#0f9056;font-size:12px;font-weight:700;">● Active</span></td>
+                </tr>
+                <tr style="background:#f9f8ff;">
+                  <td><span class="cu-avatar" style="background:#a78bfa;">JP</span> <strong>J. Peaden</strong></td>
+                  <td style="color:#aaa;font-size:11px;">jpeaden@plus1tech...</td>
+                  <td><span class="cu-tag admin">Admin</span></td>
+                  <td><span style="color:#f59e0b;font-size:12px;font-weight:700;">⏳ Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;background:#edfaf3;border:1px solid #ade5c5;border-radius:8px;padding:10px 14px;font-size:12px;color:#0f9056;font-weight:600;">
+              ✓ Invite sent successfully — waiting for Jessica to accept
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-hr">
+
+  <!-- SECTION 4 · SUMMARY CHECKLIST -->
+  <div class="section-block">
+    <div class="section-label">Section 3 · Completion Checklist</div>
+    <div class="section-title">Before You Hand Off to Plus 1</div>
+    <div class="section-desc">Run through this checklist to confirm your account is set up correctly and ready for the workspace build.</div>
+
+    <div class="callout green">
+      <b>✓ Complete these steps, then message Plus 1 Technology.</b> Once done, we'll start configuring the Spaces, Folders, Lists, custom fields, and automations from the Build Spec.
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);margin-bottom:20px;">
+      <div style="background:var(--navy);padding:12px 18px;">
+        <div style="font-weight:800;font-size:13px;color:#fff;">Setup Completion Checklist</div>
+      </div>
+      <div style="padding:6px 0;">
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Clicked the referral link</strong> with promo code SHARE10 visible</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Account created</strong> with your work email address</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Email verified</strong> — clicked the verification link in your inbox</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Workspace named</strong> "Everything Printing"</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Business plan selected</strong> with annual billing</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Brain AI or Everything AI add-on</strong> selected and added at checkout</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>SHARE10 promo applied</strong> — visible on checkout receipt</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Navigated to Settings → People</strong></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--border);">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Jessica invited</strong> at jpeaden@plus1technology.com as <strong>Admin</strong></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;">
+          <div style="width:20px;height:20px;border-radius:5px;border:2px solid #7b68ee;background:#f4f0ff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#7b68ee;font-weight:800;flex-shrink:0;">□</div>
+          <div style="font-size:13px;"><strong>Notified Plus 1</strong> — account is ready for build</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <b>Next Step:</b> Once all boxes are checked, email or text Marc at Plus 1 Technology to confirm the workspace URL (it'll look like <code style="font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:4px;">app.clickup.com/[your-workspace-id]</code>). We'll take it from there and start the build.
+    </div>
+  </div>
+
+  <hr class="section-hr">
+
+  <!-- SECTION 5 · NEED HELP -->
+  <div class="section-block">
+    <div class="section-label">Questions?</div>
+    <div class="section-title">Contact Plus 1 Technology</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px;box-shadow:var(--sh);">
+        <div style="font-weight:800;margin-bottom:6px;">📞 Phone</div>
+        <div style="color:var(--muted);font-size:13px;">610-792-5660</div>
+        <div style="font-size:11px;color:var(--subtle);margin-top:4px;">Mon–Thu 7am–8pm · Fri 8:30am–4pm EST</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px;box-shadow:var(--sh);">
+        <div style="font-weight:800;margin-bottom:6px;">✉️ Email</div>
+        <div style="color:var(--muted);font-size:13px;">Jessica Peaden — jpeaden@plus1technology.com</div>
+        <div style="font-size:11px;color:var(--subtle);margin-top:4px;">Reply within 1 business day</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /doc-body -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  Prepared by <b>Plus 1 Technology</b> · 3277 W Ridge Pike, Suite B201, Pottstown PA 19464 · plus1technology.com<br>
+  <span style="font-size:10px;opacity:.5;margin-top:4px;display:block;">This guide is confidential and prepared exclusively for Everything Printing. Screenshots are illustrative mockups — personal information has been removed or replaced with placeholders.</span>
+</div>
+
+</body>
+</html>
