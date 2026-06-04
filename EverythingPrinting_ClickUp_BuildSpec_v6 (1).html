@@ -20,7 +20,7 @@
 .diagram2{border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--sh);background:#fff;margin:6px 0 18px}.diagram2 svg{width:100%;height:auto;display:block}.dlabel2{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 8px}</style></head>
 <body>
 <nav class="sidebar"><div class="sb-logo-block"><svg viewBox="0 0 48 48" width="34" height="34"><circle cx="24" cy="24" r="18" fill="none" stroke="#fff" stroke-width="4"/><text x="24" y="30" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-weight="800" font-size="15">+1</text></svg><div style="font-family:var(--font-body);font-weight:800;font-size:13px;color:#fff;line-height:1.1">PLUS ONE<br><span style="font-size:9px;letter-spacing:.15em;font-weight:500;opacity:.7">TECHNOLOGY</span></div></div>
-<div class="sb-info-block"><div class="sb-info-label">Client / Project</div><div class="sb-info-name">Everything Printing</div><div class="sb-info-sub">ClickUp Build · Process Mapping Workshop · v6.0</div></div>
+<div class="sb-info-block"><div class="sb-info-label">Client / Project</div><div class="sb-info-name">Everything Printing</div><div class="sb-info-sub">ClickUp Build · Process Mapping Workshop · v7.0</div></div>
 <div class="sb-nav">
   <div class="sb-group"><div class="sb-group-label">Client Information</div>
     <div class="sb-item active" data-tab="overview"><span class="sb-icon">01</span>Executive Overview</div>
@@ -45,15 +45,16 @@
     <div class="sb-item" data-tab="templates"><span class="sb-icon">14</span>Templates</div>
     <div class="sb-item" data-tab="automations"><span class="sb-icon">15</span>Automations</div>
     <div class="sb-item" data-tab="workflows"><span class="sb-icon">16</span>Workflow Maps</div>
-    <div class="sb-item" data-tab="dashboards"><span class="sb-icon">17</span>Dashboards</div>
+    <div class="sb-item" data-tab="workflow-tree"><span class="sb-icon">17</span>Workflow Tree</div>
+    <div class="sb-item" data-tab="dashboards"><span class="sb-icon">18</span>Dashboards</div>
   </div>
   <div class="sb-group"><div class="sb-group-label">Delivery</div>
-    <div class="sb-item" data-tab="qa"><span class="sb-icon">18</span>QA Scripts</div>
-    <div class="sb-item" data-tab="training"><span class="sb-icon">19</span>Training</div>
-    <div class="sb-item" data-tab="approval"><span class="sb-icon">20</span>Approval</div>
+    <div class="sb-item" data-tab="qa"><span class="sb-icon">19</span>QA Scripts</div>
+    <div class="sb-item" data-tab="training"><span class="sb-icon">20</span>Training</div>
+    <div class="sb-item" data-tab="approval"><span class="sb-icon">21</span>Approval</div>
   </div>
 </div>
-<div class="sb-footer"><div class="sb-footer-row"><span class="sb-footer-label">Version</span><span class="sb-footer-val">v6.0</span></div><div class="sb-footer-row"><span class="sb-footer-label">Format</span><span class="sb-footer-val">Plus 1 + Visuals</span></div></div></nav>
+<div class="sb-footer"><div class="sb-footer-row"><span class="sb-footer-label">Version</span><span class="sb-footer-val">v7.0</span></div><div class="sb-footer-row"><span class="sb-footer-label">Format</span><span class="sb-footer-val">Plus 1 + Visuals</span></div></div></nav>
 <main class="content">
 <section class="hero"><h1>Everything Printing — ClickUp Build Specification</h1><div class="sub2">Implementation blueprint &amp; handover doc · Space → Folder → List architecture · fields · statuses · automations · templates · workflow maps</div><div class="hero-meta"><div>Client<b>Everything Printing</b></div><div>Stakeholders<b>Lee Levengood + Zach Ralph</b></div><div>Core Systems<b>ClickUp + Outlook + InfoFlow + QuickBooks</b></div><div>Build Gate<b>Phase 1A Approval</b></div></div></section>
 
@@ -1028,6 +1029,285 @@
 <text x="513.6" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Step</text>
 <text x="40.0" y="1052.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="500" fill="#5a6589" text-anchor="start" letter-spacing="0" opacity="1">Plus 1 Technology  ·  Everything Printing  ·  Confidential  ·  Page 2 of 2 — Future State (gates the Phase 1A build)</text>
 </svg></div><div class="card"><div class="card-title">Current State — Order to Invoice</div><div class="diagram"><div class="lane"><div class="lane-title">Customer</div><div class="lane-body"><span class="flow-chip navy">Email / Phone / Walk-In</span><span class="flow-chip yellow">Provides Artwork</span><span class="flow-chip cyan">Approves Quote</span></div></div><div class="lane"><div class="lane-title">Shared Inbox</div><div class="lane-body"><span class="flow-chip red">60–100 Emails</span><span class="flow-chip red">4 Staff Scan</span><span class="flow-chip yellow">Manual Ownership</span></div></div><div class="lane"><div class="lane-title">Assigned Staff</div><div class="lane-body"><span class="flow-chip cyan">Read Inquiry</span><span class="flow-chip yellow">Chase Details</span><span class="flow-chip purple">Email Back-and-Forth</span></div></div><div class="lane"><div class="lane-title">InfoFlow</div><div class="lane-body"><span class="flow-chip navy">Build Estimate</span><span class="flow-chip purple">Send Approval</span><span class="flow-chip cyan">Invoice</span></div></div><div class="lane"><div class="lane-title">Production</div><div class="lane-body"><span class="flow-chip green">Fiery Imposes</span><span class="flow-chip green">Barcode/Cutter</span><span class="flow-chip navy">Job Complete</span></div></div></div></div><div class="card"><div class="card-title">Future State — ClickUp Flow</div><div class="diagram"><div class="lane"><div class="lane-title">Customer</div><div class="lane-body"><span class="flow-chip navy">Inquiry to order@</span><span class="flow-chip cyan">Intake Form</span><span class="flow-chip green">Approves Quote / Proof</span></div></div><div class="lane"><div class="lane-title">ClickUp</div><div class="lane-body"><span class="flow-chip cyan">Auto-Match Sender</span><span class="flow-chip purple">Company Record</span><span class="flow-chip yellow">Keyword Routing</span><span class="flow-chip red">Rush Priority</span></div></div><div class="lane"><div class="lane-title">Rep</div><div class="lane-body"><span class="flow-chip navy">Owns Queue</span><span class="flow-chip yellow">Needs Info</span><span class="flow-chip cyan">Follow-Up</span><span class="flow-chip purple">Design/Proof</span></div></div><div class="lane"><div class="lane-title">InfoFlow</div><div class="lane-body"><span class="flow-chip navy">Ben Estimate</span><span class="flow-chip purple">Quote Sent</span><span class="flow-chip cyan">Invoice Attached</span></div></div><div class="lane"><div class="lane-title">Production</div><div class="lane-body"><span class="flow-chip green">Production Ready</span><span class="flow-chip green">In Production</span><span class="flow-chip cyan">QC</span><span class="flow-chip navy">Fulfillment</span></div></div></div></div></section>
+
+<section id="workflow-tree" class="section-panel">
+<div class="sh">
+  <div class="sh-title">Space-Level Workflow Tree</div>
+  <div class="sh-desc">How work flows across all four spaces — from first inquiry through production, invoicing, and closeout. Dashed lines indicate conditional paths, exception routes, and resolved items returning to origin.</div>
+</div>
+
+<div class="g4">
+  <div class="stat"><div class="stat-value">4</div><div class="stat-label">Spaces</div></div>
+  <div class="stat"><div class="stat-value">7</div><div class="stat-label">Handoff Gates</div></div>
+  <div class="stat"><div class="stat-value">2</div><div class="stat-label">Escalation Tiers</div></div>
+  <div class="stat"><div class="stat-value">1</div><div class="stat-label">Closeout Path</div></div>
+</div>
+
+<div class="callout navy"><b>Reading this diagram:</b> Solid arrows show primary forward flow. Dashed arrows show conditional paths, loops, and exception routing. Every job starts in Space 1 Intake and ends in Space 3 Paid/Closed — the path between depends on job type, quote approval, proof requirements, and whether escalation is needed.</div>
+
+<div class="dlabel2">Full workspace flow — Space 1 → Space 2 → Space 3 → Space 4</div>
+
+<div class="diagram2" style="padding:0;overflow:hidden;">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 900 1380" style="display:block;">
+<defs>
+  <marker id="arr-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#0f766e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#1419A0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arr-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="arr-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8e9ab8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<!-- ===================== SPACE 1 HEADER ===================== -->
+<rect x="30" y="20" width="840" height="38" rx="10" fill="#0f766e"/>
+<text x="450" y="44" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 1 — EP-Client Operations</text>
+
+<!-- CRM -->
+<rect x="300" y="76" width="300" height="48" rx="8" fill="#e6f3f1" stroke="#0f766e" stroke-width="1"/>
+<text x="450" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle">CRM</text>
+<text x="450" y="113" font-family="Inter,sans-serif" font-size="11" fill="#0f766e" text-anchor="middle">Companies · Contacts · History</text>
+
+<!-- CRM down arrow -->
+<line x1="450" y1="124" x2="450" y2="144" stroke="#0f766e" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+
+<!-- INTAKE -->
+<rect x="220" y="144" width="460" height="48" rx="8" fill="#e6f3f1" stroke="#0f766e" stroke-width="1"/>
+<text x="450" y="164" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle">Intake</text>
+<text x="450" y="181" font-family="Inter,sans-serif" font-size="11" fill="#0f766e" text-anchor="middle">New Inquiries · Needs Information · Intake Follow-Ups</text>
+
+<!-- Intake down arrow -->
+<line x1="450" y1="192" x2="450" y2="212" stroke="#0f766e" stroke-width="1.5" marker-end="url(#arr-teal)"/>
+
+<!-- ACTIVE JOBS -->
+<rect x="80" y="212" width="740" height="48" rx="8" fill="#e8ecf8" stroke="#1419A0" stroke-width="1.5"/>
+<text x="450" y="232" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0d1070" text-anchor="middle">Active Jobs</text>
+<text x="450" y="249" font-family="Inter,sans-serif" font-size="11" fill="#1419A0" text-anchor="middle">All Jobs · Ready to Price · Quote Sent / Awaiting Approval · Design &amp; Proofing · Job Exceptions / Escalations</text>
+
+<!-- 3 branches out of Active Jobs -->
+<!-- Left: Reorders -->
+<path d="M220 260 L220 294 L170 294 L170 320" fill="none" stroke="#0f766e" stroke-width="1.2" marker-end="url(#arr-teal)"/>
+<!-- Center: Rush -->
+<line x1="450" y1="260" x2="450" y2="320" stroke="#dc2626" stroke-width="1.2" marker-end="url(#arr-red)"/>
+<!-- Right: Production handoff -->
+<path d="M680 260 L680 294 L740 294 L740 320" fill="none" stroke="#1419A0" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+
+<!-- REORDERS -->
+<rect x="80" y="320" width="210" height="48" rx="8" fill="#e6f3f1" stroke="#0f766e" stroke-width="1"/>
+<text x="185" y="340" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle">Reorders</text>
+<text x="185" y="357" font-family="Inter,sans-serif" font-size="10.5" fill="#0f766e" text-anchor="middle">Requests · Recurring</text>
+
+<!-- RUSH ORDERS -->
+<rect x="320" y="320" width="260" height="48" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+<text x="450" y="340" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#991b1b" text-anchor="middle">Rush Orders</text>
+<text x="450" y="357" font-family="Inter,sans-serif" font-size="10.5" fill="#dc2626" text-anchor="middle">Rush Intake · Active Rush · Keywords</text>
+
+<!-- SPACE 2 HANDOFF BOX -->
+<rect x="615" y="320" width="205" height="48" rx="8" fill="#e8ecf8" stroke="#1419A0" stroke-width="1.5"/>
+<text x="717" y="340" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0d1070" text-anchor="middle">→ Space 2</text>
+<text x="717" y="357" font-family="Inter,sans-serif" font-size="10.5" fill="#1419A0" text-anchor="middle">Quote approved</text>
+
+<!-- Reorders loop back -->
+<path d="M185 320 L185 286 L220 286" fill="none" stroke="#8e9ab8" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-gray)"/>
+
+<!-- Divider -->
+<line x1="30" y1="396" x2="870" y2="396" stroke="#dce2f0" stroke-width="1" stroke-dasharray="5 4"/>
+
+<!-- ===================== SPACE 2 HEADER ===================== -->
+<rect x="30" y="410" width="840" height="38" rx="10" fill="#1419A0"/>
+<text x="450" y="434" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 2 — EP-Production</text>
+
+<!-- Entry label -->
+<line x1="717" y1="368" x2="717" y2="410" stroke="#1419A0" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-blue)"/>
+
+<!-- 4 PRODUCTION FOLDERS -->
+<rect x="40" y="466" width="185" height="58" rx="8" fill="#e8ecf8" stroke="#1419A0" stroke-width="1"/>
+<text x="133" y="487" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0d1070" text-anchor="middle">Print Production</text>
+<text x="133" y="503" font-family="Inter,sans-serif" font-size="10.5" fill="#1419A0" text-anchor="middle">Prod Ready · Digital</text>
+<text x="133" y="516" font-family="Inter,sans-serif" font-size="10.5" fill="#1419A0" text-anchor="middle">Biz Cards · NCR</text>
+
+<rect x="245" y="466" width="185" height="58" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+<text x="338" y="487" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#4c1d95" text-anchor="middle">Wide Format</text>
+<text x="338" y="503" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Queue · Proof/Prep</text>
+<text x="338" y="516" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Pickup/Delivery/Install</text>
+
+<rect x="450" y="466" width="185" height="58" rx="8" fill="#f0fdfa" stroke="#0f766e" stroke-width="1"/>
+<text x="543" y="487" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle">Mail / EDDM</text>
+<text x="543" y="503" font-family="Inter,sans-serif" font-size="10.5" fill="#0f766e" text-anchor="middle">Intake · Production</text>
+<text x="543" y="516" font-family="Inter,sans-serif" font-size="10.5" fill="#0f766e" text-anchor="middle">USPS / Delivery Prep</text>
+
+<rect x="655" y="466" width="205" height="58" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.2"/>
+<text x="757" y="487" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#78350f" text-anchor="middle">QC &amp; Fulfillment</text>
+<text x="757" y="503" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Quality Check</text>
+<text x="757" y="516" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Pickup · Delivery · Shipped</text>
+
+<!-- Feed arrows from Space 2 header -->
+<line x1="133" y1="448" x2="133" y2="466" stroke="#1419A0" stroke-width="1.2" marker-end="url(#arr-blue)"/>
+<line x1="338" y1="448" x2="338" y2="466" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+<line x1="543" y1="448" x2="543" y2="466" stroke="#0f766e" stroke-width="1.2" marker-end="url(#arr-teal)"/>
+<line x1="757" y1="448" x2="757" y2="466" stroke="#b45309" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+
+<!-- Converge lines to QC -->
+<path d="M133 524 L133 560 L450 560" fill="none" stroke="#1419A0" stroke-width="1" marker-end="url(#arr-blue)"/>
+<path d="M338 524 L338 560 L340 560" fill="none" stroke="#7c3aed" stroke-width="1"/>
+<path d="M543 524 L543 560 L544 560" fill="none" stroke="#0f766e" stroke-width="1"/>
+<line x1="757" y1="524" x2="757" y2="560" stroke="#b45309" stroke-width="1" marker-end="url(#arr-amber)"/>
+<line x1="450" y1="560" x2="757" y2="560" stroke="#dce2f0" stroke-width="1"/>
+
+<!-- Converge label -->
+<text x="450" y="576" font-family="Inter,sans-serif" font-size="11" fill="#5a6589" text-anchor="middle">Job complete → triggers Invoice Pending</text>
+<line x1="450" y1="582" x2="450" y2="600" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+
+<!-- Divider -->
+<line x1="30" y1="610" x2="870" y2="610" stroke="#dce2f0" stroke-width="1" stroke-dasharray="5 4"/>
+
+<!-- ===================== SPACE 3 HEADER ===================== -->
+<rect x="30" y="622" width="840" height="38" rx="10" fill="#7c3aed"/>
+<text x="450" y="646" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 3 — EP-Administration</text>
+
+<!-- 3 ADMIN FOLDERS -->
+<rect x="80" y="678" width="220" height="58" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+<text x="190" y="699" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#4c1d95" text-anchor="middle">Finance</text>
+<text x="190" y="715" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Invoice Pending</text>
+<text x="190" y="728" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Invoiced · Payment Pending</text>
+
+<rect x="330" y="678" width="240" height="58" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+<text x="450" y="699" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#4c1d95" text-anchor="middle">Deposits &amp; Reconciliation</text>
+<text x="450" y="715" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Deposit Review</text>
+<text x="450" y="728" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">QuickBooks – Phase 2</text>
+
+<rect x="600" y="678" width="220" height="58" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+<text x="710" y="699" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#4c1d95" text-anchor="middle">Follow-Up</text>
+<text x="710" y="715" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Quote · Proof</text>
+<text x="710" y="728" font-family="Inter,sans-serif" font-size="10.5" fill="#7c3aed" text-anchor="middle">Payment Follow-Ups</text>
+
+<!-- Feed arrows from Space 3 header -->
+<line x1="190" y1="660" x2="190" y2="678" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+<line x1="450" y1="660" x2="450" y2="678" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+<line x1="710" y1="660" x2="710" y2="678" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+
+<!-- Finance → Paid/Closed -->
+<line x1="190" y1="736" x2="190" y2="764" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+<text x="210" y="752" font-family="Inter,sans-serif" font-size="10" fill="#5a6589">Paid + fulfilled</text>
+
+<rect x="80" y="764" width="220" height="48" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+<text x="190" y="784" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#14532d" text-anchor="middle">Paid / Closed</text>
+<text x="190" y="800" font-family="Inter,sans-serif" font-size="10.5" fill="#16a34a" text-anchor="middle">Financial archive · Revenue data</text>
+
+<!-- Follow-Up loops back -->
+<path d="M600 707 L570 707 L570 800 L300 800" fill="none" stroke="#8e9ab8" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-gray)"/>
+
+<!-- Escalation path up to Leadership -->
+<path d="M190 764 L190 840 L450 840" fill="none" stroke="#b45309" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="290" y="858" font-family="Inter,sans-serif" font-size="10.5" fill="#5a6589" text-anchor="middle">Overdue / exception → escalate</text>
+
+<!-- Divider -->
+<line x1="30" y1="870" x2="870" y2="870" stroke="#dce2f0" stroke-width="1" stroke-dasharray="5 4"/>
+
+<!-- ===================== SPACE 4 HEADER ===================== -->
+<rect x="30" y="882" width="840" height="38" rx="10" fill="#b45309"/>
+<text x="450" y="906" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 4 — EP-Leadership</text>
+
+<!-- Entry arrow -->
+<line x1="450" y1="840" x2="450" y2="882" stroke="#b45309" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-amber)"/>
+
+<!-- 3 LEADERSHIP FOLDERS -->
+<rect x="80" y="938" width="220" height="58" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1.2"/>
+<text x="190" y="959" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#78350f" text-anchor="middle">Escalations</text>
+<text x="190" y="975" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Ben Review · Lee Review</text>
+<text x="190" y="988" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Blocked Jobs</text>
+
+<rect x="330" y="938" width="240" height="58" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1"/>
+<text x="450" y="959" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#78350f" text-anchor="middle">Reporting</text>
+<text x="450" y="975" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">KPI Definitions</text>
+<text x="450" y="988" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Dashboard Requests · QA</text>
+
+<rect x="600" y="938" width="220" height="58" rx="8" fill="#fffbeb" stroke="#b45309" stroke-width="1"/>
+<text x="710" y="959" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#78350f" text-anchor="middle">Implementation QA</text>
+<text x="710" y="975" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Build Tasks · Test Orders</text>
+<text x="710" y="988" font-family="Inter,sans-serif" font-size="10.5" fill="#b45309" text-anchor="middle">Training Feedback</text>
+
+<!-- Feed arrows from Space 4 header -->
+<line x1="190" y1="920" x2="190" y2="938" stroke="#b45309" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+<line x1="450" y1="920" x2="450" y2="938" stroke="#b45309" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+<line x1="710" y1="920" x2="710" y2="938" stroke="#b45309" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+
+<!-- Escalation resolution -->
+<line x1="190" y1="996" x2="190" y2="1032" stroke="#b45309" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+
+<rect x="80" y="1032" width="220" height="48" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+<text x="190" y="1053" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#14532d" text-anchor="middle">Resolved</text>
+<text x="190" y="1069" font-family="Inter,sans-serif" font-size="10.5" fill="#16a34a" text-anchor="middle">Returns to originating list</text>
+
+<!-- Resolved return loop back to Active Jobs -->
+<path d="M80 1056 L46 1056 L46 236 L80 236" fill="none" stroke="#8e9ab8" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-gray)"/>
+<text x="20" y="648" font-family="Inter,sans-serif" font-size="10" fill="#8e9ab8" text-anchor="middle" transform="rotate(-90,20,648)">Resolved → back to job</text>
+
+<!-- ===================== LEGEND ===================== -->
+<line x1="30" y1="1110" x2="870" y2="1110" stroke="#dce2f0" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="450" y="1132" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="1">LEGEND</text>
+
+<line x1="60" y1="1158" x2="120" y2="1158" stroke="#1419A0" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+<text x="130" y="1163" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Primary flow (solid)</text>
+
+<line x1="320" y1="1158" x2="380" y2="1158" stroke="#8e9ab8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr-gray)"/>
+<text x="390" y="1163" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Conditional / loop / exception (dashed)</text>
+
+<rect x="60" y="1180" width="18" height="18" rx="4" fill="#e6f3f1" stroke="#0f766e" stroke-width="1"/>
+<text x="88" y="1193" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Client Operations</text>
+
+<rect x="220" y="1180" width="18" height="18" rx="4" fill="#e8ecf8" stroke="#1419A0" stroke-width="1"/>
+<text x="248" y="1193" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Production</text>
+
+<rect x="380" y="1180" width="18" height="18" rx="4" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1"/>
+<text x="408" y="1193" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Administration</text>
+
+<rect x="560" y="1180" width="18" height="18" rx="4" fill="#fffbeb" stroke="#b45309" stroke-width="1"/>
+<text x="588" y="1193" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Leadership</text>
+
+<rect x="720" y="1180" width="18" height="18" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+<text x="748" y="1193" font-family="Inter,sans-serif" font-size="11" fill="#1a2040">Resolved / Closed</text>
+</svg>
+</div>
+
+<div class="g2" style="margin-top:20px;">
+  <div class="card">
+    <div class="card-title">The Two Critical Gates</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">A job cannot move from Space 1 to Space 2 until both gates are cleared:</p>
+    <ul class="checklist">
+      <li><b>Gate 1 — Quote Approved:</b> Customer has accepted the estimate from InfoFlow. Estimate Number and Quote Amount must be populated.</li>
+      <li><b>Gate 2 — Proof Cleared:</b> If Proof Required = Yes, Proof Approved Date must be set. If Proof Required = No OR Design Required = No, this gate is automatically passed.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">Escalation Ladder</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Any job that is blocked, disputed, or overdue follows a two-tier escalation path:</p>
+    <ul class="checklist">
+      <li><b>Tier 1 — Ben Review:</b> Auto-assigned when Status = Escalated. Ben attempts resolution. SLA clock starts.</li>
+      <li><b>Tier 2 — Lee Review:</b> Auto-assigned if Ben does not resolve within SLA. Financial Impact field populated. Lee makes final decision.</li>
+      <li><b>Resolved:</b> Escalation marked resolved. Job automatically returns to its originating list in Space 1 with updated status.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card" style="margin-top:4px;">
+  <div class="card-title">Space-Level Handoff Rules</div>
+  <div class="table-wrap" style="margin-top:0;">
+    <table>
+      <thead><tr><th>From</th><th>To</th><th>Trigger</th><th>Gate / Condition</th></tr></thead>
+      <tbody>
+        <tr><td>Intake → Active Jobs</td><td>Space 1 internal</td><td>Company matched + required fields complete</td><td>Quantity, Material, Size, Due Date all populated</td></tr>
+        <tr><td>Active Jobs → Space 2</td><td>Space 1 → Space 2</td><td>Quote Approved</td><td>Design Required = No → direct. Design Required = Yes → Proof Approved Date must be set first</td></tr>
+        <tr><td>Space 2 → Space 3</td><td>Production → Admin</td><td>Job complete (all production stages done)</td><td>Status set to Invoice Pending → appears in Finance folder</td></tr>
+        <tr><td>Space 1 or 3 → Space 4</td><td>Any → Leadership</td><td>Escalation, blocked job, or overdue payment</td><td>Ben assigned first; Lee assigned if unresolved</td></tr>
+        <tr><td>Space 4 → Space 1</td><td>Leadership → Client Ops</td><td>Escalation resolved</td><td>Status = Resolved → job returns to originating list</td></tr>
+        <tr><td>Rush flag → Rush Orders</td><td>Space 1 internal</td><td>Rush Order = checked OR priority keyword detected</td><td>Immediate notification to Zach; surfaces top of all queues</td></tr>
+        <tr><td>Finance → Paid/Closed</td><td>Space 3 internal</td><td>Payment Status = Paid AND Delivered confirmed</td><td>Phase 2: auto-close. Phase 1: manual status change</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</section>
 
 <section id="dashboards" class="section-panel"><div class="sh"><div class="sh-title">Views & Dashboard Architecture</div><div class="sh-desc">Dashboard and view specifications by user and workflow.</div></div><div class="table-wrap"><table><thead><tr><th>Dashboard / View</th><th>Audience</th><th>Filters</th><th>Widgets / Columns</th><th>Purpose</th></tr></thead><tbody><tr><td>Operations Dashboard</td><td>Katie, Zach, Lee</td><td>Open jobs</td><td>Open Inquiries, Needs Info, Ready to Price, Quote Sent, Rush, Escalations</td><td>Daily operations control center.</td></tr><tr><td>My Assigned Jobs</td><td>All Staff</td><td>Assignee = me; not closed</td><td>Status, due date, job type, customer, rush</td><td>Replace inbox scanning.</td></tr><tr><td>Production Dashboard</td><td>Production, Jason, Zach</td><td>Production statuses</td><td>Production Ready, Scheduled, In Production, QC, EDDM, Wide Format</td><td>Production prioritization.</td></tr><tr><td>Finance Dashboard</td><td>Lee / Admin</td><td>Invoice/payment statuses</td><td>Invoice Pending, Invoiced, Payment Pending, Deposit Review</td><td>Financial closeout.</td></tr><tr><td>Leadership Dashboard</td><td>Lee</td><td>Escalated, overdue, rush, pipeline</td><td>Revenue Pipeline, Escalations, Overdue Jobs, Jobs by Type</td><td>Executive visibility.</td></tr></tbody></table></div></section>
 
