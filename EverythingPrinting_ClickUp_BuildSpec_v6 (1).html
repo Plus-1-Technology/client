@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Everything Printing — ClickUp Build Spec v6 | Plus 1 Technology</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+:root{--p1-blue:#1419A0;--navy:#1419A0;--navy-dark:#0d1070;--navy-dim:#e8ecf8;--navy-mid:#c5ceed;--cyan:#00B9FF;--cyan-dim:#e0f4fc;--cyan-mid:#a8ddf5;--bg:#f4f6fb;--bg2:#fff;--bg3:#eef1f8;--bg4:#f9fafd;--border:#dce2f0;--border2:#c8d0e8;--text:#1a2040;--muted:#5a6589;--subtle:#8e9ab8;--green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;--yellow:#b45309;--yellow-bg:#fffbeb;--yellow-bd:#fde68a;--red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;--purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;--orange:#c2410c;--orange-bg:#fff7ed;--orange-bd:#fed7aa;--teal:#0f766e;--teal-bg:#f0fdfa;--teal-bd:#99f6e4;--sb-bg:#0e1278;--sb-border:rgba(255,255,255,.08);--sb-text:rgba(255,255,255,.65);--font-body:'Inter',sans-serif;--font-display:'Inter',sans-serif;--font-mono:'DM Mono',monospace;--sh:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--sh2:0 4px 16px rgba(0,0,0,.09);--r:8px;--r2:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;scroll-behavior:smooth}body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:14px;line-height:1.65;display:grid;grid-template-columns:248px 1fr;min-height:100vh}.mut{color:var(--muted)}.sub{color:var(--subtle)}.mono{font-family:var(--font-mono)}.num{text-align:center;color:var(--muted);font-family:var(--font-mono)}
+.sidebar{background:var(--sb-bg);height:100vh;position:sticky;top:0;overflow-y:auto;display:flex;flex-direction:column;border-right:1px solid var(--sb-border);z-index:100}.sb-logo-block{padding:18px 18px 14px;border-bottom:1px solid var(--sb-border);display:flex;align-items:center;gap:10px}.sb-info-block{padding:14px 18px;border-bottom:1px solid var(--sb-border);background:rgba(0,0,0,.2)}.sb-info-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);font-weight:700;margin-bottom:4px}.sb-info-name{font-family:var(--font-display);font-size:13px;color:#fff;font-weight:700;line-height:1.3;margin-bottom:2px}.sb-info-sub{font-size:11px;color:rgba(255,255,255,.45)}.sb-nav{flex:1;overflow-y:auto;padding:8px 10px 14px}.sb-group{margin-bottom:6px}.sb-group-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);font-weight:700;padding:10px 10px 5px}.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;font-family:var(--font-body);font-size:12.5px;font-weight:500;color:var(--sb-text);cursor:pointer;border-radius:6px;transition:all .12s;border-left:2px solid transparent;user-select:none}.sb-item:hover{background:rgba(255,255,255,.05);color:#fff}.sb-item.active{background:rgba(0,185,255,.12);color:#fff;font-weight:600;border-left-color:#00B9FF;box-shadow:inset 0 0 0 1px rgba(0,185,255,.15)}.sb-icon{font-size:12px;width:18px;text-align:center;flex-shrink:0;font-family:var(--font-mono);color:rgba(255,255,255,.5)}.sb-footer{padding:12px 18px;border-top:1px solid var(--sb-border);background:rgba(0,0,0,.2)}.sb-footer-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:8px}.sb-footer-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:700}.sb-footer-val{font-size:11px;color:rgba(255,255,255,.65);font-weight:600}
+.content{display:flex;flex-direction:column;min-width:0;overflow-x:hidden}.hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,#1a5fa8 100%);border-bottom:3px solid var(--cyan);padding:30px 40px 26px;color:#fff;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 85% 0%,rgba(41,171,226,.15) 0%,transparent 60%);pointer-events:none}.hero h1{font-family:var(--font-display);font-size:25px;font-weight:800;margin-bottom:6px}.hero .sub2{font-size:13px;color:rgba(255,255,255,.8)}.hero-meta{display:flex;gap:26px;margin-top:16px;flex-wrap:wrap}.hero-meta div{font-size:11px;color:rgba(255,255,255,.6)}.hero-meta b{display:block;font-size:13px;color:#fff;font-weight:700;margin-top:2px}
+.section-panel{display:none;padding:28px 40px 90px}.section-panel.active{display:block;animation:fadeIn .22s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.sh{margin-bottom:22px}.sh-title{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.01em;margin-bottom:4px}.sh-desc{font-size:13px;color:var(--muted);line-height:1.55;max-width:980px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:20px;box-shadow:var(--sh);margin-bottom:16px}.card-title{font-family:var(--font-display);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:7px}.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-family:var(--font-body);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}.badge-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}.badge-yellow{background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-bd)}.badge-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}.badge-blue{background:var(--navy-dim);color:var(--navy);border:1px solid var(--navy-mid)}.badge-cyan{background:var(--cyan-dim);color:#0369a1;border:1px solid var(--cyan-mid)}.badge-purple{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)}.badge-orange{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd)}.badge-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)}
+.table-wrap{border:1px solid var(--border);border-radius:var(--r);overflow:auto;box-shadow:var(--sh);background:#fff}table{width:100%;border-collapse:collapse;font-size:12.5px}thead tr{background:var(--bg3)}th{padding:10px 14px;text-align:left;font-family:var(--font-body);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border)}td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}tr:last-child td{border-bottom:none}tbody tr:hover td{background:var(--bg4)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:center;box-shadow:var(--sh)}.stat-value{font-family:var(--font-display);font-size:30px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px}.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.callout{border-radius:var(--r);padding:14px 16px;font-size:13px;margin:14px 0;border:1px solid}.callout.navy{background:var(--navy-dim);border-color:var(--navy-mid);color:var(--text)}.callout.red{background:var(--red-bg);border-color:var(--red-bd)}.callout.green{background:var(--green-bg);border-color:var(--green-bd)}.callout.yellow{background:var(--yellow-bg);border-color:var(--yellow-bd)}.callout.purple{background:var(--purple-bg);border-color:var(--purple-bd)}
+.flow-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--sh);display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:18px}.flow-chip{display:inline-flex;padding:6px 12px;border-radius:7px;font-size:11.5px;font-weight:700;border:1px solid}.flow-chip.navy{background:var(--navy-dim);color:var(--navy);border-color:var(--navy-mid)}.flow-chip.yellow{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow-bd)}.flow-chip.cyan{background:var(--cyan-dim);color:#0369a1;border-color:var(--cyan-mid)}.flow-chip.purple{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd)}.flow-chip.green{background:var(--green-bg);color:var(--green);border-color:var(--green-bd)}.flow-chip.red{background:var(--red-bg);color:var(--red);border-color:var(--red-bd)}.flow-chip.teal{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-bd)}.flow-arrow{color:var(--subtle);font-weight:700}
+.exp-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:8px;box-shadow:var(--sh)}.exp-card.open{box-shadow:var(--sh2)}.exp-hdr{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-left:4px solid transparent;transition:background .15s,border-color .15s;user-select:none}.exp-hdr:hover{background:var(--bg3)}.exp-card.open .exp-hdr{background:var(--navy-dim);border-left-color:var(--cyan)}.exp-icon{width:38px;height:38px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-family:var(--font-mono);font-weight:700;background:var(--navy-dim);color:var(--navy)}.exp-title{font-family:var(--font-body);font-weight:700;font-size:14px;color:var(--text)}.exp-sub{font-size:11.5px;color:var(--muted);margin-top:1px}.exp-badges{display:flex;gap:6px;margin-left:auto;align-items:center}.exp-chevron{font-size:10px;color:var(--subtle);margin-left:6px;transition:transform .2s}.exp-card.open .exp-chevron{transform:rotate(180deg)}.exp-body{display:none;border-top:1px solid var(--border);animation:fadeIn .2s ease;padding:16px}.exp-card.open .exp-body{display:block}
+.kv{display:flex;gap:10px;padding:4px 0;font-size:13px}.kv .k{width:150px;flex-shrink:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}.lbl{margin:12px 0 6px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.fchip{display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:11.5px;margin:0 5px 6px 0;font-family:var(--font-mono)}.checklist{margin:0 0 0 18px}.checklist li{font-size:13px;margin-bottom:5px;padding-left:4px}.steps-list{counter-reset:s;list-style:none}.steps-list li{position:relative;padding:10px 0 10px 40px;border-bottom:1px solid var(--border);font-size:13px}.steps-list li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:8px;width:26px;height:26px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.tree{font-family:var(--font-mono);font-size:12px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;white-space:pre-wrap;box-shadow:var(--sh);margin-bottom:16px}.diagram{border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);background:#fff;margin-bottom:8px;padding:16px}.lane{display:grid;grid-template-columns:160px 1fr;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}.lane-title{background:var(--navy-dim);padding:12px;font-weight:800;color:var(--navy);font-size:12px;text-transform:uppercase}.lane-body{padding:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.node-map{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:10px}.node{min-width:130px;max-width:190px;text-align:center;background:#fff;border:1px solid var(--border2);border-radius:10px;padding:10px 12px;box-shadow:var(--sh);font-size:12px;font-weight:700}.node.core{border-color:var(--navy-mid);background:var(--navy-dim);color:var(--navy)}.node.auto{border-color:var(--cyan-mid);background:var(--cyan-dim);color:#0369a1}.node.warn{border-color:var(--yellow-bd);background:var(--yellow-bg);color:var(--yellow)}.node.ok{border-color:var(--green-bd);background:var(--green-bg);color:var(--green)}.arrow{font-weight:800;color:var(--subtle)}.signbox{background:var(--bg2);border:2px solid var(--navy);border-radius:var(--r2);padding:24px;margin-top:18px}.signline{margin-top:18px;font-size:14px}
+@media print{.sidebar{display:none}body{grid-template-columns:1fr}.section-panel{display:block!important;padding:18px}.exp-body{display:block!important}.exp-card,.card{break-inside:avoid}}@media(max-width:820px){body{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.g2,.g3,.g4{grid-template-columns:1fr}.lane{grid-template-columns:1fr}}
+.diagram2{border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--sh);background:#fff;margin:6px 0 18px}.diagram2 svg{width:100%;height:auto;display:block}.dlabel2{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 8px}</style></head>
+<body>
+<nav class="sidebar"><div class="sb-logo-block"><svg viewBox="0 0 48 48" width="34" height="34"><circle cx="24" cy="24" r="18" fill="none" stroke="#fff" stroke-width="4"/><text x="24" y="30" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-weight="800" font-size="15">+1</text></svg><div style="font-family:var(--font-body);font-weight:800;font-size:13px;color:#fff;line-height:1.1">PLUS ONE<br><span style="font-size:9px;letter-spacing:.15em;font-weight:500;opacity:.7">TECHNOLOGY</span></div></div>
+<div class="sb-info-block"><div class="sb-info-label">Client / Project</div><div class="sb-info-name">Everything Printing</div><div class="sb-info-sub">ClickUp Build · Process Mapping Workshop · v6.0</div></div>
+<div class="sb-nav">
+  <div class="sb-group"><div class="sb-group-label">Client Information</div>
+    <div class="sb-item active" data-tab="overview"><span class="sb-icon">01</span>Executive Overview</div>
+    <div class="sb-item" data-tab="discovery"><span class="sb-icon">02</span>Discovery Findings</div>
+    <div class="sb-item" data-tab="audit"><span class="sb-icon">03</span>Build Review</div>
+  </div>
+  <div class="sb-group"><div class="sb-group-label">Architecture</div>
+    <div class="sb-item" data-tab="architecture"><span class="sb-icon">04</span>Architecture Index</div>
+    <div class="sb-item" data-tab="data-model"><span class="sb-icon">05</span>Data Model</div>
+    <div class="sb-item" data-tab="roles"><span class="sb-icon">06</span>Roles</div>
+    <div class="sb-item" data-tab="forms"><span class="sb-icon">07</span>Forms</div>
+  </div>
+  <div class="sb-group"><div class="sb-group-label">Space Build</div>
+    <div class="sb-item" data-tab="space-1"><span class="sb-icon">08</span>Client Operations</div>
+    <div class="sb-item" data-tab="space-2"><span class="sb-icon">09</span>Production</div>
+    <div class="sb-item" data-tab="space-3"><span class="sb-icon">10</span>Administration</div>
+    <div class="sb-item" data-tab="space-4"><span class="sb-icon">11</span>Leadership</div>
+  </div>
+  <div class="sb-group"><div class="sb-group-label">Build Detail</div>
+    <div class="sb-item" data-tab="fields"><span class="sb-icon">12</span>Custom Fields</div>
+    <div class="sb-item" data-tab="statuses"><span class="sb-icon">13</span>Status Engine</div>
+    <div class="sb-item" data-tab="templates"><span class="sb-icon">14</span>Templates</div>
+    <div class="sb-item" data-tab="automations"><span class="sb-icon">15</span>Automations</div>
+    <div class="sb-item" data-tab="workflows"><span class="sb-icon">16</span>Workflow Maps</div>
+    <div class="sb-item" data-tab="dashboards"><span class="sb-icon">17</span>Dashboards</div>
+  </div>
+  <div class="sb-group"><div class="sb-group-label">Delivery</div>
+    <div class="sb-item" data-tab="qa"><span class="sb-icon">18</span>QA Scripts</div>
+    <div class="sb-item" data-tab="training"><span class="sb-icon">19</span>Training</div>
+    <div class="sb-item" data-tab="approval"><span class="sb-icon">20</span>Approval</div>
+  </div>
+</div>
+<div class="sb-footer"><div class="sb-footer-row"><span class="sb-footer-label">Version</span><span class="sb-footer-val">v6.0</span></div><div class="sb-footer-row"><span class="sb-footer-label">Format</span><span class="sb-footer-val">Plus 1 + Visuals</span></div></div></nav>
+<main class="content">
+<section class="hero"><h1>Everything Printing — ClickUp Build Specification</h1><div class="sub2">Implementation blueprint &amp; handover doc · Space → Folder → List architecture · fields · statuses · automations · templates · workflow maps</div><div class="hero-meta"><div>Client<b>Everything Printing</b></div><div>Stakeholders<b>Lee Levengood + Zach Ralph</b></div><div>Core Systems<b>ClickUp + Outlook + InfoFlow + QuickBooks</b></div><div>Build Gate<b>Phase 1A Approval</b></div></div></section>
+
+<section id="overview" class="section-panel active">
+<div class="sh"><div class="sh-title">Executive Overview</div><div class="sh-desc">This document preserves the original build-spec format and expands the implementation details. ClickUp becomes the operational workflow system while InfoFlow remains the quoting/invoicing source of truth during Phase 1.</div></div>
+<div class="g4"><div class="stat"><div class="stat-value">4</div><div class="stat-label">Spaces</div></div><div class="stat"><div class="stat-value">16</div><div class="stat-label">Folders</div></div><div class="stat"><div class="stat-value">34</div><div class="stat-label">Lists / Queues</div></div><div class="stat"><div class="stat-value">35</div><div class="stat-label">Locked Fields</div></div></div>
+<div class="card"><div class="card-title">Operating Principle</div><div class="callout navy"><b>Alerted on assignment, not by scanning the inbox.</b> The future state reduces shared-inbox ambiguity by routing emails, forms, estimates, proofs, and invoices to a visible Company/Contact/Job structure.</div><div class="flow-wrap"><span class="flow-chip navy">Inquiry</span><span class="flow-arrow">→</span><span class="flow-chip cyan">Route / Assign</span><span class="flow-arrow">→</span><span class="flow-chip yellow">Gather Info</span><span class="flow-arrow">→</span><span class="flow-chip purple">Quote</span><span class="flow-arrow">→</span><span class="flow-chip cyan">Approve / Design</span><span class="flow-arrow">→</span><span class="flow-chip green">Produce</span><span class="flow-arrow">→</span><span class="flow-chip navy">Invoice / Close</span></div></div>
+<div class="g2"><div class="card"><div class="card-title">Current State Pain Points</div><ul class="checklist"><li>Shared order@ inbox requires multiple staff members to scan and self-assign work.</li><li>Ownership can become unclear when everyone sees every reply.</li><li>InfoFlow and Outlook do not anchor around a shared job record.</li><li>Walk-in and phone inquiries often begin as handwritten notes.</li><li>Missing details are chased manually by email.</li><li>QuickBooks deposit reconciliation remains a Phase 2 pain point.</li></ul></div><div class="card"><div class="card-title">Future State Outcomes</div><ul class="checklist"><li>One Company and Job record anchors each request.</li><li>Routing replaces shared-inbox scramble.</li><li>Intake forms replace handwritten notes where useful.</li><li>Quote and proof approvals become separate gates.</li><li>Rush, reorder, and priority keywords become visible.</li><li>Dashboards support operations, production, finance, and leadership.</li></ul></div></div>
+</section>
+
+<section id="discovery" class="section-panel">
+<div class="sh"><div class="sh-title">Discovery Findings</div><div class="sh-desc">Client information retained and expanded in the original visual format.</div></div>
+<div class="g3"><div class="card"><div class="card-title">Current Systems</div><ul class="checklist"><li>Outlook / order@ for intake</li><li>InfoFlow / IFP for estimating, order confirmation, and invoicing</li><li>QuickBooks for accounting and deposit reconciliation</li><li>Fiery + barcode/cutter production automation</li><li>Client folders for historical proofs and reorder references</li></ul></div><div class="card"><div class="card-title">People / Roles Identified</div><ul class="checklist"><li>Katie — primary intake</li><li>Zach — workflow/operations lead</li><li>Ben — estimating/pricing and first escalation</li><li>Jason — wide format / EDDM / production-specific work</li><li>Lee — owner, leadership approval, final escalation</li></ul></div><div class="card"><div class="card-title">Constraints</div><ul class="checklist"><li>Preserve InfoFlow in Phase 1.</li><li>Do not disrupt existing production automation.</li><li>Keep walk-in intake fast.</li><li>Do not rely on memory for follow-ups.</li><li>Keep quote approval and proof approval separate.</li></ul></div></div>
+<div class="card"><div class="card-title">Validated Lifecycle</div><div class="node-map"><div class="node core">Inquiry</div><div class="arrow">→</div><div class="node auto">Triage</div><div class="arrow">→</div><div class="node warn">Info Gathering</div><div class="arrow">→</div><div class="node core">Quote</div><div class="arrow">→</div><div class="node core">Quote Approval</div><div class="arrow">→</div><div class="node warn">Design / Proof</div><div class="arrow">→</div><div class="node ok">Production</div><div class="arrow">→</div><div class="node ok">Fulfillment</div><div class="arrow">→</div><div class="node core">Invoice / Close</div></div></div>
+</section>
+
+<section id="audit" class="section-panel">
+<div class="sh"><div class="sh-title">Build Review & Recommendations</div><div class="sh-desc">What should remain, what should be expanded, and what should be treated as Phase 2.</div></div>
+<div class="g4"><div class="stat"><div class="stat-value">High</div><div class="stat-label">Workflow Confidence</div></div><div class="stat"><div class="stat-value">Med</div><div class="stat-label">Integration Confidence</div></div><div class="stat"><div class="stat-value">Phase 1</div><div class="stat-label">ClickUp Build</div></div><div class="stat"><div class="stat-value">Phase 2</div><div class="stat-label">QB RPA</div></div></div>
+<div class="table-wrap"><table><thead><tr><th>Area</th><th>Status</th><th>Decision</th><th>Recommendation</th></tr></thead><tbody><tr><td>Current/Future Workflow</td><td><span class="badge badge-green">Valid</span></td><td>Use as executive map.</td><td>Expand into detailed job-type workflows.</td></tr><tr><td>Design Workflow</td><td><span class="badge badge-yellow">Needs Expansion</span></td><td>Must be its own approval path.</td><td>Separate quote approval from proof approval.</td></tr><tr><td>CRM Structure</td><td><span class="badge badge-yellow">Critical</span></td><td>Company/contact records must anchor jobs.</td><td>Build Companies + Contacts before automations.</td></tr><tr><td>InfoFlow</td><td><span class="badge badge-blue">Keep</span></td><td>Source of truth for estimating/invoicing.</td><td>Attach/BCC outputs into ClickUp.</td></tr><tr><td>QuickBooks Deposits</td><td><span class="badge badge-red">Phase 2</span></td><td>Do not overbuild Phase 1.</td><td>Track in admin backlog/RPA queue.</td></tr></tbody></table></div>
+</section>
+
+<section id="architecture" class="section-panel"><div class="sh"><div class="sh-title">Architecture Index</div><div class="sh-desc">Complete recommended ClickUp hierarchy before detailed implementation cards.</div></div><div class="dlabel2">Workspace map — Spaces → Folders (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1672" height="438" viewBox="0 0 1672 438"><rect width="1672" height="438" fill="#fff"/><rect x="0" y="0" width="1672" height="70" fill="#0e1278"/><rect x="0" y="68" width="1672" height="2.5" fill="#00B9FF"/><circle cx="32" cy="34" r="14" fill="none" stroke="#fff" stroke-width="2.4"/><text x="32" y="40" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">+1</text><text x="56" y="29" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" letter-spacing="1.5">PLUS ONE TECHNOLOGY</text><text x="56" y="45" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,.7)">ClickUp Architecture · Workspace map</text><text x="1650" y="42" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="800" fill="#fff" text-anchor="end">Workspace → Spaces → Folders</text><rect x="666.0" y="84" width="340" height="44" rx="10" fill="#1419A0"/><text x="836.0" y="104" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">EVERYTHING PRINTING WORKSPACE</text><text x="836.0" y="120" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" fill="rgba(255,255,255,.7)" text-anchor="middle">4 Spaces · 16 Folders · 34 Lists · build target Space 90175771699</text><path d="M836.0,128 L836.0,126 L230.0,126 L230.0,140" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="40" y="140" width="380" height="50" rx="9" fill="#0f766e"/><text x="230.0" y="170" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">1 · Client Operations</text><rect x="54" y="202" width="352" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="54" y="202" width="4" height="30" rx="2" fill="#0f766e"/><text x="68" y="221" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 CRM</text><rect x="54" y="240" width="352" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="54" y="240" width="4" height="30" rx="2" fill="#0f766e"/><text x="68" y="259" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Intake</text><rect x="54" y="278" width="352" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="54" y="278" width="4" height="30" rx="2" fill="#0f766e"/><text x="68" y="297" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Active Jobs</text><rect x="54" y="316" width="352" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="54" y="316" width="4" height="30" rx="2" fill="#0f766e"/><text x="68" y="335" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Reorders</text><rect x="54" y="354" width="352" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="54" y="354" width="4" height="30" rx="2" fill="#0f766e"/><text x="68" y="373" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Rush Orders</text><path d="M836.0,128 L836.0,126 L634.0,126 L634.0,140" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="444" y="140" width="380" height="50" rx="9" fill="#1419A0"/><text x="634.0" y="170" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">2 · Production</text><rect x="458" y="202" width="352" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="458" y="202" width="4" height="30" rx="2" fill="#1419A0"/><text x="472" y="221" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Print Production</text><rect x="458" y="240" width="352" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="458" y="240" width="4" height="30" rx="2" fill="#1419A0"/><text x="472" y="259" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Wide Format</text><rect x="458" y="278" width="352" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="458" y="278" width="4" height="30" rx="2" fill="#1419A0"/><text x="472" y="297" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Mail / EDDM</text><rect x="458" y="316" width="352" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="458" y="316" width="4" height="30" rx="2" fill="#1419A0"/><text x="472" y="335" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 QC &amp; Fulfillment</text><path d="M836.0,128 L836.0,126 L1038.0,126 L1038.0,140" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="848" y="140" width="380" height="50" rx="9" fill="#7c3aed"/><text x="1038.0" y="170" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">3 · Administration</text><rect x="862" y="202" width="352" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="862" y="202" width="4" height="30" rx="2" fill="#7c3aed"/><text x="876" y="221" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Finance</text><rect x="862" y="240" width="352" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="862" y="240" width="4" height="30" rx="2" fill="#7c3aed"/><text x="876" y="259" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Deposits &amp; Reconciliation</text><rect x="862" y="278" width="352" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="862" y="278" width="4" height="30" rx="2" fill="#7c3aed"/><text x="876" y="297" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Follow-Up</text><path d="M836.0,128 L836.0,126 L1442.0,126 L1442.0,140" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="1252" y="140" width="380" height="50" rx="9" fill="#b45309"/><text x="1442.0" y="170" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">4 · Leadership</text><rect x="1266" y="202" width="352" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1266" y="202" width="4" height="30" rx="2" fill="#b45309"/><text x="1280" y="221" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Reporting</text><rect x="1266" y="240" width="352" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1266" y="240" width="4" height="30" rx="2" fill="#b45309"/><text x="1280" y="259" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Escalations</text><rect x="1266" y="278" width="352" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1266" y="278" width="4" height="30" rx="2" fill="#b45309"/><text x="1280" y="297" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#1a2040">📁 Implementation QA</text></svg></div><div class="tree">Everything Printing Workspace
+├── SPACE 1: Client Operations
+│   ├── CRM: Companies, Contacts, Client History / Reference
+│   ├── Intake: New Inquiries, Needs Information, Intake Follow-Ups
+│   ├── Active Jobs: All Active Jobs, Ready to Price, Quote Sent, Design &amp; Proofing, Escalations
+│   ├── Reorders: Reorder Requests, Recurring / Scheduled Reorders
+│   └── Rush Orders: Rush Intake, Active Rush Orders, Outdoor Pickup / Priority Keywords
+│
+├── SPACE 2: Production
+│   ├── Print Production: Production Ready, Digital Print, Business Cards, Multi-Part Forms
+│   ├── Wide Format: Wide Format Queue, Wide Format Proof / Prep, Pickup / Delivery / Install
+│   ├── Mail / EDDM: EDDM Intake, EDDM Production, USPS / Delivery Prep
+│   └── QC &amp; Fulfillment: Quality Check, Ready for Pickup, Ready for Delivery, Shipped / Delivered
+│
+├── SPACE 3: Administration
+│   ├── Finance: Invoice Pending, Invoiced / Payment Pending, Paid / Closed
+│   ├── Deposits &amp; Reconciliation: Deposit Review, QuickBooks Reconciliation - Phase 2
+│   └── Follow-Up: Quote Follow-Ups, Proof Follow-Ups, Payment Follow-Ups
+│
+└── SPACE 4: Leadership
+    ├── Reporting: KPI Definitions, Dashboard Requests, Reporting QA
+    ├── Escalations: Ben Review, Lee Review, Blocked Jobs
+    └── Implementation QA: Build Tasks, Test Orders, Training Feedback</div></section>
+
+<section id="data-model" class="section-panel"><div class="sh"><div class="sh-title">Company, Contact & Job Data Model</div><div class="sh-desc">The data model prevents duplication and creates a reliable record trail.</div></div><div class="card"><div class="card-title">Relationship Model</div><div class="node-map"><div class="node core">Company Record</div><div class="arrow">→</div><div class="node auto">Contacts</div><div class="arrow">→</div><div class="node warn">Job Tasks</div><div class="arrow">→</div><div class="node ok">Quotes / Proofs / Invoices</div><div class="arrow">→</div><div class="node core">Closed History</div></div><div class="callout navy"><b>Build rule:</b> Company is the anchor. Contacts belong to Companies. Jobs link to both. Attachments live on Jobs but remain traceable through the Company.</div></div></section>
+
+<section id="roles" class="section-panel"><div class="sh"><div class="sh-title">Role Matrix</div><div class="sh-desc">Daily ownership and routing responsibilities.</div></div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Person</th><th>Primary Responsibilities</th><th>Views Used</th><th>Automation Touchpoints</th></tr></thead><tbody><tr><td>Front Desk / Intake</td><td>Katie</td><td>Phone, walk-in, first-pass intake, initial routing.</td><td>New Inquiry Triage, Needs Info, My Assigned Jobs</td><td>Form-created tasks, missing-info reminders, assignment notices.</td></tr><tr><td>Operations Lead</td><td>Zach</td><td>Workflow oversight, routing, repeat context, priority exceptions.</td><td>Operations Dashboard, Rush Orders, Outdoor Pickup Priority</td><td>Keyword routing, escalations, rush alerts.</td></tr><tr><td>Estimator / Pricing</td><td>Ben</td><td>InfoFlow estimate creation, pricing review, first escalation path.</td><td>Ready to Price, Quote In Progress, Escalated to Ben</td><td>Ready to Price assignments, escalation deadlines.</td></tr><tr><td>Production</td><td>Jason</td><td>Wide format, EDDM, production-specific validation.</td><td>Production Board, Wide Format Queue, EDDM Queue</td><td>Job-type routing, production release, rush notifications.</td></tr><tr><td>Owner / Executive</td><td>Lee</td><td>Leadership approval, final escalation, oversight, finance visibility.</td><td>Leadership Dashboard, Escalations, Invoicing</td><td>Lee Review, blocked jobs, overdue invoices.</td></tr></tbody></table></div></section>
+
+<section id="forms" class="section-panel"><div class="sh"><div class="sh-title">Forms Architecture</div><div class="sh-desc">Forms replace handwritten notes where helpful without slowing down quick interactions.</div></div><div class="g2"><div class="card"><div class="card-title">New Inquiry / Walk-In Intake</div><ul class="checklist"><li>Company / Customer Name</li><li>Contact Name</li><li>Email / Phone</li><li>Inquiry Source</li><li>Job Type</li><li>Quantity</li><li>Needed By</li><li>Notes / Multiple Projects</li><li>Upload Artwork</li></ul><div class="callout green"><b>Output:</b> Creates New Inquiry task and starts triage.</div></div><div class="card"><div class="card-title">Missing Information</div><ul class="checklist"><li>Quantity</li><li>Paper / Material</li><li>Finished Size</li><li>Color Specification</li><li>Artwork</li><li>Delivery/Pickup</li></ul><div class="callout yellow"><b>Output:</b> Updates task and moves toward Ready to Price.</div></div><div class="card"><div class="card-title">Design Questionnaire</div><ul class="checklist"><li>Logo / Brand Assets</li><li>Design Goal</li><li>Dimensions</li><li>Copy / Text</li><li>Examples</li><li>Approval Contact</li></ul><div class="callout purple"><b>Output:</b> Creates/updates Design Intake task.</div></div><div class="card"><div class="card-title">Reorder Request</div><ul class="checklist"><li>Previous Job Reference</li><li>Same as Last Time?</li><li>Changes Needed</li><li>Quantity</li><li>Needed By</li><li>Proof Required?</li></ul><div class="callout navy"><b>Output:</b> Creates Reorder task and prompts previous proof lookup.</div></div></div></section>
+
+
+    <section id="space-1" class="section-panel">
+      <div class="sh"><div class="sh-title">SPACE 1 — Client Operations</div><div class="sh-desc">Primary day-to-day operating space for CRM, intake, quoting, active job coordination, reorders, and rush handling.</div></div>
+      <div class="dlabel2">Space 1 architecture — Folders → Lists (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1668" height="471" viewBox="0 0 1668 471"><rect width="1668" height="471" fill="#fff"/><rect x="0" y="0" width="1668" height="70" fill="#0e1278"/><rect x="0" y="68" width="1668" height="2.5" fill="#00B9FF"/><circle cx="32" cy="34" r="14" fill="none" stroke="#fff" stroke-width="2.4"/><text x="32" y="40" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">+1</text><text x="56" y="29" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" letter-spacing="1.5">PLUS ONE TECHNOLOGY</text><text x="56" y="45" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,.7)">ClickUp Architecture · Space 1</text><text x="1646" y="42" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="800" fill="#fff" text-anchor="end">SPACE 1 — Client Operations</text><rect x="40" y="92" width="1588" height="50" rx="10" fill="#1419A0"/><text x="834.0" y="114" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 1 — Client Operations</text><text x="834.0" y="131" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" fill="rgba(255,255,255,.72)" text-anchor="middle">5 folders · 16 lists / queues</text><path d="M834.0,142 L834.0,165.0 L190.0,165.0 L190.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="40" y="188" width="300" height="46" rx="9" fill="#0f766e"/><text x="54" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F1</text><text x="54" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">CRM</text><rect x="40" y="246" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="246" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Companies</text><rect x="40" y="285" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="285" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Contacts</text><rect x="40" y="324" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="324" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Client History / Reference</text><path d="M834.0,142 L834.0,165.0 L512.0,165.0 L512.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="362" y="188" width="300" height="46" rx="9" fill="#1419A0"/><text x="376" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F2</text><text x="376" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Intake</text><rect x="362" y="246" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="246" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">New Inquiries</text><rect x="362" y="285" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="285" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Needs Information</text><rect x="362" y="324" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="324" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Intake Follow-Ups</text><path d="M834.0,142 L834.0,165.0 L834.0,165.0 L834.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="684" y="188" width="300" height="46" rx="9" fill="#7c3aed"/><text x="698" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F3</text><text x="698" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Active Jobs</text><rect x="684" y="246" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="246" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">All Active Jobs</text><rect x="684" y="285" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="285" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Ready to Price</text><rect x="684" y="324" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="324" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Quote Sent / Awaiting Approval</text><rect x="684" y="363" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="363" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="382" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Design &amp; Proofing</text><rect x="684" y="402" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="402" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="421" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Job Exceptions / Escalations</text><path d="M834.0,142 L834.0,165.0 L1156.0,165.0 L1156.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="1006" y="188" width="300" height="46" rx="9" fill="#b45309"/><text x="1020" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F4</text><text x="1020" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Reorders</text><rect x="1006" y="246" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="246" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Reorder Requests</text><rect x="1006" y="285" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="285" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Recurring / Scheduled Reorders</text><path d="M834.0,142 L834.0,165.0 L1478.0,165.0 L1478.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="1328" y="188" width="300" height="46" rx="9" fill="#be185d"/><text x="1342" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F5</text><text x="1342" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Rush Orders</text><rect x="1328" y="246" width="300" height="30" rx="7" fill="#fbe9f1" stroke="#c8d0e8" stroke-width="1"/><rect x="1328" y="246" width="4" height="30" rx="2" fill="#be185d"/><text x="1343" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Rush Intake</text><rect x="1328" y="285" width="300" height="30" rx="7" fill="#fbe9f1" stroke="#c8d0e8" stroke-width="1"/><rect x="1328" y="285" width="4" height="30" rx="2" fill="#be185d"/><text x="1343" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Active Rush Orders</text><rect x="1328" y="324" width="300" height="30" rx="7" fill="#fbe9f1" stroke="#c8d0e8" stroke-width="1"/><rect x="1328" y="324" width="4" height="30" rx="2" fill="#be185d"/><text x="1343" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Outdoor Pickup / Priority Keywords</text></svg></div><div class="g3">
+        <div class="stat"><div class="stat-value">5</div><div class="stat-label">Folders</div></div>
+        <div class="stat"><div class="stat-value">16</div><div class="stat-label">Lists / Queues</div></div>
+        <div class="stat"><div class="stat-value">Core Working Space</div><div class="stat-label">Space Role</div></div>
+      </div>
+      <div class="callout navy"><b>Build rule:</b> This Space should be built exactly enough to support the operational workflow without duplicating work that belongs in InfoFlow. ClickUp owns visibility, routing, handoffs, follow-ups, and approvals.</div>
+      
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F1</div>
+            <div><div class="exp-title">Folder: CRM</div><div class="exp-sub">Central customer database and relationship layer. Companies and contacts should live here as stable records, not only inside job tasks.</div></div>
+            <div class="exp-badges"><span class="badge badge-blue">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Companies</b></td>
+              <td>Master company/customer record; anchor for contacts, jobs, quotes, proofs, invoices.</td>
+              <td>Prospect, Active, Repeat, VIP, Inactive, Archived</td>
+              <td>Company fields 1–4, 10–18</td>
+              <td>Company match review; VIP flag propagation; missing billing cleanup</td>
+              <td>Company Record; Active Clients; VIP Clients; Missing Billing Info</td>
+            </tr>
+            <tr>
+              <td><b>Contacts</b></td>
+              <td>Person-level records linked to Company and Jobs.</td>
+              <td>Active, Inactive, Billing Contact, Decision Maker, Archived</td>
+              <td>Contact fields 4–9, 17–18</td>
+              <td>Email sender matching; contact data cleanup</td>
+              <td>Contact Record; Decision Makers; Billing Contacts; Missing Email</td>
+            </tr>
+            <tr>
+              <td><b>Client History / Reference</b></td>
+              <td>Standing preferences, historical proof references, recurring job context, and customer-specific notes.</td>
+              <td>Active Reference, Needs Review, Deprecated, Archived</td>
+              <td>Company, Contact, Job Type, Reorder, Previous Job Reference, Notes</td>
+              <td>Reorder checked → prompt prior proof/reference review</td>
+              <td>Client Reference Note; Reorder References; Design References</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F2</div>
+            <div><div class="exp-title">Folder: Intake</div><div class="exp-sub">Front door for email, phone, walk-in, portal, and quick inquiry capture.</div></div>
+            <div class="exp-badges"><span class="badge badge-cyan">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>New Inquiries</b></td>
+              <td>Starting point for all new incoming requests before full qualification.</td>
+              <td>New Inquiry, Assigned, Needs Information, Ready to Price, Closed / No Action</td>
+              <td>Company, Contact, Inquiry Source, Job Type, Assigned Rep, Rush, Reorder, Quantity, Due Date, Notes</td>
+              <td>Email/form creates task; sender matching; missing fields → Needs Information</td>
+              <td>New Inquiry; Reorder; Rush Order; Today’s Intake; Unassigned; Walk-Ins</td>
+            </tr>
+            <tr>
+              <td><b>Needs Information</b></td>
+              <td>Jobs missing quantity, material, artwork, size, deadline, contact, or design requirements.</td>
+              <td>Needs Information, Waiting on Customer, Info Received, Ready to Price, Closed / No Response</td>
+              <td>Quantity, Material, Finished Size, Color, Due Date, Design Required, Proof Required, Attachments</td>
+              <td>Status → customer follow-up; response/form → Ready to Price</td>
+              <td>Missing Info Follow-Up; Overdue Info; Customer Waiting; Ready to Move</td>
+            </tr>
+            <tr>
+              <td><b>Intake Follow-Ups</b></td>
+              <td>Operational follow-up queue for incomplete intake and customer response waiting.</td>
+              <td>Open, Due Today, Overdue, Completed, No Response</td>
+              <td>Company, Contact, Assigned Rep, Due Date, Follow-Up Type, Notes</td>
+              <td>Created from Needs Information; overdue notification to assigned rep</td>
+              <td>Follow-Up Task; Due Today; Overdue; By Rep</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F3</div>
+            <div><div class="exp-title">Folder: Active Jobs</div><div class="exp-sub">Main operational job workflow from pricing through design, production release, and exception handling.</div></div>
+            <div class="exp-badges"><span class="badge badge-purple">5 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>All Active Jobs</b></td>
+              <td>Universal active job list for work from quote through closeout.</td>
+              <td>Assigned, Ready to Price, Quote In Progress, Quote Sent, Awaiting Quote Approval, Quote Approved, Design Intake, Design In Progress, Proof Sent, Awaiting Proof Approval, Proof Revision, Proof Approved, Production Ready, In Production, Quality Check, Invoice Pending, Closed</td>
+              <td>All 17 job-level fields + Company/Contact relationships</td>
+              <td>Status routing to pricing/design/production/invoice; rush flag views</td>
+              <td>All job templates; Board by Status; My Jobs; Overdue; Rush; By Job Type</td>
+            </tr>
+            <tr>
+              <td><b>Ready to Price</b></td>
+              <td>Filtered estimating queue for jobs with enough information to quote.</td>
+              <td>Ready to Price, Quote In Progress, Needs Information, Escalated, Quote Sent</td>
+              <td>Quantity, Due Date, Material, Size, Color, Estimate Number, Quote Amount</td>
+              <td>Ready to Price → assign Ben/estimator; Quote Sent → follow-up</td>
+              <td>Estimate Request; Ben Queue; Rush Quotes; Aging Quotes</td>
+            </tr>
+            <tr>
+              <td><b>Quote Sent / Awaiting Approval</b></td>
+              <td>Queue for open quotes and customer approval follow-up.</td>
+              <td>Quote Sent, Awaiting Quote Approval, Quote Revision, Quote Approved, Quote Rejected, Closed Lost</td>
+              <td>Estimate Number, Quote Amount, Assigned Rep, Due Date, Reorder, Rush</td>
+              <td>Quote Sent → follow-up; Approved → Design or Production</td>
+              <td>Quote Follow-Up; Follow-Up Due; Approved Today; Rejected</td>
+            </tr>
+            <tr>
+              <td><b>Design &amp; Proofing</b></td>
+              <td>Dedicated design requirements, proofing, revision, and approval workflow.</td>
+              <td>Design Intake, Design In Progress, Proof Sent, Awaiting Proof Approval, Proof Revision, Proof Approved</td>
+              <td>Design Required, Proof Required, Proof Approved Date, Attachments, Job Type, Due Date</td>
+              <td>Design Intake → questionnaire; Proof Sent → follow-up; Proof Approved → Production Ready</td>
+              <td>Design Intake; Proof Follow-Up; Proof Waiting; Revisions; Ready for Production</td>
+            </tr>
+            <tr>
+              <td><b>Job Exceptions / Escalations</b></td>
+              <td>Operational blocker and escalation list for jobs requiring management intervention.</td>
+              <td>Escalated, Ben Review, Lee Review, Blocked, Resolved</td>
+              <td>Assigned Rep, Job Type, Due Date, Rush, Blocker Reason, Notes</td>
+              <td>Escalated → Ben; overdue/unresolved → Lee</td>
+              <td>Escalation; Ben Review; Lee Review; Blocked Rush Jobs</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F4</div>
+            <div><div class="exp-title">Folder: Reorders</div><div class="exp-sub">Repeat job handling with previous-order lookup, proof comparison, and scheduled reorder support.</div></div>
+            <div class="exp-badges"><span class="badge badge-green">2 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Reorder Requests</b></td>
+              <td>Fast path for repeat jobs using prior proof/order/artwork.</td>
+              <td>New Reorder, Previous Job Lookup, Changes Needed, Ready to Price, Production Ready, Closed</td>
+              <td>Reorder, Company, Contact, Previous Job Reference, Quantity, Due Date, Proof Required, Notes</td>
+              <td>Reorder checked → previous job reference required; changes → proof required</td>
+              <td>Reorder; Same-as-Last-Time; Changes Needed; Ready to Price</td>
+            </tr>
+            <tr>
+              <td><b>Recurring / Scheduled Reorders</b></td>
+              <td>Quarterly, annual, or predictable repeat campaigns.</td>
+              <td>Scheduled, Upcoming, Due Soon, Created, Completed, Paused</td>
+              <td>Company, Contact, Job Type, Frequency, Due Date, Previous Job Reference</td>
+              <td>Due date → create Reorder Request</td>
+              <td>Recurring Reorder; Next 30 Days; Quarterly; Annual</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F5</div>
+            <div><div class="exp-title">Folder: Rush Orders</div><div class="exp-sub">High-visibility queue for urgent jobs and keyword-priority work such as outdoor pickup.</div></div>
+            <div class="exp-badges"><span class="badge badge-blue">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Rush Intake</b></td>
+              <td>Validates rush feasibility before commitment.</td>
+              <td>Rush Review, Approved Rush, Declined Rush, Needs Pricing, Production Ready</td>
+              <td>Rush, Due Date, Job Type, Quantity, Material, Assigned Rep, Notes</td>
+              <td>Rush checked → notify Zach/production; missing deadline → Needs Info</td>
+              <td>Rush Order; Rush Review; Due Today; Due Tomorrow</td>
+            </tr>
+            <tr>
+              <td><b>Active Rush Orders</b></td>
+              <td>All live rush jobs requiring operational visibility.</td>
+              <td>Ready to Price, Quote Sent, Production Ready, In Production, QC, Ready for Pickup, Closed</td>
+              <td>Rush, Due Date, Job Type, Assigned Rep, Production Owner, Blocker Reason</td>
+              <td>Rush blocker → escalate; rush overdue → notify Lee</td>
+              <td>Rush Order; By Deadline; By Owner; Blocked Rush</td>
+            </tr>
+            <tr>
+              <td><b>Outdoor Pickup / Priority Keywords</b></td>
+              <td>Keyword-driven priority queue for known high-risk phrases.</td>
+              <td>Keyword Flagged, Assigned, In Progress, Resolved</td>
+              <td>Keyword Matched, Company, Contact, Job Type, Assigned Rep, Due Date</td>
+              <td>Email contains outdoor pickup → red flag + top of Zach view</td>
+              <td>Priority Keyword Review; Outdoor Pickup; Unassigned Keywords</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section id="space-2" class="section-panel">
+      <div class="sh"><div class="sh-title">SPACE 2 — Production</div><div class="sh-desc">Production queues for approved work, job-type-specific production, quality check, pickup, delivery, shipping, and completion.</div></div>
+      <div class="dlabel2">Space 2 architecture — Folders → Lists (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1346" height="432" viewBox="0 0 1346 432"><rect width="1346" height="432" fill="#fff"/><rect x="0" y="0" width="1346" height="70" fill="#0e1278"/><rect x="0" y="68" width="1346" height="2.5" fill="#00B9FF"/><circle cx="32" cy="34" r="14" fill="none" stroke="#fff" stroke-width="2.4"/><text x="32" y="40" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">+1</text><text x="56" y="29" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" letter-spacing="1.5">PLUS ONE TECHNOLOGY</text><text x="56" y="45" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,.7)">ClickUp Architecture · Space 2</text><text x="1324" y="42" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="800" fill="#fff" text-anchor="end">SPACE 2 — Production</text><rect x="40" y="92" width="1266" height="50" rx="10" fill="#1419A0"/><text x="673.0" y="114" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 2 — Production</text><text x="673.0" y="131" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" fill="rgba(255,255,255,.72)" text-anchor="middle">4 folders · 14 lists / queues</text><path d="M673.0,142 L673.0,165.0 L190.0,165.0 L190.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="40" y="188" width="300" height="46" rx="9" fill="#0f766e"/><text x="54" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F1</text><text x="54" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Print Production</text><rect x="40" y="246" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="246" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Production Ready</text><rect x="40" y="285" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="285" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Digital Print</text><rect x="40" y="324" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="324" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Business Cards</text><rect x="40" y="363" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="363" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="382" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Multi-Part Forms</text><path d="M673.0,142 L673.0,165.0 L512.0,165.0 L512.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="362" y="188" width="300" height="46" rx="9" fill="#1419A0"/><text x="376" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F2</text><text x="376" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Wide Format</text><rect x="362" y="246" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="246" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Wide Format Queue</text><rect x="362" y="285" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="285" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Wide Format Proof / Prep</text><rect x="362" y="324" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="324" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Pickup / Delivery / Install</text><path d="M673.0,142 L673.0,165.0 L834.0,165.0 L834.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="684" y="188" width="300" height="46" rx="9" fill="#7c3aed"/><text x="698" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F3</text><text x="698" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Mail / EDDM</text><rect x="684" y="246" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="246" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">EDDM Intake</text><rect x="684" y="285" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="285" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">EDDM Production</text><rect x="684" y="324" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="324" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">USPS / Delivery Prep</text><path d="M673.0,142 L673.0,165.0 L1156.0,165.0 L1156.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="1006" y="188" width="300" height="46" rx="9" fill="#b45309"/><text x="1020" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F4</text><text x="1020" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">QC &amp; Fulfillment</text><rect x="1006" y="246" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="246" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Quality Check</text><rect x="1006" y="285" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="285" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Ready for Pickup</text><rect x="1006" y="324" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="324" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Ready for Delivery</text><rect x="1006" y="363" width="300" height="30" rx="7" fill="#fdf3e3" stroke="#c8d0e8" stroke-width="1"/><rect x="1006" y="363" width="4" height="30" rx="2" fill="#b45309"/><text x="1021" y="382" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Shipped / Delivered</text></svg></div><div class="g3">
+        <div class="stat"><div class="stat-value">4</div><div class="stat-label">Folders</div></div>
+        <div class="stat"><div class="stat-value">14</div><div class="stat-label">Lists / Queues</div></div>
+        <div class="stat"><div class="stat-value">Production Visibility</div><div class="stat-label">Space Role</div></div>
+      </div>
+      <div class="callout navy"><b>Build rule:</b> This Space should be built exactly enough to support the operational workflow without duplicating work that belongs in InfoFlow. ClickUp owns visibility, routing, handoffs, follow-ups, and approvals.</div>
+      
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F1</div>
+            <div><div class="exp-title">Folder: Print Production</div><div class="exp-sub">Approved print work after quote/proof gates have been cleared.</div></div>
+            <div class="exp-badges"><span class="badge badge-blue">4 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Production Ready</b></td>
+              <td>Central queue for approved jobs awaiting production start.</td>
+              <td>Production Ready, Scheduled, In Production, Blocked</td>
+              <td>Job Type, Quantity, Due Date, Rush, Material, Size, Proof Approved Date</td>
+              <td>Proof Approved/Quote Approved → Production Ready; Rush → notify production</td>
+              <td>Production Board; Rush First; By Job Type</td>
+            </tr>
+            <tr>
+              <td><b>Digital Print</b></td>
+              <td>Standard digital print production jobs.</td>
+              <td>Queued, Scheduled, In Production, QC, Complete</td>
+              <td>Quantity, Material, Size, Color, Due Date</td>
+              <td>Job Type = Digital Print → queue here</td>
+              <td>Digital Print Production; Today; This Week; Rush</td>
+            </tr>
+            <tr>
+              <td><b>Business Cards</b></td>
+              <td>Business-card-specific production and proof tracking.</td>
+              <td>Proof Approved, Queued, In Production, QC, Ready for Pickup</td>
+              <td>Quantity, Material, Size, Proof Approved Date, Reorder</td>
+              <td>Job Type = Business Cards → apply checklist</td>
+              <td>Business Cards; Reorders; New Designs; Ready for Pickup</td>
+            </tr>
+            <tr>
+              <td><b>Multi-Part Forms</b></td>
+              <td>NCR/multipart form production queue.</td>
+              <td>Proof Approved, Queued, In Production, QC, Complete</td>
+              <td>Quantity, Material, Size, Numbering, Parts Count, Due Date</td>
+              <td>Job Type = Multi-Part → apply checklist</td>
+              <td>Multi-Part Job; Numbered Forms; Rush Forms</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F2</div>
+            <div><div class="exp-title">Folder: Wide Format</div><div class="exp-sub">Large format workflow for signs, banners, posters, outdoor materials, pickup, delivery, and install coordination.</div></div>
+            <div class="exp-badges"><span class="badge badge-cyan">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Wide Format Queue</b></td>
+              <td>Large format approved jobs.</td>
+              <td>Wide Format Review, Production Ready, In Production, QC, Fulfillment</td>
+              <td>Job Type, Finished Size, Material, Indoor/Outdoor, Rush, Due Date</td>
+              <td>Job Type = Wide Format → notify Jason/production</td>
+              <td>Wide Format; Outdoor; Indoor; Rush; Due Date</td>
+            </tr>
+            <tr>
+              <td><b>Wide Format Proof / Prep</b></td>
+              <td>Pre-production proofing and setup for wide format work.</td>
+              <td>Design Intake, Proof Sent, Proof Revision, Proof Approved, Ready for Production</td>
+              <td>Design Required, Proof Required, Proof Approved Date, Attachment, Size</td>
+              <td>Proof Approved → Wide Format Queue</td>
+              <td>Wide Format Proof; Awaiting Proof; Revisions</td>
+            </tr>
+            <tr>
+              <td><b>Pickup / Delivery / Install</b></td>
+              <td>Final fulfillment for wide format jobs.</td>
+              <td>Ready for Pickup, Ready for Delivery, Install Scheduled, Delivered, Closed</td>
+              <td>Delivery Address, Due Date, Contact Phone, Assigned Rep</td>
+              <td>Ready for Pickup → notify rep; outdoor pickup keyword → priority</td>
+              <td>Pickup Today; Delivery Today; Install Scheduled</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F3</div>
+            <div><div class="exp-title">Folder: Mail / EDDM</div><div class="exp-sub">EDDM and mail-prep workflow with route/geography, production, bundling, and USPS/delivery steps.</div></div>
+            <div class="exp-badges"><span class="badge badge-purple">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>EDDM Intake</b></td>
+              <td>Captures EDDM-specific details before production.</td>
+              <td>EDDM Review, Needs Route Info, Ready to Price, Approved</td>
+              <td>Job Type, Quantity, Due Date, Route/Area Notes, Size, Proof Required</td>
+              <td>Job Type = EDDM → apply EDDM intake checklist</td>
+              <td>EDDM; Needs Route Info; Ready to Price</td>
+            </tr>
+            <tr>
+              <td><b>EDDM Production</b></td>
+              <td>Production queue for approved EDDM jobs.</td>
+              <td>Production Ready, In Production, Bundling/Prep, QC, Complete</td>
+              <td>Quantity, Size, Material, Due Date, Proof Approved Date</td>
+              <td>Proof Approved → production ready; Rush EDDM → notify production</td>
+              <td>EDDM Production; Bundling; QC; Rush</td>
+            </tr>
+            <tr>
+              <td><b>USPS / Delivery Prep</b></td>
+              <td>Final prep and delivery to USPS or customer.</td>
+              <td>Prep Required, Ready for USPS, Delivered to USPS, Closed</td>
+              <td>Delivery Address, Due Date, Notes, Attachment</td>
+              <td>Delivered to USPS → Invoice Pending</td>
+              <td>USPS Today; Closed This Week</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F4</div>
+            <div><div class="exp-title">Folder: QC &amp; Fulfillment</div><div class="exp-sub">Quality check, pickup, delivery, shipping, and fulfillment completion.</div></div>
+            <div class="exp-badges"><span class="badge badge-green">4 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Quality Check</b></td>
+              <td>Final review before fulfillment and invoicing.</td>
+              <td>QC Pending, QC In Progress, QC Passed, QC Failed, Rework</td>
+              <td>Job Type, Quantity, Due Date, Rush, Notes</td>
+              <td>QC Passed → fulfillment/invoice; QC Failed → production rework</td>
+              <td>QC Checklist; Failed QC; Rush QC</td>
+            </tr>
+            <tr>
+              <td><b>Ready for Pickup</b></td>
+              <td>Jobs ready for customer pickup.</td>
+              <td>Ready for Pickup, Customer Notified, Picked Up, Invoice Pending</td>
+              <td>Contact Phone, Contact Email, Due Date, Assigned Rep</td>
+              <td>Ready for Pickup → notification task</td>
+              <td>Pickup Today; Waiting Pickup</td>
+            </tr>
+            <tr>
+              <td><b>Ready for Delivery</b></td>
+              <td>Jobs prepared for local delivery.</td>
+              <td>Ready for Delivery, Delivery Scheduled, Delivered, Invoice Pending</td>
+              <td>Delivery Address, Contact Phone, Due Date, Assigned Rep</td>
+              <td>Delivered → Invoice Pending</td>
+              <td>Delivery Today; Delivery Scheduled</td>
+            </tr>
+            <tr>
+              <td><b>Shipped / Delivered</b></td>
+              <td>Jobs fulfilled by shipment or completed delivery.</td>
+              <td>Shipped, Delivered, Invoice Pending, Closed</td>
+              <td>Delivery Address, Tracking Number, Contact Email, Invoice Number</td>
+              <td>Delivered + Paid → Closed</td>
+              <td>Shipped; Delivered Not Invoiced</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section id="space-3" class="section-panel">
+      <div class="sh"><div class="sh-title">SPACE 3 — Administration</div><div class="sh-desc">Finance, invoice visibility, payment follow-up, deposit review, reconciliation, and administrative closeout.</div></div>
+      <div class="dlabel2">Space 3 architecture — Folders → Lists (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1024" height="393" viewBox="0 0 1024 393"><rect width="1024" height="393" fill="#fff"/><rect x="0" y="0" width="1024" height="70" fill="#0e1278"/><rect x="0" y="68" width="1024" height="2.5" fill="#00B9FF"/><circle cx="32" cy="34" r="14" fill="none" stroke="#fff" stroke-width="2.4"/><text x="32" y="40" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">+1</text><text x="56" y="29" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" letter-spacing="1.5">PLUS ONE TECHNOLOGY</text><text x="56" y="45" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,.7)">ClickUp Architecture · Space 3</text><text x="1002" y="42" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="800" fill="#fff" text-anchor="end">SPACE 3 — Administration</text><rect x="40" y="92" width="944" height="50" rx="10" fill="#1419A0"/><text x="512.0" y="114" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 3 — Administration</text><text x="512.0" y="131" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" fill="rgba(255,255,255,.72)" text-anchor="middle">3 folders · 8 lists / queues</text><path d="M512.0,142 L512.0,165.0 L190.0,165.0 L190.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="40" y="188" width="300" height="46" rx="9" fill="#0f766e"/><text x="54" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F1</text><text x="54" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Finance</text><rect x="40" y="246" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="246" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Invoice Pending</text><rect x="40" y="285" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="285" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Invoiced / Payment Pending</text><rect x="40" y="324" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="324" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Paid / Closed</text><path d="M512.0,142 L512.0,165.0 L512.0,165.0 L512.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="362" y="188" width="300" height="46" rx="9" fill="#1419A0"/><text x="376" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F2</text><text x="376" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Deposits &amp; Reconciliation</text><rect x="362" y="246" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="246" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Deposit Review</text><rect x="362" y="285" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="285" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">QuickBooks Reconciliation – Phase 2</text><path d="M512.0,142 L512.0,165.0 L834.0,165.0 L834.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="684" y="188" width="300" height="46" rx="9" fill="#7c3aed"/><text x="698" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F3</text><text x="698" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Follow-Up</text><rect x="684" y="246" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="246" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Quote Follow-Ups</text><rect x="684" y="285" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="285" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Proof Follow-Ups</text><rect x="684" y="324" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="324" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Payment Follow-Ups</text></svg></div><div class="g3">
+        <div class="stat"><div class="stat-value">3</div><div class="stat-label">Folders</div></div>
+        <div class="stat"><div class="stat-value">8</div><div class="stat-label">Lists / Queues</div></div>
+        <div class="stat"><div class="stat-value">Back Office</div><div class="stat-label">Space Role</div></div>
+      </div>
+      <div class="callout navy"><b>Build rule:</b> This Space should be built exactly enough to support the operational workflow without duplicating work that belongs in InfoFlow. ClickUp owns visibility, routing, handoffs, follow-ups, and approvals.</div>
+      
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F1</div>
+            <div><div class="exp-title">Folder: Finance</div><div class="exp-sub">Invoice issuance, payment tracking, and financial closeout.</div></div>
+            <div class="exp-badges"><span class="badge badge-blue">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Invoice Pending</b></td>
+              <td>Jobs complete but not invoiced/attached.</td>
+              <td>Invoice Pending, Invoice In Progress, Invoiced</td>
+              <td>Company, Contact, Job Type, Quote Amount, Invoice Number, Payment Status</td>
+              <td>Production complete → Invoice Pending; Invoice Number → Invoiced</td>
+              <td>Pending Today; Overdue Invoice; By Customer</td>
+            </tr>
+            <tr>
+              <td><b>Invoiced / Payment Pending</b></td>
+              <td>Invoices issued but payment not fully confirmed.</td>
+              <td>Invoiced, Deposit Paid, Payment Pending, Overdue, Paid</td>
+              <td>Invoice Number, Payment Status, Quote Amount, Billing Email, Billing Contact</td>
+              <td>Payment overdue → create payment follow-up</td>
+              <td>Payment Follow-Up; Overdue; Deposit Paid; Paid This Week</td>
+            </tr>
+            <tr>
+              <td><b>Paid / Closed</b></td>
+              <td>Closed financial records for completed jobs.</td>
+              <td>Paid, Closed, Archived</td>
+              <td>Invoice Number, Payment Status, Quote Amount, Company, Job Type</td>
+              <td>Paid + fulfilled → Closed</td>
+              <td>Closed This Month; Revenue by Job Type</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F2</div>
+            <div><div class="exp-title">Folder: Deposits &amp; Reconciliation</div><div class="exp-sub">Tracks deposit pain points and future QuickBooks automation without overbuilding Phase 1.</div></div>
+            <div class="exp-badges"><span class="badge badge-cyan">2 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Deposit Review</b></td>
+              <td>Tracks deposits that require review or exception handling.</td>
+              <td>Needs Review, In Review, Matched, Exception, Closed</td>
+              <td>Invoice Number, Payment Status, Quote Amount, Company, Notes</td>
+              <td>Deposit Paid → optional review task</td>
+              <td>Exceptions; Needs Review</td>
+            </tr>
+            <tr>
+              <td><b>QuickBooks Reconciliation - Phase 2</b></td>
+              <td>Backlog for QuickBooks deposit RPA and reconciliation automation.</td>
+              <td>Backlog, Research, Prototype, Test, Implemented</td>
+              <td>System, Pain Point, Priority, Owner, Notes</td>
+              <td>No Phase 1 automation; future RPA backlog</td>
+              <td>Phase 2 Automation Request</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F3</div>
+            <div><div class="exp-title">Folder: Follow-Up</div><div class="exp-sub">Central follow-up management for quotes, proofs, and payments.</div></div>
+            <div class="exp-badges"><span class="badge badge-purple">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Quote Follow-Ups</b></td>
+              <td>Prevents quotes from being forgotten after sent.</td>
+              <td>Open, Due Today, Overdue, Completed, Closed Lost</td>
+              <td>Company, Contact, Quote Amount, Assigned Rep, Due Date</td>
+              <td>Quote Sent → create follow-up</td>
+              <td>Quote Follow-Up; Due Today; Overdue; By Rep</td>
+            </tr>
+            <tr>
+              <td><b>Proof Follow-Ups</b></td>
+              <td>Tracks proof approval waiting periods.</td>
+              <td>Open, Due Today, Overdue, Approved, Revision Requested</td>
+              <td>Proof Required, Proof Approved Date, Assigned Rep, Due Date</td>
+              <td>Proof Sent → create follow-up</td>
+              <td>Proof Follow-Up; Awaiting Approval; Overdue</td>
+            </tr>
+            <tr>
+              <td><b>Payment Follow-Ups</b></td>
+              <td>Tracks invoice/payment follow-up work.</td>
+              <td>Open, Due Today, Overdue, Paid, Escalated</td>
+              <td>Invoice Number, Payment Status, Billing Email, Billing Contact, Due Date</td>
+              <td>Payment overdue → create task; Paid → close</td>
+              <td>Payment Follow-Up; Overdue; Due Today</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section id="space-4" class="section-panel">
+      <div class="sh"><div class="sh-title">SPACE 4 — Leadership</div><div class="sh-desc">Executive visibility, escalation control, reporting governance, build QA, and training feedback.</div></div>
+      <div class="dlabel2">Space 4 architecture — Folders → Lists (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1024" height="393" viewBox="0 0 1024 393"><rect width="1024" height="393" fill="#fff"/><rect x="0" y="0" width="1024" height="70" fill="#0e1278"/><rect x="0" y="68" width="1024" height="2.5" fill="#00B9FF"/><circle cx="32" cy="34" r="14" fill="none" stroke="#fff" stroke-width="2.4"/><text x="32" y="40" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="800" fill="#fff" text-anchor="middle">+1</text><text x="56" y="29" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" letter-spacing="1.5">PLUS ONE TECHNOLOGY</text><text x="56" y="45" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" fill="rgba(255,255,255,.7)">ClickUp Architecture · Space 4</text><text x="1002" y="42" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="800" fill="#fff" text-anchor="end">SPACE 4 — Leadership</text><rect x="40" y="92" width="944" height="50" rx="10" fill="#1419A0"/><text x="512.0" y="114" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">SPACE 4 — Leadership</text><text x="512.0" y="131" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" fill="rgba(255,255,255,.72)" text-anchor="middle">3 folders · 9 lists / queues</text><path d="M512.0,142 L512.0,165.0 L190.0,165.0 L190.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="40" y="188" width="300" height="46" rx="9" fill="#0f766e"/><text x="54" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F1</text><text x="54" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Reporting</text><rect x="40" y="246" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="246" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">KPI Definitions</text><rect x="40" y="285" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="285" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Dashboard Requests</text><rect x="40" y="324" width="300" height="30" rx="7" fill="#e6f3f1" stroke="#c8d0e8" stroke-width="1"/><rect x="40" y="324" width="4" height="30" rx="2" fill="#0f766e"/><text x="55" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Reporting QA</text><path d="M512.0,142 L512.0,165.0 L512.0,165.0 L512.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="362" y="188" width="300" height="46" rx="9" fill="#1419A0"/><text x="376" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F2</text><text x="376" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Escalations</text><rect x="362" y="246" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="246" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Ben Review</text><rect x="362" y="285" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="285" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Lee Review</text><rect x="362" y="324" width="300" height="30" rx="7" fill="#e8ecf8" stroke="#c8d0e8" stroke-width="1"/><rect x="362" y="324" width="4" height="30" rx="2" fill="#1419A0"/><text x="377" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Blocked Jobs</text><path d="M512.0,142 L512.0,165.0 L834.0,165.0 L834.0,188" fill="none" stroke="#00B9FF" stroke-width="1.8"/><rect x="684" y="188" width="300" height="46" rx="9" fill="#7c3aed"/><text x="698" y="207" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9" font-weight="800" fill="rgba(255,255,255,.8)" letter-spacing="1">FOLDER · F3</text><text x="698" y="224" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="800" fill="#fff">Implementation QA</text><rect x="684" y="246" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="246" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="265" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Build Tasks</text><rect x="684" y="285" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="285" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="304" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Test Orders</text><rect x="684" y="324" width="300" height="30" rx="7" fill="#f3eefb" stroke="#c8d0e8" stroke-width="1"/><rect x="684" y="324" width="4" height="30" rx="2" fill="#7c3aed"/><text x="699" y="343" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#1a2040">Training Feedback</text></svg></div><div class="g3">
+        <div class="stat"><div class="stat-value">3</div><div class="stat-label">Folders</div></div>
+        <div class="stat"><div class="stat-value">9</div><div class="stat-label">Lists / Queues</div></div>
+        <div class="stat"><div class="stat-value">Executive Control</div><div class="stat-label">Space Role</div></div>
+      </div>
+      <div class="callout navy"><b>Build rule:</b> This Space should be built exactly enough to support the operational workflow without duplicating work that belongs in InfoFlow. ClickUp owns visibility, routing, handoffs, follow-ups, and approvals.</div>
+      
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F1</div>
+            <div><div class="exp-title">Folder: Reporting</div><div class="exp-sub">Defines and validates KPIs, dashboards, and future reporting improvements.</div></div>
+            <div class="exp-badges"><span class="badge badge-blue">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>KPI Definitions</b></td>
+              <td>Defines metrics and how they are calculated.</td>
+              <td>Draft, Approved, Deprecated</td>
+              <td>KPI Name, Source Fields, Dashboard, Owner, Notes</td>
+              <td>Governance only</td>
+              <td>KPI Definition</td>
+            </tr>
+            <tr>
+              <td><b>Dashboard Requests</b></td>
+              <td>Backlog for dashboard improvements.</td>
+              <td>Requested, Approved, Build, QA, Done</td>
+              <td>Requester, Dashboard, Metric, Priority, Notes</td>
+              <td>Approved → build task</td>
+              <td>Dashboard Request; Approved; Backlog; Done</td>
+            </tr>
+            <tr>
+              <td><b>Reporting QA</b></td>
+              <td>Validates dashboards and metrics.</td>
+              <td>Needs Test, Testing, Passed, Failed, Fixed</td>
+              <td>Dashboard, KPI, Expected Result, Actual Result, Owner</td>
+              <td>Failed → fix task</td>
+              <td>Reporting QA Test</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F2</div>
+            <div><div class="exp-title">Folder: Escalations</div><div class="exp-sub">Leadership-level blocker review and decision queue.</div></div>
+            <div class="exp-badges"><span class="badge badge-cyan">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Ben Review</b></td>
+              <td>First escalation stage for pricing/estimating blockers.</td>
+              <td>Open, In Review, Resolved, Escalate to Lee</td>
+              <td>Company, Job Type, Blocker Reason, Due Date, Assigned Rep</td>
+              <td>Escalated → Ben; overdue → Lee Review</td>
+              <td>Ben Review; Open; Overdue; Resolved</td>
+            </tr>
+            <tr>
+              <td><b>Lee Review</b></td>
+              <td>Final leadership escalation stage.</td>
+              <td>Open, In Review, Decision Made, Resolved</td>
+              <td>Company, Job Type, Blocker Reason, Financial Impact, Due Date</td>
+              <td>Ben unresolved → Lee</td>
+              <td>Lee Review; Open; High Impact; Resolved</td>
+            </tr>
+            <tr>
+              <td><b>Blocked Jobs</b></td>
+              <td>All blocked work requiring visibility.</td>
+              <td>Blocked, Waiting Internal, Waiting Customer, Resolved</td>
+              <td>Company, Job Type, Blocker Reason, Assigned Rep, Rush, Due Date</td>
+              <td>Blocked + Rush → notify Lee/Zach</td>
+              <td>Blocked Jobs; Rush Blocked; Customer Waiting</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="exp-card open">
+          <div class="exp-hdr">
+            <div class="exp-icon">F3</div>
+            <div><div class="exp-title">Folder: Implementation QA</div><div class="exp-sub">Plus 1 build management, test orders, and training feedback.</div></div>
+            <div class="exp-badges"><span class="badge badge-purple">3 Lists</span></div>
+            <div class="exp-chevron">⌄</div>
+          </div>
+          <div class="exp-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>List</th><th>Purpose</th><th>Statuses</th><th>Custom Fields</th><th>Automations</th><th>Templates / Views</th></tr></thead>
+                <tbody>
+            <tr>
+              <td><b>Build Tasks</b></td>
+              <td>Internal Plus 1 implementation checklist.</td>
+              <td>Backlog, In Progress, QA, Client Review, Done</td>
+              <td>Build Area, Owner, Priority, Due Date, Notes</td>
+              <td>QA failed → return to In Progress</td>
+              <td>Build Task; By Phase; QA Needed</td>
+            </tr>
+            <tr>
+              <td><b>Test Orders</b></td>
+              <td>Sandbox/test cases for each workflow.</td>
+              <td>Not Started, Testing, Passed, Failed, Retest</td>
+              <td>Test ID, Workflow, Expected Result, Actual Result, Owner</td>
+              <td>Failed → fix task</td>
+              <td>Test Order</td>
+            </tr>
+            <tr>
+              <td><b>Training Feedback</b></td>
+              <td>Captures user feedback after training and pilot use.</td>
+              <td>New, Reviewed, Accepted, Deferred, Implemented</td>
+              <td>Submitted By, Role, Area, Priority, Notes</td>
+              <td>Accepted → change request/build task</td>
+              <td>Training Feedback; New; Accepted; Deferred</td>
+            </tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </section>
+
+<section id="fields" class="section-panel"><div class="sh"><div class="sh-title">35-Field Custom Field Schema</div><div class="sh-desc">18 client/contact fields and 17 job-level fields.</div></div><div class="g2"><div class="card"><div class="card-title">Client / Contact Fields — 18</div><div class="table-wrap"><table><thead><tr><th>#</th><th>Field</th><th>Type</th><th>Required</th><th>Use</th></tr></thead><tbody><tr><td>1</td><td>Company Name</td><td>Short Text</td><td>Yes</td><td>Legal/customer-facing company name</td></tr><tr><td>2</td><td>Company Record Type</td><td>Dropdown</td><td>Yes</td><td>Company, individual, vendor, internal</td></tr><tr><td>3</td><td>Client Status</td><td>Dropdown</td><td>Yes</td><td>Active, inactive, prospect, repeat, VIP</td></tr><tr><td>4</td><td>Primary Contact</td><td>Relationship</td><td>Recommended</td><td>Links Company to Contact</td></tr><tr><td>5</td><td>Contact First Name</td><td>Short Text</td><td>Yes</td><td>Contact identity</td></tr><tr><td>6</td><td>Contact Last Name</td><td>Short Text</td><td>Yes</td><td>Contact identity</td></tr><tr><td>7</td><td>Contact Email</td><td>Email</td><td>Yes</td><td>Email matching</td></tr><tr><td>8</td><td>Contact Phone</td><td>Phone</td><td>Recommended</td><td>Phone/walk-in follow-up</td></tr><tr><td>9</td><td>Preferred Contact Method</td><td>Dropdown</td><td>No</td><td>Email, phone, walk-in, portal</td></tr><tr><td>10</td><td>Billing Contact</td><td>Text/Relationship</td><td>No</td><td>Invoice recipient</td></tr><tr><td>11</td><td>Billing Email</td><td>Email</td><td>No</td><td>Invoice delivery</td></tr><tr><td>12</td><td>Billing Address</td><td>Text</td><td>No</td><td>Billing data</td></tr><tr><td>13</td><td>Shipping / Delivery Address</td><td>Text</td><td>No</td><td>Delivery location</td></tr><tr><td>14</td><td>City</td><td>Short Text</td><td>No</td><td>Address reporting</td></tr><tr><td>15</td><td>State</td><td>Dropdown</td><td>No</td><td>Address reporting</td></tr><tr><td>16</td><td>ZIP</td><td>Short Text</td><td>No</td><td>Address reporting</td></tr><tr><td>17</td><td>Account Owner</td><td>People</td><td>Recommended</td><td>Relationship owner</td></tr><tr><td>18</td><td>Client Notes</td><td>Long Text</td><td>No</td><td>Standing preferences</td></tr></tbody></table></div></div><div class="card"><div class="card-title">Job-Level Fields — 17</div><div class="table-wrap"><table><thead><tr><th>#</th><th>Field</th><th>Type</th><th>Required</th><th>Use</th></tr></thead><tbody><tr><td>1</td><td>Job Type</td><td>Dropdown</td><td>Yes</td><td>Business Cards, EDDM, Wide Format, Multi-Part</td></tr><tr><td>2</td><td>Inquiry Source</td><td>Dropdown</td><td>Yes</td><td>Email, phone, walk-in, portal, reorder</td></tr><tr><td>3</td><td>Assigned Rep</td><td>People</td><td>Yes</td><td>Job owner</td></tr><tr><td>4</td><td>Rush Order</td><td>Checkbox</td><td>No</td><td>Rush visibility</td></tr><tr><td>5</td><td>Reorder</td><td>Checkbox</td><td>No</td><td>Prior job lookup</td></tr><tr><td>6</td><td>Quantity</td><td>Number</td><td>Before quote</td><td>Pricing and production</td></tr><tr><td>7</td><td>Due Date / Needed By</td><td>Date</td><td>Before quote</td><td>Deadline</td></tr><tr><td>8</td><td>Paper / Material</td><td>Dropdown/Text</td><td>Before quote</td><td>Stock/substrate</td></tr><tr><td>9</td><td>Finished Size</td><td>Short Text</td><td>Before quote</td><td>Size details</td></tr><tr><td>10</td><td>Color Specification</td><td>Dropdown</td><td>Recommended</td><td>BW, full color, spot</td></tr><tr><td>11</td><td>Design Required</td><td>Checkbox</td><td>No</td><td>Activates design</td></tr><tr><td>12</td><td>Proof Required</td><td>Checkbox</td><td>No</td><td>Activates proof gate</td></tr><tr><td>13</td><td>Proof Approved Date</td><td>Date</td><td>If required</td><td>Production release</td></tr><tr><td>14</td><td>Estimate Number</td><td>Short Text</td><td>At quote sent</td><td>InfoFlow estimate</td></tr><tr><td>15</td><td>Invoice Number</td><td>Short Text</td><td>At invoiced</td><td>InfoFlow invoice</td></tr><tr><td>16</td><td>Quote Amount</td><td>Currency</td><td>At quote sent</td><td>Pipeline value</td></tr><tr><td>17</td><td>Payment Status</td><td>Dropdown</td><td>No</td><td>Not invoiced, invoiced, deposit paid, paid, overdue</td></tr></tbody></table></div></div></div></section>
+
+<section id="statuses" class="section-panel"><div class="sh"><div class="sh-title">Status Engine</div><div class="sh-desc">Statuses are operational gates tied to handoffs, automations, and reporting checkpoints.</div></div><div class="table-wrap"><table><thead><tr><th>Phase</th><th>Statuses</th><th>Entry Criteria</th><th>Automation</th></tr></thead><tbody><tr><td>Intake</td><td>New Inquiry → Assigned → Needs Information</td><td>Inquiry source, company/contact, job type</td><td>Create task; assign triage; match company; flag missing info.</td></tr><tr><td>Estimating</td><td>Ready to Price → Quote In Progress → Quote Sent</td><td>Quantity, material, due date, size/color</td><td>Assign estimator; quote sent follow-up.</td></tr><tr><td>Approval</td><td>Awaiting Quote Approval → Approved / Rejected / Revision</td><td>Estimate number and quote amount</td><td>Route to Design or Production.</td></tr><tr><td>Design</td><td>Design Intake → Proof Sent → Revision → Proof Approved</td><td>Design/proof fields and assets</td><td>Questionnaire, proof follow-up, release to production.</td></tr><tr><td>Production</td><td>Production Ready → Scheduled → In Production → QC</td><td>Approved quote and proof if required</td><td>Production notification and rush prioritization.</td></tr><tr><td>Finance</td><td>Invoice Pending → Invoiced → Payment Pending → Paid → Closed</td><td>Invoice/payment data</td><td>Payment follow-up and closeout.</td></tr><tr><td>Exception</td><td>Escalated → Ben Review → Lee Review → Blocked → Resolved</td><td>Blocker reason and owner</td><td>Ben then Lee escalation ladder.</td></tr></tbody></table></div></section>
+
+<section id="templates" class="section-panel"><div class="sh"><div class="sh-title">Task Template Specifications</div><div class="sh-desc">Templates referenced throughout the Space/Folder/List breakdown.</div></div><div class="table-wrap"><table><thead><tr><th>Template</th><th>Used In</th><th>Required Fields</th><th>Checklist</th><th>Automations</th></tr></thead><tbody><tr><td>New Inquiry</td><td>New Inquiries</td><td>Company/contact, source, type, quantity, due date, notes</td><td>Confirm identity, attach artwork, capture specs, assign owner.</td><td>Email/form create, match company, missing fields</td></tr><tr><td>Reorder</td><td>Reorder Requests</td><td>Company, previous job, quantity, due date, changes</td><td>Locate prior proof, confirm changes, route.</td><td>Prior reference requirement</td></tr><tr><td>Rush Order</td><td>Rush Intake / Active Rush</td><td>Rush flag, hard due date, type, quantity</td><td>Validate feasibility, notify production, escalate blockers.</td><td>Rush dashboard, priority notifications</td></tr><tr><td>Business Cards</td><td>Business Cards</td><td>Name/title/contact details, quantity, proof</td><td>Confirm details, proof, production.</td><td>Proof workflow</td></tr><tr><td>EDDM</td><td>EDDM Intake / Production</td><td>Route, quantity, size, indicia, date</td><td>USPS requirements, proof, production, delivery.</td><td>EDDM checklist</td></tr><tr><td>Wide Format</td><td>Wide Format Queue</td><td>Dimensions, substrate, finish, outdoor/indoor</td><td>Confirm materials, proof, pickup/delivery/install.</td><td>Wide format routing</td></tr><tr><td>Multi-Part Job</td><td>Multi-Part Forms</td><td>Parts count, colors, numbering, padding, quantity</td><td>Confirm sequence, proof, QC numbering.</td><td>Multi-part checklist</td></tr></tbody></table></div></section>
+
+<section id="automations" class="section-panel"><div class="sh"><div class="sh-title">Automation Catalog</div><div class="sh-desc">Implementation-ready automation rules. Native ClickUp where possible; email parsing/invoice matching may require Power Automate, Make, or Zapier.</div></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Category</th><th>Trigger</th><th>Conditions</th><th>Actions</th><th>Phase</th></tr></thead><tbody><tr><td>AUT-001</td><td>Intake</td><td>Email received at order@</td><td>Known sender</td><td>Create/update job; match Company/Contact; attach email</td><td>1B</td></tr><tr><td>AUT-002</td><td>Intake</td><td>Email received at order@</td><td>Unknown sender</td><td>Create New Inquiry task for triage</td><td>1B</td></tr><tr><td>AUT-003</td><td>Routing</td><td>Email contains priority keyword</td><td>Outdoor pickup / rush phrase</td><td>Flag red; route to Zach/Rush view</td><td>1B</td></tr><tr><td>AUT-004</td><td>Forms</td><td>New Inquiry form submitted</td><td>Required fields complete</td><td>Create task; assign triage; populate fields</td><td>1A</td></tr><tr><td>AUT-005</td><td>CRM</td><td>New task created</td><td>Company match found</td><td>Link task to Company and Contact</td><td>1B</td></tr><tr><td>AUT-006</td><td>CRM</td><td>New task created</td><td>No Company match</td><td>Create CRM review task</td><td>1B</td></tr><tr><td>AUT-007</td><td>Data Quality</td><td>Required quote fields missing</td><td>Quantity/material/due date blank</td><td>Status → Needs Information</td><td>1A</td></tr><tr><td>AUT-008</td><td>Estimating</td><td>Status → Ready to Price</td><td>Estimator blank</td><td>Assign Ben/estimator</td><td>1A</td></tr><tr><td>AUT-009</td><td>Quote</td><td>Status → Quote Sent</td><td>Quote amount present</td><td>Create follow-up +3 business days</td><td>1A</td></tr><tr><td>AUT-010</td><td>Quote</td><td>Quote Approved</td><td>Design Required = yes</td><td>Status → Design Intake</td><td>1A</td></tr><tr><td>AUT-011</td><td>Quote</td><td>Quote Approved</td><td>Design Required = no</td><td>Status → Production Ready</td><td>1A</td></tr><tr><td>AUT-012</td><td>Design</td><td>Status → Proof Sent</td><td>Proof Required</td><td>Create proof follow-up</td><td>1B</td></tr><tr><td>AUT-013</td><td>Design</td><td>Status → Proof Approved</td><td>Approved date blank</td><td>Set date; move Production Ready</td><td>1B</td></tr><tr><td>AUT-014</td><td>Production</td><td>Status → Production Ready</td><td>Job Type = EDDM</td><td>Apply EDDM checklist</td><td>1A</td></tr><tr><td>AUT-015</td><td>Production</td><td>Status → Production Ready</td><td>Job Type = Wide Format</td><td>Apply Wide Format checklist</td><td>1A</td></tr><tr><td>AUT-016</td><td>Production</td><td>Status → Production Ready</td><td>Rush = yes</td><td>Notify production; Rush view</td><td>1A</td></tr><tr><td>AUT-017</td><td>Escalation</td><td>Status → Escalated</td><td>First escalation</td><td>Assign Ben</td><td>1A</td></tr><tr><td>AUT-018</td><td>Escalation</td><td>Escalation overdue</td><td>Still unresolved</td><td>Assign Lee; notify leadership</td><td>1A</td></tr><tr><td>AUT-019</td><td>Finance</td><td>Status → Invoice Pending</td><td>Job complete</td><td>Add to admin invoice queue</td><td>1A</td></tr><tr><td>AUT-020</td><td>Finance</td><td>Payment overdue</td><td>Payment Status not Paid</td><td>Create payment follow-up</td><td>2</td></tr><tr><td>AUT-021</td><td>Closeout</td><td>Paid + Delivered</td><td>Both true</td><td>Status → Closed</td><td>2</td></tr><tr><td>AUT-022</td><td>Phase 2</td><td>QuickBooks deposit reconciliation</td><td>Manual checkbox process remains</td><td>Evaluate RPA</td><td>2/3</td></tr></tbody></table></div></section>
+
+<section id="workflows" class="section-panel"><div class="sh"><div class="sh-title">Workflow Maps</div><div class="sh-desc">Current and future workflow maps retained in original card/swimlane format.</div></div><div class="dlabel2">Current state — BPMN swim-lane (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1064" viewBox="0 0 1700 1064">
+<defs><marker id="ar_1419A0" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1419A0"/></marker><marker id="ar_27AE60" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#27AE60"/></marker><marker id="ar_C0392B" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#C0392B"/></marker><marker id="ar_2980B9" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2980B9"/></marker><marker id="ar_F39C12" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#F39C12"/></marker><marker id="ar_8E44AD" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8E44AD"/></marker><marker id="ar_00B9FF" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#00B9FF"/></marker><marker id="ar_5a6589" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#5a6589"/></marker><marker id="ar_2C3E50" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2C3E50"/></marker><marker id="ar_1ABC9C" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1ABC9C"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e1278"/><stop offset="0.6" stop-color="#1419A0"/><stop offset="1" stop-color="#1a5fa8"/></linearGradient></defs>
+<rect x="0.0" y="0.0" width="1700.0" height="1064.0" rx="0" fill="#ffffff" stroke="none" stroke-width="0" opacity="1"/>
+<rect x="0.0" y="0.0" width="1700.0" height="150.0" rx="0" fill="url(#hero)" stroke="none" stroke-width="0" opacity="1"/>
+<rect x="0.0" y="147.0" width="1700.0" height="3.0" rx="0" fill="#00B9FF" stroke="none" stroke-width="0" opacity="1"/>
+<circle cx="48.0" cy="52.0" r="20" fill="none" stroke="#fff" stroke-width="3.4"/>
+<text x="48.0" y="59.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">+1</text>
+<text x="82.0" y="46.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="start" letter-spacing="2" opacity="1">PLUS ONE TECHNOLOGY</text>
+<text x="82.0" y="64.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="500" fill="rgba(255,255,255,0.72)" text-anchor="start" letter-spacing="0" opacity="1">Process Mapping Workshop  ·  Deliverable 1 of 4  ·  CURRENT STATE</text>
+<text x="82.0" y="104.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="26" font-weight="800" fill="#fff" text-anchor="start" letter-spacing="0" opacity="1">Current State — How a Job Flows Today</text>
+<text x="82.0" y="132.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="start" letter-spacing="0" opacity="1">Everything Printing — Order-to-Invoice Process  ·  BPMN Swim-Lane  ·  Lee Levengood + Zach Ralph</text>
+<text x="1660.0" y="46.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#00B9FF" text-anchor="end" letter-spacing="0" opacity="1">STATE  AS-IS (today)</text>
+<text x="1660.0" y="66.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="end" letter-spacing="0" opacity="1">Pain points  6 flagged</text>
+<text x="1660.0" y="86.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="end" letter-spacing="0" opacity="1">Systems  Outlook + InfoFlow, not linked</text>
+<text x="280.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">INQUIRY</text>
+<text x="468.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">TRIAGE</text>
+<text x="656.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">CLAIM</text>
+<text x="844.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">INFO</text>
+<text x="1032.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">QUOTE</text>
+<text x="1220.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">PRODUCTION</text>
+<text x="1408.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">INVOICE</text>
+<rect x="250.0" y="210.0" width="1410.0" height="120.0" rx="0" fill="#EBF5FB" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="210.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="266.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">CUSTOMER</text>
+<rect x="250.0" y="330.0" width="1410.0" height="120.0" rx="0" fill="#FDEDEC" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="330.0" width="210.0" height="120.0" rx="0" fill="#161a8f" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="386.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">SHARED INBOX</text>
+<text x="145.0" y="400.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">order@ · all 4 staff</text>
+<rect x="250.0" y="450.0" width="1410.0" height="120.0" rx="0" fill="#ffffff" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="450.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="506.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">ASSIGNED</text>
+<text x="145.0" y="520.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">STAFF</text>
+<rect x="250.0" y="570.0" width="1410.0" height="120.0" rx="0" fill="#ECF0F1" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="570.0" width="210.0" height="120.0" rx="0" fill="#161a8f" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="626.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">PRICING /</text>
+<text x="145.0" y="640.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">InfoFlow (Ben)</text>
+<rect x="250.0" y="690.0" width="1410.0" height="120.0" rx="0" fill="#EAFAF1" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="690.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="746.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">PRODUCTION</text>
+<rect x="40.0" y="210.0" width="1620.0" height="600.0" rx="0" fill="none" stroke="#c5ceed" stroke-width="2" opacity="1"/>
+<circle cx="280.0" cy="270.0" r="26" fill="#fff" stroke="#27AE60" stroke-width="2.6"/>
+<text x="280.0" y="267.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Inquiry</text>
+<text x="280.0" y="278.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">arrives</text>
+<rect x="389.0" y="234.0" width="158.0" height="72.0" rx="10" fill="#fff" stroke="#2980B9" stroke-width="1.6" opacity="1"/>
+<text x="468.0" y="258.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Email / phone /</text>
+<text x="468.0" y="271.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">walk-in / portal</text>
+<text x="468.0" y="284.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">(+ artwork)</text>
+<rect x="577.0" y="354.0" width="158.0" height="72.0" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.6" opacity="1"/>
+<text x="656.0" y="378.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Lands in shared</text>
+<text x="656.0" y="391.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">inbox — 60–100</text>
+<text x="656.0" y="404.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">emails, 4 scan it</text>
+<polygon points="723.0,358.0 731.0,372.0 715.0,372.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="723.0" y="371.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<rect x="765.0" y="474.0" width="158.0" height="72.0" rx="10" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.6" opacity="1"/>
+<text x="844.0" y="498.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">A staffer manually</text>
+<text x="844.0" y="511.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">reads &amp; &#x27;owns&#x27;</text>
+<text x="844.0" y="524.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">the job</text>
+<polygon points="911.0,478.0 919.0,492.0 903.0,492.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="911.0" y="491.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<rect x="953.0" y="354.0" width="158.0" height="72.0" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.6" opacity="1"/>
+<text x="1032.0" y="378.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Email back-and-</text>
+<text x="1032.0" y="391.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">forth; everyone</text>
+<text x="1032.0" y="404.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">sees every reply</text>
+<polygon points="1099.0,358.0 1107.0,372.0 1091.0,372.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="1099.0" y="371.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<polygon points="1032.0,478.0 1064.0,510.0 1032.0,542.0 1000.0,510.0" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.8"/>
+<text x="1032.0" y="508.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#7a5200" text-anchor="middle" letter-spacing="0" opacity="1">Details</text>
+<text x="1032.0" y="518.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#7a5200" text-anchor="middle" letter-spacing="0" opacity="1">complete?</text>
+<rect x="953.0" y="354.0" width="158.0" height="72.0" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.6" opacity="1"/>
+<text x="1032.0" y="384.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Chase qty / paper</text>
+<text x="1032.0" y="397.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">/ color by email</text>
+<polygon points="1099.0,358.0 1107.0,372.0 1091.0,372.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="1099.0" y="371.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<rect x="1141.0" y="594.0" width="158.0" height="72.0" rx="10" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.6" opacity="1"/>
+<text x="1220.0" y="618.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Build estimate in</text>
+<text x="1220.0" y="631.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">InfoFlow; customer</text>
+<text x="1220.0" y="644.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">accepts online</text>
+<rect x="1141.0" y="710.0" width="158.0" height="80.0" rx="10" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.6" opacity="1"/>
+<text x="1220.0" y="732.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Fiery imposes +</text>
+<text x="1220.0" y="745.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">barcode; cutter</text>
+<text x="1220.0" y="758.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">auto-cuts</text>
+<text x="1220.0" y="781.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="500" fill="#5a6589" text-anchor="middle" letter-spacing="0" opacity="1">already automated</text>
+<rect x="1329.0" y="594.0" width="158.0" height="72.0" rx="10" fill="#fff" stroke="#1419A0" stroke-width="1.6" opacity="1"/>
+<text x="1408.0" y="624.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Invoice generated</text>
+<text x="1408.0" y="637.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">in InfoFlow</text>
+<rect x="1329.0" y="714.0" width="158.0" height="72.0" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.6" opacity="1"/>
+<text x="1408.0" y="738.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Lee clicks EVERY</text>
+<text x="1408.0" y="751.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">QuickBooks</text>
+<text x="1408.0" y="764.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">deposit box</text>
+<polygon points="1475.0,718.0 1483.0,732.0 1467.0,732.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="1475.0" y="731.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<circle cx="1408.0" cy="510.0" r="26" fill="#fff" stroke="#2C3E50" stroke-width="4"/>
+<text x="1408.0" y="507.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Invoiced</text>
+<text x="1408.0" y="518.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">/ closed</text>
+<path d="M306.0,270.0 L389.0,270.0" fill="none" stroke="#2980B9" stroke-width="2.3" marker-end="url(#ar_2980B9)" stroke-linejoin="round"/>
+<path d="M547.0,270.0 L562.0,270.0 L562.0,390.0 L577.0,390.0" fill="none" stroke="#C0392B" stroke-width="3.4" marker-end="url(#ar_C0392B)" stroke-linejoin="round"/>
+<text x="568.0" y="330.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#C0392B" text-anchor="start" letter-spacing="0" opacity="1">handoff</text>
+<path d="M735.0,390.0 L750.0,390.0 L750.0,510.0 L765.0,510.0" fill="none" stroke="#C0392B" stroke-width="3.4" marker-end="url(#ar_C0392B)" stroke-linejoin="round"/>
+<path d="M923.0,510.0 L938.0,510.0 L938.0,390.0 L953.0,390.0" fill="none" stroke="#5a6589" stroke-width="2.3" marker-end="url(#ar_5a6589)" stroke-linejoin="round"/>
+<path d="M923.0,510.0 L1000.0,510.0" fill="none" stroke="#1419A0" stroke-width="2.3" marker-end="url(#ar_1419A0)" stroke-linejoin="round"/>
+<path d="M1032.0,478.0 L1032.0,426.0" fill="none" stroke="#C0392B" stroke-width="2.3" marker-end="url(#ar_C0392B)" stroke-linejoin="round"/>
+<text x="1040.0" y="452.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#C0392B" text-anchor="start" letter-spacing="0" opacity="1">No</text>
+<path d="M1064.0,510.0 L1102.5,510.0 L1102.5,630.0 L1141.0,630.0" fill="none" stroke="#27AE60" stroke-width="3.4" marker-end="url(#ar_27AE60)" stroke-linejoin="round"/>
+<text x="1108.5" y="570.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#27AE60" text-anchor="start" letter-spacing="0" opacity="1">Yes</text>
+<path d="M1220.0,666.0 L1220.0,710.0" fill="none" stroke="#27AE60" stroke-width="3.4" marker-end="url(#ar_27AE60)" stroke-linejoin="round"/>
+<path d="M1299.0,750.0 L1314.0,750.0 L1314.0,630.0 L1329.0,630.0" fill="none" stroke="#1419A0" stroke-width="2.3" marker-end="url(#ar_1419A0)" stroke-linejoin="round"/>
+<path d="M1408.0,666.0 L1408.0,714.0" fill="none" stroke="#C0392B" stroke-width="2.3" marker-end="url(#ar_C0392B)" stroke-linejoin="round"/>
+<path d="M1408.0,714.0 L1408.0,536.0" fill="none" stroke="#2C3E50" stroke-width="2.3" marker-end="url(#ar_2C3E50)" stroke-linejoin="round"/>
+<rect x="40.0" y="832.0" width="1620.0" height="92.0" rx="10" fill="#FDEDEC" stroke="#f5c6c0" stroke-width="1.5" opacity="1"/>
+<text x="58.0" y="858.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="800" fill="#C0392B" text-anchor="start" letter-spacing="0.6" opacity="1">WHY IT BREAKS</text>
+<text x="58.0" y="880.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• No routing &amp; no shared system of record — 4 people scan one inbox; jobs slip between people (&#x27;who has it?&#x27;).</text>
+<text x="58.0" y="897.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• InfoFlow and Outlook don&#x27;t talk — client emails have no link to the job; staff cross-reference by hand.</text>
+<text x="58.0" y="914.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• Missing job details chased over email; QuickBooks deposit = every checkbox clicked manually.</text>
+<rect x="40.0" y="1000.0" width="1620.0" height="46.0" rx="10" fill="#f7f9fd" stroke="#e3e8f3" stroke-width="1.5" opacity="1"/>
+<text x="58.0" y="1019.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="800" fill="#5a6589" text-anchor="start" letter-spacing="1" opacity="1">LEGEND</text>
+<circle cx="66.0" cy="1032.0" r="7" fill="#fff" stroke="#27AE60" stroke-width="2.4"/>
+<text x="80.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Start</text>
+<circle cx="144.0" cy="1032.0" r="7" fill="#fff" stroke="#2C3E50" stroke-width="3"/>
+<text x="158.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">End / outcome</text>
+<polygon points="273.2,1024.5 280.7,1032.0 273.2,1039.5 265.7,1032.0" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.4"/>
+<text x="287.2" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Decision</text>
+<rect x="362.4" y="1025.0" width="16.0" height="14.0" rx="3" fill="#fff" stroke="#1419A0" stroke-width="1.4" opacity="1"/>
+<text x="384.4" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Step</text>
+<polygon points="442.0,1025.0 450.0,1039.0 434.0,1039.0" fill="#E74C3C" stroke="#fff" stroke-width="1"/>
+<text x="442.0" y="1038.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">!</text>
+<text x="456.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Pain point</text>
+<text x="40.0" y="1052.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="500" fill="#5a6589" text-anchor="start" letter-spacing="0" opacity="1">Plus 1 Technology  ·  Everything Printing  ·  Confidential  ·  Page 1 of 2 — Current State</text>
+</svg></div><div class="dlabel2">Future state — ClickUp BPMN swim-lane (visual)</div><div class="diagram2"><svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1064" viewBox="0 0 1700 1064">
+<defs><marker id="ar_1419A0" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1419A0"/></marker><marker id="ar_27AE60" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#27AE60"/></marker><marker id="ar_C0392B" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#C0392B"/></marker><marker id="ar_2980B9" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2980B9"/></marker><marker id="ar_F39C12" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#F39C12"/></marker><marker id="ar_8E44AD" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8E44AD"/></marker><marker id="ar_00B9FF" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#00B9FF"/></marker><marker id="ar_5a6589" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#5a6589"/></marker><marker id="ar_2C3E50" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#2C3E50"/></marker><marker id="ar_1ABC9C" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#1ABC9C"/></marker><linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e1278"/><stop offset="0.6" stop-color="#1419A0"/><stop offset="1" stop-color="#1a5fa8"/></linearGradient></defs>
+<rect x="0.0" y="0.0" width="1700.0" height="1064.0" rx="0" fill="#ffffff" stroke="none" stroke-width="0" opacity="1"/>
+<rect x="0.0" y="0.0" width="1700.0" height="150.0" rx="0" fill="url(#hero)" stroke="none" stroke-width="0" opacity="1"/>
+<rect x="0.0" y="147.0" width="1700.0" height="3.0" rx="0" fill="#00B9FF" stroke="none" stroke-width="0" opacity="1"/>
+<circle cx="48.0" cy="52.0" r="20" fill="none" stroke="#fff" stroke-width="3.4"/>
+<text x="48.0" y="59.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="17" font-weight="800" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">+1</text>
+<text x="82.0" y="46.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="start" letter-spacing="2" opacity="1">PLUS ONE TECHNOLOGY</text>
+<text x="82.0" y="64.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="500" fill="rgba(255,255,255,0.72)" text-anchor="start" letter-spacing="0" opacity="1">Process Mapping Workshop  ·  Deliverable 1 of 4  ·  FUTURE STATE</text>
+<text x="82.0" y="104.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="26" font-weight="800" fill="#fff" text-anchor="start" letter-spacing="0" opacity="1">Future State — The ClickUp Flow</text>
+<text x="82.0" y="132.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="start" letter-spacing="0" opacity="1">Everything Printing — Order-to-Invoice Process  ·  BPMN Swim-Lane  ·  Lee Levengood + Zach Ralph</text>
+<text x="1660.0" y="46.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#00B9FF" text-anchor="end" letter-spacing="0" opacity="1">STATE  TO-BE (ClickUp)</text>
+<text x="1660.0" y="66.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="end" letter-spacing="0" opacity="1">Automations  6 ⚡</text>
+<text x="1660.0" y="86.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="rgba(255,255,255,0.8)" text-anchor="end" letter-spacing="0" opacity="1">Principle  Alerted on assignment, not the inbox</text>
+<text x="280.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">INQUIRY</text>
+<text x="468.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">CAPTURE</text>
+<text x="656.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">ROUTE</text>
+<text x="844.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">INFO</text>
+<text x="1032.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">QUOTE</text>
+<text x="1220.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">APPROVE / PRODUCE</text>
+<text x="1408.0" y="196.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#5a6589" text-anchor="middle" letter-spacing="0.5" opacity="1">CLOSE</text>
+<rect x="250.0" y="210.0" width="1410.0" height="120.0" rx="0" fill="#EBF5FB" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="210.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="266.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">CUSTOMER</text>
+<rect x="250.0" y="330.0" width="1410.0" height="120.0" rx="0" fill="#e6f7ff" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="330.0" width="210.0" height="120.0" rx="0" fill="#161a8f" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="386.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">CLICKUP</text>
+<text x="145.0" y="400.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">automation layer</text>
+<rect x="250.0" y="450.0" width="1410.0" height="120.0" rx="0" fill="#ffffff" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="450.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="506.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">ASSIGNED REP</text>
+<text x="145.0" y="520.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">(Zach / rep)</text>
+<rect x="250.0" y="570.0" width="1410.0" height="120.0" rx="0" fill="#ECF0F1" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="570.0" width="210.0" height="120.0" rx="0" fill="#161a8f" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="626.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">PRICING /</text>
+<text x="145.0" y="640.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">InfoFlow (Ben)</text>
+<rect x="250.0" y="690.0" width="1410.0" height="120.0" rx="0" fill="#EAFAF1" stroke="#d9e0ee" stroke-width="1" opacity="1"/>
+<rect x="40.0" y="690.0" width="210.0" height="120.0" rx="0" fill="#0e1278" stroke="#0e1278" stroke-width="0" opacity="1"/>
+<text x="145.0" y="746.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">PRODUCTION</text>
+<text x="145.0" y="760.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" letter-spacing="0" opacity="1">(+ Jason WF/EDDM)</text>
+<rect x="40.0" y="210.0" width="1620.0" height="600.0" rx="0" fill="none" stroke="#c5ceed" stroke-width="2" opacity="1"/>
+<circle cx="280.0" cy="270.0" r="26" fill="#fff" stroke="#27AE60" stroke-width="2.6"/>
+<text x="280.0" y="267.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Inquiry to</text>
+<text x="280.0" y="278.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">order@</text>
+<rect x="389.0" y="354.0" width="158.0" height="72.0" rx="10" fill="#e6f7ff" stroke="#00B9FF" stroke-width="1.6" opacity="1"/>
+<text x="468.0" y="384.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Auto-match sender</text>
+<text x="468.0" y="397.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">→ Company record</text>
+<polygon points="537.0,357.0 529.0,368.0 534.5,368.0 532.0,375.0 541.0,364.0 534.5,364.0" fill="#00B9FF" stroke="#0369a1" stroke-width="0.6"/>
+<rect x="430.2" y="424.0" width="75.6" height="16.0" rx="8" fill="#e8ecf8" stroke="#c5ceed" stroke-width="1" opacity="1"/>
+<text x="468.0" y="435.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1419A0" text-anchor="middle" letter-spacing="0" opacity="1">NEW INQUIRY</text>
+<rect x="577.0" y="350.0" width="158.0" height="80.0" rx="10" fill="#e6f7ff" stroke="#00B9FF" stroke-width="1.6" opacity="1"/>
+<text x="656.0" y="372.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Keyword + sender</text>
+<text x="656.0" y="385.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">routing → auto-</text>
+<text x="656.0" y="398.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">assign to rep</text>
+<text x="656.0" y="421.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="500" fill="#5a6589" text-anchor="middle" letter-spacing="0" opacity="1">&#x27;outdoor pickup&#x27; → RED, top of Zach</text>
+<polygon points="725.0,353.0 717.0,364.0 722.5,364.0 720.0,371.0 729.0,360.0 722.5,360.0" fill="#00B9FF" stroke="#0369a1" stroke-width="0.6"/>
+<rect x="577.0" y="474.0" width="158.0" height="72.0" rx="10" fill="#fff" stroke="#1419A0" stroke-width="1.6" opacity="1"/>
+<text x="656.0" y="504.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Job lands in the</text>
+<text x="656.0" y="517.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">rep&#x27;s queue</text>
+<polygon points="844.0,358.0 876.0,390.0 844.0,422.0 812.0,390.0" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.8"/>
+<text x="844.0" y="388.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#7a5200" text-anchor="middle" letter-spacing="0" opacity="1">Qty/paper/</text>
+<text x="844.0" y="398.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#7a5200" text-anchor="middle" letter-spacing="0" opacity="1">color set?</text>
+<rect x="765.0" y="234.0" width="158.0" height="72.0" rx="10" fill="#e6f7ff" stroke="#00B9FF" stroke-width="1.6" opacity="1"/>
+<text x="844.0" y="258.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Intake form auto-</text>
+<text x="844.0" y="271.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">fires; replies fill</text>
+<text x="844.0" y="284.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">the fields</text>
+<polygon points="913.0,237.0 905.0,248.0 910.5,248.0 908.0,255.0 917.0,244.0 910.5,244.0" fill="#00B9FF" stroke="#0369a1" stroke-width="0.6"/>
+<rect x="809.0" y="304.0" width="70.0" height="16.0" rx="8" fill="#e8ecf8" stroke="#c5ceed" stroke-width="1" opacity="1"/>
+<text x="844.0" y="315.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1419A0" text-anchor="middle" letter-spacing="0" opacity="1">NEEDS INFO</text>
+<rect x="953.0" y="594.0" width="158.0" height="72.0" rx="10" fill="#ECF0F1" stroke="#1419A0" stroke-width="1.6" opacity="1"/>
+<text x="1032.0" y="618.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Ben builds InfoFlow</text>
+<text x="1032.0" y="631.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">estimate; sent for</text>
+<text x="1032.0" y="644.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">approval</text>
+<rect x="997.0" y="664.0" width="70.0" height="16.0" rx="8" fill="#e8ecf8" stroke="#c5ceed" stroke-width="1" opacity="1"/>
+<text x="1032.0" y="675.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1419A0" text-anchor="middle" letter-spacing="0" opacity="1">QUOTE SENT</text>
+<polygon points="1220.0,478.0 1252.0,510.0 1220.0,542.0 1188.0,510.0" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.8"/>
+<text x="1220.0" y="508.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#7a5200" text-anchor="middle" letter-spacing="0" opacity="1">Approved?</text>
+<rect x="1141.0" y="714.0" width="158.0" height="72.0" rx="10" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.6" opacity="1"/>
+<text x="1220.0" y="738.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">In Production —</text>
+<text x="1220.0" y="751.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Fiery + barcode cut</text>
+<text x="1220.0" y="764.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">(unchanged)</text>
+<rect x="1176.6" y="784.0" width="86.8" height="16.0" rx="8" fill="#e8ecf8" stroke="#c5ceed" stroke-width="1" opacity="1"/>
+<text x="1220.0" y="795.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1419A0" text-anchor="middle" letter-spacing="0" opacity="1">IN PRODUCTION</text>
+<rect x="1329.0" y="354.0" width="158.0" height="72.0" rx="10" fill="#e6f7ff" stroke="#00B9FF" stroke-width="1.6" opacity="1"/>
+<text x="1408.0" y="378.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">InfoFlow est. &amp;</text>
+<text x="1408.0" y="391.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">invoice BCC&#x27;d →</text>
+<text x="1408.0" y="404.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11.5" font-weight="600" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">auto-attached</text>
+<polygon points="1477.0,357.0 1469.0,368.0 1474.5,368.0 1472.0,375.0 1481.0,364.0 1474.5,364.0" fill="#00B9FF" stroke="#0369a1" stroke-width="0.6"/>
+<circle cx="1408.0" cy="510.0" r="26" fill="#fff" stroke="#2C3E50" stroke-width="4"/>
+<text x="1408.0" y="507.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">Completed</text>
+<text x="1408.0" y="518.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#2C3E50" text-anchor="middle" letter-spacing="0" opacity="1">/ Invoiced</text>
+<path d="M306.0,270.0 L347.5,270.0 L347.5,390.0 L389.0,390.0" fill="none" stroke="#2980B9" stroke-width="3.4" marker-end="url(#ar_2980B9)" stroke-linejoin="round"/>
+<text x="353.5" y="330.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#2980B9" text-anchor="start" letter-spacing="0" opacity="1">to order@</text>
+<path d="M547.0,390.0 L577.0,390.0" fill="none" stroke="#00B9FF" stroke-width="3.4" marker-end="url(#ar_00B9FF)" stroke-linejoin="round"/>
+<path d="M656.0,430.0 L656.0,474.0" fill="none" stroke="#00B9FF" stroke-width="2.3" marker-end="url(#ar_00B9FF)" stroke-linejoin="round"/>
+<path d="M735.0,510.0 L773.5,510.0 L773.5,390.0 L812.0,390.0" fill="none" stroke="#1419A0" stroke-width="2.3" marker-end="url(#ar_1419A0)" stroke-linejoin="round"/>
+<path d="M844.0,358.0 L844.0,306.0" fill="none" stroke="#F39C12" stroke-width="2.3" marker-end="url(#ar_F39C12)" stroke-linejoin="round"/>
+<text x="852.0" y="332.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#F39C12" text-anchor="start" letter-spacing="0" opacity="1">No</text>
+<path d="M844.0,306.0 L844.0,358.0" fill="none" stroke="#00B9FF" stroke-width="2.3" stroke-dasharray="5 4" marker-end="url(#ar_00B9FF)" stroke-linejoin="round"/>
+<text x="852.0" y="332.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#00B9FF" text-anchor="start" letter-spacing="0" opacity="1">refiled</text>
+<path d="M876.0,390.0 L914.5,390.0 L914.5,630.0 L953.0,630.0" fill="none" stroke="#27AE60" stroke-width="3.4" marker-end="url(#ar_27AE60)" stroke-linejoin="round"/>
+<text x="920.5" y="510.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#27AE60" text-anchor="start" letter-spacing="0" opacity="1">Yes</text>
+<path d="M1111.0,630.0 L1149.5,630.0 L1149.5,510.0 L1188.0,510.0" fill="none" stroke="#1419A0" stroke-width="2.3" marker-end="url(#ar_1419A0)" stroke-linejoin="round"/>
+<path d="M1220.0,542.0 L1220.0,714.0" fill="none" stroke="#27AE60" stroke-width="3.4" marker-end="url(#ar_27AE60)" stroke-linejoin="round"/>
+<text x="1228.0" y="628.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="600" fill="#27AE60" text-anchor="start" letter-spacing="0" opacity="1">Yes</text>
+<path d="M1299.0,750.0 L1314.0,750.0 L1314.0,390.0 L1329.0,390.0" fill="none" stroke="#00B9FF" stroke-width="2.3" marker-end="url(#ar_00B9FF)" stroke-linejoin="round"/>
+<path d="M1408.0,426.0 L1408.0,484.0" fill="none" stroke="#2C3E50" stroke-width="2.3" marker-end="url(#ar_2C3E50)" stroke-linejoin="round"/>
+<rect x="40.0" y="832.0" width="1620.0" height="92.0" rx="10" fill="#EAFAF1" stroke="#bfe6cf" stroke-width="1.5" opacity="1"/>
+<text x="58.0" y="858.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="800" fill="#27AE60" text-anchor="start" letter-spacing="0.6" opacity="1">WHAT CHANGES</text>
+<text x="58.0" y="880.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• Every email, job, estimate &amp; invoice is auto-anchored to one Company record — no more &#x27;who has it?&#x27;.</text>
+<text x="58.0" y="897.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• Routing + auto-assign replaces the shared-inbox scramble; &#x27;outdoor pickup&#x27; can never be missed (flags red, top of Zach&#x27;s view).</text>
+<text x="58.0" y="914.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="500" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">• Intake form auto-fires for missing details; InfoFlow estimates/invoices BCC-attach to the record automatically.  Phase 2: QuickBooks deposit RPA.</text>
+<rect x="1180.0" y="998.0" width="480.0" height="42.0" rx="8" fill="#fff" stroke="#1419A0" stroke-width="1.6" opacity="1"/>
+<text x="1196.0" y="1016.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="800" fill="#1419A0" text-anchor="start" letter-spacing="0.5" opacity="1">APPROVED BY LEE LEVENGOOD</text>
+<text x="1196.0" y="1032.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="600" fill="#5a6589" text-anchor="start" letter-spacing="0" opacity="1">Signature: ______________________   Date: __________</text>
+<rect x="40.0" y="1000.0" width="1620.0" height="46.0" rx="10" fill="#f7f9fd" stroke="#e3e8f3" stroke-width="1.5" opacity="1"/>
+<text x="58.0" y="1019.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10" font-weight="800" fill="#5a6589" text-anchor="start" letter-spacing="1" opacity="1">LEGEND</text>
+<circle cx="66.0" cy="1032.0" r="7" fill="#fff" stroke="#27AE60" stroke-width="2.4"/>
+<text x="80.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Start</text>
+<circle cx="144.0" cy="1032.0" r="7" fill="#fff" stroke="#2C3E50" stroke-width="3"/>
+<text x="158.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Outcome</text>
+<polygon points="234.8,1024.5 242.3,1032.0 234.8,1039.5 227.3,1032.0" fill="#FEF9E7" stroke="#F39C12" stroke-width="1.4"/>
+<text x="248.8" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Decision</text>
+<polygon points="334.0,1024.0 326.0,1035.0 331.5,1035.0 329.0,1042.0 338.0,1031.0 331.5,1031.0" fill="#00B9FF" stroke="#0369a1" stroke-width="0.6"/>
+<text x="346.0" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Automated (ClickUp)</text>
+<rect x="491.6" y="1025.0" width="16.0" height="14.0" rx="3" fill="#fff" stroke="#1419A0" stroke-width="1.4" opacity="1"/>
+<text x="513.6" y="1036.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="600" fill="#2C3E50" text-anchor="start" letter-spacing="0" opacity="1">Step</text>
+<text x="40.0" y="1052.0" font-family="Inter,'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="500" fill="#5a6589" text-anchor="start" letter-spacing="0" opacity="1">Plus 1 Technology  ·  Everything Printing  ·  Confidential  ·  Page 2 of 2 — Future State (gates the Phase 1A build)</text>
+</svg></div><div class="card"><div class="card-title">Current State — Order to Invoice</div><div class="diagram"><div class="lane"><div class="lane-title">Customer</div><div class="lane-body"><span class="flow-chip navy">Email / Phone / Walk-In</span><span class="flow-chip yellow">Provides Artwork</span><span class="flow-chip cyan">Approves Quote</span></div></div><div class="lane"><div class="lane-title">Shared Inbox</div><div class="lane-body"><span class="flow-chip red">60–100 Emails</span><span class="flow-chip red">4 Staff Scan</span><span class="flow-chip yellow">Manual Ownership</span></div></div><div class="lane"><div class="lane-title">Assigned Staff</div><div class="lane-body"><span class="flow-chip cyan">Read Inquiry</span><span class="flow-chip yellow">Chase Details</span><span class="flow-chip purple">Email Back-and-Forth</span></div></div><div class="lane"><div class="lane-title">InfoFlow</div><div class="lane-body"><span class="flow-chip navy">Build Estimate</span><span class="flow-chip purple">Send Approval</span><span class="flow-chip cyan">Invoice</span></div></div><div class="lane"><div class="lane-title">Production</div><div class="lane-body"><span class="flow-chip green">Fiery Imposes</span><span class="flow-chip green">Barcode/Cutter</span><span class="flow-chip navy">Job Complete</span></div></div></div></div><div class="card"><div class="card-title">Future State — ClickUp Flow</div><div class="diagram"><div class="lane"><div class="lane-title">Customer</div><div class="lane-body"><span class="flow-chip navy">Inquiry to order@</span><span class="flow-chip cyan">Intake Form</span><span class="flow-chip green">Approves Quote / Proof</span></div></div><div class="lane"><div class="lane-title">ClickUp</div><div class="lane-body"><span class="flow-chip cyan">Auto-Match Sender</span><span class="flow-chip purple">Company Record</span><span class="flow-chip yellow">Keyword Routing</span><span class="flow-chip red">Rush Priority</span></div></div><div class="lane"><div class="lane-title">Rep</div><div class="lane-body"><span class="flow-chip navy">Owns Queue</span><span class="flow-chip yellow">Needs Info</span><span class="flow-chip cyan">Follow-Up</span><span class="flow-chip purple">Design/Proof</span></div></div><div class="lane"><div class="lane-title">InfoFlow</div><div class="lane-body"><span class="flow-chip navy">Ben Estimate</span><span class="flow-chip purple">Quote Sent</span><span class="flow-chip cyan">Invoice Attached</span></div></div><div class="lane"><div class="lane-title">Production</div><div class="lane-body"><span class="flow-chip green">Production Ready</span><span class="flow-chip green">In Production</span><span class="flow-chip cyan">QC</span><span class="flow-chip navy">Fulfillment</span></div></div></div></div></section>
+
+<section id="dashboards" class="section-panel"><div class="sh"><div class="sh-title">Views & Dashboard Architecture</div><div class="sh-desc">Dashboard and view specifications by user and workflow.</div></div><div class="table-wrap"><table><thead><tr><th>Dashboard / View</th><th>Audience</th><th>Filters</th><th>Widgets / Columns</th><th>Purpose</th></tr></thead><tbody><tr><td>Operations Dashboard</td><td>Katie, Zach, Lee</td><td>Open jobs</td><td>Open Inquiries, Needs Info, Ready to Price, Quote Sent, Rush, Escalations</td><td>Daily operations control center.</td></tr><tr><td>My Assigned Jobs</td><td>All Staff</td><td>Assignee = me; not closed</td><td>Status, due date, job type, customer, rush</td><td>Replace inbox scanning.</td></tr><tr><td>Production Dashboard</td><td>Production, Jason, Zach</td><td>Production statuses</td><td>Production Ready, Scheduled, In Production, QC, EDDM, Wide Format</td><td>Production prioritization.</td></tr><tr><td>Finance Dashboard</td><td>Lee / Admin</td><td>Invoice/payment statuses</td><td>Invoice Pending, Invoiced, Payment Pending, Deposit Review</td><td>Financial closeout.</td></tr><tr><td>Leadership Dashboard</td><td>Lee</td><td>Escalated, overdue, rush, pipeline</td><td>Revenue Pipeline, Escalations, Overdue Jobs, Jobs by Type</td><td>Executive visibility.</td></tr></tbody></table></div></section>
+
+<section id="qa" class="section-panel"><div class="sh"><div class="sh-title">QA Test Scripts</div><div class="sh-desc">Build acceptance tests before client handoff.</div></div><div class="table-wrap"><table><thead><tr><th>Test ID</th><th>Scenario</th><th>Steps</th><th>Expected Result</th></tr></thead><tbody><tr><td>TEST-001</td><td>New Inquiry Form</td><td>Submit walk-in inquiry</td><td>Task created; owner assigned; fields populated</td></tr><tr><td>TEST-002</td><td>Missing Information</td><td>Create task without quantity/material</td><td>Needs Information flag/follow-up created</td></tr><tr><td>TEST-003</td><td>Ready to Price</td><td>Populate quote fields</td><td>Estimator notified</td></tr><tr><td>TEST-004</td><td>Quote Sent</td><td>Move to Quote Sent and enter amount</td><td>Follow-up task created</td></tr><tr><td>TEST-005</td><td>Quote Approved With Design</td><td>Design Required = yes and approve quote</td><td>Moves to Design Intake</td></tr><tr><td>TEST-006</td><td>Proof Approval</td><td>Move Proof Sent → Proof Approved</td><td>Proof date set; moves Production Ready</td></tr><tr><td>TEST-007</td><td>Rush Order</td><td>Check Rush Order</td><td>Rush dashboard and notifications update</td></tr><tr><td>TEST-008</td><td>Escalation Ladder</td><td>Move job to Escalated</td><td>Ben then Lee if overdue</td></tr><tr><td>TEST-009</td><td>Invoice Pending</td><td>Move completed job to Invoice Pending</td><td>Admin/finance view updates</td></tr><tr><td>TEST-010</td><td>Close Job</td><td>Mark paid and fulfilled</td><td>Eligible for Closed</td></tr></tbody></table></div></section>
+
+<section id="training" class="section-panel"><div class="sh"><div class="sh-title">Training Plan</div><div class="sh-desc">Training focuses on behavior change: use assigned queues instead of scanning the shared inbox.</div></div><div class="g2"><div class="card"><div class="card-title">Session 1 — Intake</div><ul class="checklist"><li>New Inquiry form</li><li>Company/contact lookup</li><li>Needs Information</li><li>Comments instead of notes</li></ul></div><div class="card"><div class="card-title">Session 2 — Quotes</div><ul class="checklist"><li>Ready to Price</li><li>InfoFlow references</li><li>Quote Sent</li><li>Follow-up views</li></ul></div><div class="card"><div class="card-title">Session 3 — Design & Production</div><ul class="checklist"><li>Design questionnaire</li><li>Proof statuses</li><li>Production Ready</li><li>Rush handling</li></ul></div><div class="card"><div class="card-title">Session 4 — Leadership</div><ul class="checklist"><li>Dashboards</li><li>Escalations</li><li>Open quotes</li><li>Invoice visibility</li></ul></div></div></section>
+
+<section id="approval" class="section-panel"><div class="sh"><div class="sh-title">Approval Checklist</div><div class="sh-desc">Items Lee and Zach should approve before build begins.</div></div><div class="card"><div class="card-title">Decision Checklist</div><ul class="checklist"><li>Approve Space → Folder → List architecture.</li><li>Approve Companies/Contacts/Jobs data model.</li><li>Approve 35-field schema and field names.</li><li>Approve status names and transition rules.</li><li>Confirm Katie, Zach, Ben, Jason, Lee ownership rules.</li><li>Confirm routing and priority keywords.</li><li>Confirm design questionnaire strategy.</li><li>Confirm InfoFlow estimate/invoice BCC process.</li><li>Confirm Phase 2 QuickBooks automation treatment.</li><li>Approve templates, automations, dashboards, and QA scripts.</li></ul><div class="signbox"><div><b>Approved by Lee Levengood</b></div><div class="signline">Signature: ________________________________ Date: _______________</div></div></div></section>
+
+</main><script>
+document.querySelectorAll('.sb-item').forEach(item=>{item.addEventListener('click',()=>{document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));item.classList.add('active');document.getElementById(item.dataset.tab).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});});});
+document.querySelectorAll('.exp-hdr').forEach(h=>{h.addEventListener('click',()=>h.closest('.exp-card').classList.toggle('open'));});
+</script></body></html>
