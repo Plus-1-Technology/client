@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Packing Slip Label Review</title>
+  <link rel="stylesheet" href="editor/label_editor.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">KEEHN DOCUMENT INTELLIGENCE</div>
+      <h1 id="editor-title">Packing Slip Label Review</h1>
+      <div id="source-status" class="source-status"></div>
+    </div>
+    <div class="top-actions">
+      <span id="save-status" class="save-status">Not changed</span>
+      <button id="export-all">Export full review backup</button>
+      <button id="export-training" class="primary">Export approved training labels</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside class="documents-panel">
+      <label class="search-label">Find document
+        <input id="document-search" type="search" placeholder="Vendor or filename">
+      </label>
+      <div id="document-count" class="document-count"></div>
+      <div id="document-list" class="document-list"></div>
+    </aside>
+
+    <main class="review-panel">
+      <section class="document-header">
+        <div>
+          <div id="document-position" class="eyebrow"></div>
+          <h2 id="document-title"></h2>
+          <div id="document-metrics" class="metrics"></div>
+        </div>
+        <div class="nav-actions">
+          <button id="prev-doc" class="secondary">Previous</button>
+          <button id="next-doc" class="secondary">Next</button>
+        </div>
+      </section>
+
+      <section class="toolstrip" aria-label="Labeling tools">
+        <div class="tool-group">
+          <span class="tool-label">Select evidence</span>
+          <button id="mode-word" class="mode active">Select words</button>
+          <button id="mode-area" class="mode">Draw area</button>
+          <span style="font-size:11px;color:#617184;white-space:nowrap">Click words to add or remove them</span>
+        </div>
+        <div class="tool-group">
+          <span class="tool-label">Layers</span>
+          <label><input id="toggle-azure" type="checkbox" checked> Saved labels</label>
+          <label><input id="toggle-suggestions" type="checkbox" checked> Suggestions</label>
+          <label><input id="toggle-words" type="checkbox"> OCR words</label>
+        </div>
+        <div class="tool-group">
+          <span class="tool-label">Zoom</span>
+          <button id="zoom-out" class="secondary" aria-label="Zoom out">-</button>
+          <span id="zoom-value">100%</span>
+          <button id="zoom-in" class="secondary" aria-label="Zoom in">+</button>
+        </div>
+      </section>
+
+      <div id="page-tabs" class="page-tabs"></div>
+
+      <section class="page-and-labels">
+        <div id="page-scroll" class="page-scroll">
+          <div id="page-stage" class="page-stage" aria-label="Document page">
+            <img id="page-image" alt="Current document page">
+            <div id="word-layer" class="overlay-layer"></div>
+            <div id="suggestion-layer" class="overlay-layer"></div>
+            <div id="label-layer" class="overlay-layer"></div>
+            <div id="selection-layer" class="overlay-layer"></div>
+          </div>
+        </div>
+
+        <aside class="labels-panel">
+          <div class="labels-heading">
+            <h3 id="labels-panel-title">All fields</h3>
+            <span id="page-label-count"></span>
+          </div>
+          <div class="labels-view-tabs" role="group" aria-label="Label panel view">
+            <button id="show-page-labels" class="secondary" type="button">Populated on page</button>
+            <button id="show-all-fields" class="secondary active" type="button">All fields</button>
+          </div>
+          <div id="field-inventory-controls" class="field-inventory-controls">
+            <input id="field-inventory-search" type="search" placeholder="Search all fields" aria-label="Search all fields">
+            <select id="field-inventory-level" aria-label="Filter fields by level">
+              <option value="All">Document + Line fields</option>
+              <option value="Document">Document fields only</option>
+              <option value="Line">Line fields only</option>
+            </select>
+          </div>
+          <div id="page-errors" class="page-errors"></div>
+          <div id="labels-list" class="labels-list"></div>
+        </aside>
+      </section>
+
+      <section id="label-panel" class="label-panel" hidden>
+        <div class="panel-heading">
+          <div>
+            <div id="selection-kind" class="eyebrow">NEW LABEL</div>
+            <h3>Assign selected evidence</h3>
+          </div>
+          <button id="cancel-label" class="icon-button" aria-label="Cancel selection">x</button>
+        </div>
+        <div class="form-grid">
+          <label class="wide">Captured text
+            <textarea id="captured-text" rows="3"></textarea>
+          </label>
+          <label class="wide">Allowed field
+            <input id="field-search" list="field-options" autocomplete="off" placeholder="Search current DI and observed fields">
+            <datalist id="field-options"></datalist>
+          </label>
+          <div>
+            <span class="field-caption">Field source</span>
+            <strong id="field-source">Select a field</strong>
+          </div>
+          <div>
+            <span class="field-caption">Field level</span>
+            <strong id="field-level">-</strong>
+          </div>
+          <label id="line-index-wrap" hidden>Line-item row
+            <input id="line-index" type="number" min="1" step="1" placeholder="1">
+          </label>
+        </div>
+        <div id="new-field-creator" class="new-field-creator" hidden style="margin-top:14px;padding:14px;border:1px solid #9fc2df;border-radius:8px;background:#f3f7fb">
+          <div class="form-grid" style="margin-top:0">
+            <label>New field name
+              <input id="new-field-name" autocomplete="off" placeholder="Enter the exact new field name">
+            </label>
+            <label>Field level
+              <select id="new-field-level" style="border:1px solid #afc2d3;border-radius:7px;padding:8px;background:#fff">
+                <option value="">Select Document or Line item</option>
+                <option value="Document">Document</option>
+                <option value="Line">Line item</option>
+              </select>
+            </label>
+            <div>
+              <span class="field-caption">Scope</span>
+              <strong>Entire current document type</strong>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <button id="confirm-new-field" class="primary">Add field &amp; save label</button>
+            <button id="cancel-new-field" class="secondary">Cancel</button>
+          </div>
+        </div>
+        <div id="label-validation" class="validation-message"></div>
+        <div class="panel-actions">
+          <button id="save-label" class="primary">Save label</button>
+          <button id="add-new-label" class="secondary">Add new label</button>
+          <button id="edit-label" class="secondary" hidden>Edit label</button>
+          <button id="delete-label" class="danger" hidden>Delete label</button>
+        </div>
+      </section>
+
+      <section class="review-actions">
+        <label class="notes-label">Reviewer notes
+          <textarea id="doc-notes" rows="2" placeholder="Record anything that still needs attention"></textarea>
+        </label>
+        <div>
+          <button id="reset-doc" class="danger-outline">Reset this document</button>
+          <button id="approve-doc" class="approve">Approve this document</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="editor/label_editor_core.js"></script>
+  <script src="data/packing_slip_list.data.js"></script>
+  <script src="editor/label_editor_app.js"></script>
+</body>
+</html>
