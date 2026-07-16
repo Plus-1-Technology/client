@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-07-16T13:08:28.513343+00:00",
+  "generated_at": "2026-07-16T15:10:38.293910+00:00",
   "snapshot_id": "db6f99eb1d694ddd7b0c498a371b4d19016eb9eb5b5f904838e1281a39e29e71",
   "public_site": "https://plus-1-technology.github.io/client/Keehan-DI-Label-Review/",
   "models": {
@@ -37,53 +37,58 @@
       "suggestions": 0
     }
   },
-  "file_count": 622,
-  "package_bytes": 195152932,
+  "file_count": 630,
+  "package_bytes": 194678670,
   "files": [
     {
       "path": "build_manifest.py",
-      "bytes": 2567,
-      "sha256": "66a192593a5a6f847960196b6d7dc67311afcc94b4a00ee384bc747fefcc2505"
+      "bytes": 2631,
+      "sha256": "e66a4467d1e63257572125ee2f06d42b5b5e9be6de6ee45db851878ed382e41d"
     },
     {
       "path": "index.html",
-      "bytes": 3747,
-      "sha256": "9850b088e0f5cac43285030b8a767e9d8df7ef9d58169a7e38dee4aac16fb51e"
+      "bytes": 3777,
+      "sha256": "a1815a2b40797187ffa9f81eb82f125ec3163b90e102aa81b66a3dd76742f3f8"
     },
     {
       "path": "packing-slip/data/packing_slip_list.data.js",
-      "bytes": 5927096,
-      "sha256": "b984ded2efa2a09ebcaba14f6c1ed6b18b8497609c7e6c55d928b13e7b409701"
+      "bytes": 5928004,
+      "sha256": "0efbc0ecd86d6461de0d5265dcafa3aa5e136a9225fc99383468589e79029862"
     },
     {
       "path": "packing-slip/editor/label_editor.css",
-      "bytes": 8869,
-      "sha256": "4c374a9b66b54ff3f01c27e624744d74e2889c74e719cd67ba18c1006ee77c31"
+      "bytes": 8871,
+      "sha256": "fb3c3e349af0f17109247c376f584495f550887eebf42203961791aeb8299857"
     },
     {
       "path": "packing-slip/editor/label_editor_app.js",
-      "bytes": 30861,
-      "sha256": "5bcad1a785c355be284cbd888142db12cceadf056ba88367fa8976b16720d676"
+      "bytes": 31600,
+      "sha256": "13f1479fb06c1587662742bc3a2065346927fd97daec27578c352c17b15d960f"
     },
     {
       "path": "packing-slip/editor/label_editor_core.js",
-      "bytes": 11732,
-      "sha256": "291b95285c5d237e3203854eda825c9ab4fef3c1f0a0396dd57d00dd04d31706"
+      "bytes": 12770,
+      "sha256": "e458fba6ad44e661a8ab912f7e7cc6bef6ca6c11042819cf707c73d92f4fdb2b"
     },
     {
       "path": "packing-slip/editor/label_editor_template.html",
-      "bytes": 7921,
-      "sha256": "89a2f9b52e37513cf0e600e2ce28131ac8636f702fa7477b475be29debb55f3c"
+      "bytes": 8143,
+      "sha256": "2afd13b58af913582e06ba0eec9758f0c91c98df62d0753f379f42992c30d894"
+    },
+    {
+      "path": "packing-slip/exports/endpoint-gap-repair-audit-packing_slip_list.json",
+      "bytes": 7326,
+      "sha256": "a0dd74a2a50d0db909784105e045ced72819d44caea7be51a4556b7814319eb7"
     },
     {
       "path": "packing-slip/exports/full-review-backup-packing_slip_list-db6f99eb1d69.json",
-      "bytes": 12766554,
-      "sha256": "a6ee0d8da467a22d5eaa252911f0559d6b18567fded16fd1d2de3426f9ea68e8"
+      "bytes": 12324271,
+      "sha256": "e95c1185fd1e4c0044eb4c7f95d851e1c9a46e0357501182e7717183a90478c5"
     },
     {
       "path": "packing-slip/exports/training-ready-approved-labels-packing_slip_list-db6f99eb1d69.json",
-      "bytes": 600138,
-      "sha256": "69daab35c25e413fe736d83ed995ea352f8c53f704e439d7deb7e9c987e32afa"
+      "bytes": 600852,
+      "sha256": "e612e57625a1efd956e86763e7a25e10370c1b32f2760293a2fc1c80fafe27b5"
     },
     {
       "path": "packing-slip/img/current/db6f99eb1d69/packing_slip_list/AHS-23049-DRI6GQ-packing-slip-list--b7330198-1.jpg",
@@ -917,8 +922,8 @@
     },
     {
       "path": "packing-slip/Label-Review-packing_slip_list.html",
-      "bytes": 8123,
-      "sha256": "2f62097d46b50f651e21ee83cc1517aedcf61a823dc8a70e3ecc19a858863133"
+      "bytes": 8190,
+      "sha256": "2519c3415c931d2528acbaf71bcaa0b40898521aed3a17a61a2206bd1fa7e2c1"
     },
     {
       "path": "purchase-order/data/purchase_order.data.js",
@@ -932,23 +937,28 @@
     },
     {
       "path": "purchase-order/editor/label_editor.css",
-      "bytes": 8869,
-      "sha256": "4c374a9b66b54ff3f01c27e624744d74e2889c74e719cd67ba18c1006ee77c31"
+      "bytes": 8871,
+      "sha256": "fb3c3e349af0f17109247c376f584495f550887eebf42203961791aeb8299857"
     },
     {
       "path": "purchase-order/editor/label_editor_app.js",
-      "bytes": 30861,
-      "sha256": "5bcad1a785c355be284cbd888142db12cceadf056ba88367fa8976b16720d676"
+      "bytes": 31600,
+      "sha256": "13f1479fb06c1587662742bc3a2065346927fd97daec27578c352c17b15d960f"
     },
     {
       "path": "purchase-order/editor/label_editor_core.js",
-      "bytes": 11732,
-      "sha256": "291b95285c5d237e3203854eda825c9ab4fef3c1f0a0396dd57d00dd04d31706"
+      "bytes": 12770,
+      "sha256": "e458fba6ad44e661a8ab912f7e7cc6bef6ca6c11042819cf707c73d92f4fdb2b"
     },
     {
       "path": "purchase-order/editor/label_editor_template.html",
-      "bytes": 7921,
-      "sha256": "89a2f9b52e37513cf0e600e2ce28131ac8636f702fa7477b475be29debb55f3c"
+      "bytes": 8143,
+      "sha256": "2afd13b58af913582e06ba0eec9758f0c91c98df62d0753f379f42992c30d894"
+    },
+    {
+      "path": "purchase-order/exports/endpoint-gap-repair-audit-purchase_order.json",
+      "bytes": 235,
+      "sha256": "9a352a2ee618cdae3875714f992f35f74519f76750394eec11c6cc1fcf1ab159"
     },
     {
       "path": "purchase-order/exports/full-review-backup-purchase_order-db6f99eb1d69.json",
@@ -1747,53 +1757,83 @@
     },
     {
       "path": "purchase-order/Label-Review-purchase_order-received_status.html",
-      "bytes": 8200,
-      "sha256": "a195fade2ef77c157a16ec3ee23829f635486a939d1444b3f22dac303ce5d5e5"
+      "bytes": 8245,
+      "sha256": "bb3ef4e9781f37f106ceb45eaa39c2f075951f16587573eddf7af398a8155613"
     },
     {
       "path": "purchase-order/Label-Review-purchase_order.html",
-      "bytes": 8124,
-      "sha256": "34dfebf020a907f300f5ff496e1cb7057007b1b76ab0067770bf771acf7f6878"
+      "bytes": 8191,
+      "sha256": "a304d5ee0447b888e6f9438d438c8b9a6e0e82c353780e740562508ba19eed94"
     },
     {
       "path": "README.md",
-      "bytes": 1595,
-      "sha256": "4ddce15629e9ce3621caa5bdc842907ddc981458a14ae64b596fdb18c81fe017"
+      "bytes": 2107,
+      "sha256": "35bdd5b44dce3865410653697ff22e82518d930386b6795f34cb5f562b339bbf"
+    },
+    {
+      "path": "scripts/repair_endpoint_gap_labels.js",
+      "bytes": 4892,
+      "sha256": "316ac96e7bc7d265524c855b45722365543ce8e312dd38d1231a4f0ff798bf14"
+    },
+    {
+      "path": "scripts/synchronize_review_exports.js",
+      "bytes": 1400,
+      "sha256": "ca8659d50f05451cb2374534d938702e096610d89d53a0854a2218d6aaaeadb7"
+    },
+    {
+      "path": "tests/test_live_editor_word_range.js",
+      "bytes": 1014,
+      "sha256": "526b7cb4f20dc66d5f306dbf39c1759b64bf249031933277f6cd374df26f9993"
+    },
+    {
+      "path": "tests/test_repair_endpoint_gap_labels.js",
+      "bytes": 2177,
+      "sha256": "059804d6e7d0c947d89252e3d75587e90ac52d3cc1192395f3817ece126a6006"
     },
     {
       "path": "update_from_export.py",
-      "bytes": 5087,
-      "sha256": "4f89255ca96783c204fd98a4df39f456457fa97a042e04ee5b68d0227d481e93"
+      "bytes": 5198,
+      "sha256": "28ce0c8d26b0f3d91cd9063974bd257bdaf4933baa74b0b4ac72946820a333db"
     },
     {
       "path": "vendor-invoice/data/vendor_invoice.data.js",
-      "bytes": 13647628,
-      "sha256": "1bdcf07372ab4fe929620d46c26030d3905558b2c4ec13daef65f60f60382b82"
+      "bytes": 13653390,
+      "sha256": "24306c21000245987ed5949934bc5bd339b956f67bfc4e292bc15cfbb8649c53"
     },
     {
       "path": "vendor-invoice/editor/label_editor.css",
-      "bytes": 8869,
-      "sha256": "4c374a9b66b54ff3f01c27e624744d74e2889c74e719cd67ba18c1006ee77c31"
+      "bytes": 8871,
+      "sha256": "fb3c3e349af0f17109247c376f584495f550887eebf42203961791aeb8299857"
     },
     {
       "path": "vendor-invoice/editor/label_editor_app.js",
-      "bytes": 30861,
-      "sha256": "5bcad1a785c355be284cbd888142db12cceadf056ba88367fa8976b16720d676"
+      "bytes": 31600,
+      "sha256": "13f1479fb06c1587662742bc3a2065346927fd97daec27578c352c17b15d960f"
     },
     {
       "path": "vendor-invoice/editor/label_editor_core.js",
-      "bytes": 11732,
-      "sha256": "291b95285c5d237e3203854eda825c9ab4fef3c1f0a0396dd57d00dd04d31706"
+      "bytes": 12770,
+      "sha256": "e458fba6ad44e661a8ab912f7e7cc6bef6ca6c11042819cf707c73d92f4fdb2b"
     },
     {
       "path": "vendor-invoice/editor/label_editor_template.html",
-      "bytes": 7921,
-      "sha256": "89a2f9b52e37513cf0e600e2ce28131ac8636f702fa7477b475be29debb55f3c"
+      "bytes": 8143,
+      "sha256": "2afd13b58af913582e06ba0eec9758f0c91c98df62d0753f379f42992c30d894"
+    },
+    {
+      "path": "vendor-invoice/exports/endpoint-gap-repair-audit-vendor_invoice.json",
+      "bytes": 35809,
+      "sha256": "41924b6936e7b9d9826d0f4c0f7724649c32731f192bcd87bab1ac647aef1c31"
     },
     {
       "path": "vendor-invoice/exports/full-review-backup-vendor_invoice-db6f99eb1d69.json",
-      "bytes": 30136872,
-      "sha256": "18c68729cb309cbeb162e2c45a4c272b1561ac20bc3f70fcc8e1fea94a7272fa"
+      "bytes": 29098760,
+      "sha256": "2c1a84606860359b9d0b2b9748befde21969b604b55b609e6f833f4aff41bf6c"
+    },
+    {
+      "path": "vendor-invoice/exports/training-ready-approved-labels-vendor_invoice-db6f99eb1d69.json",
+      "bytes": 938930,
+      "sha256": "13dfaa6cd657d28f8b729ba3804e4f08c18e0a556dfcbc60642242c4b6aa416e"
     },
     {
       "path": "vendor-invoice/img/current/db6f99eb1d69/vendor_invoice/AHS-23049-Q6WLN7-vendor-invoice--3d65398d-1.jpg",
@@ -3147,8 +3187,8 @@
     },
     {
       "path": "vendor-invoice/Label-Review-vendor_invoice.html",
-      "bytes": 8124,
-      "sha256": "b38189d91758f241e562299d4f4b9d1ffb4becd2edda6f0f1f2a9342a7f4d045"
+      "bytes": 8191,
+      "sha256": "9c4d0a4a2f2f8fcef8d6abaeef8b8f26b6d42b5ec2eecef55fd1e2bea55083a4"
     }
   ],
   "azure_changed": false,

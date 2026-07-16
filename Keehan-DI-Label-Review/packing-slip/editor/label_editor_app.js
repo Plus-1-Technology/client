@@ -160,7 +160,9 @@
       if (mode !== 'word') return;
       event.stopPropagation();
       const index = Number(button.dataset.wordIndex);
-      selectedWords = core.toggleWordSelection(selectedWords, index);
+      selectedWords = selectedWords.length === 1 && !selectedWords.includes(index)
+        ? core.wordRangeSelection(currentPage().words, selectedWords[0], index)
+        : core.toggleWordSelection(selectedWords, index);
       draftFromWords();
       renderPage();
       openDraftPanel('WORD SELECTION', false);

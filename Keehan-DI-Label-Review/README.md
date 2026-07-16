@@ -15,12 +15,16 @@ The landing page provides one entry point for:
 
 1. Open the public landing page.
 2. Select the document type assigned to you.
-3. Review, add, edit, or delete labels. Do not approve a document until its labels are complete.
-4. The editor autosaves changes to the current browser profile.
-5. Before switching computers or handing work to another person, click **Export full review backup**.
-6. Send the exported JSON to the project owner or commit it to this folder as the next checkpoint.
+3. In **Select words** mode, click the first and last word of a continuous value. The editor selects every OCR word inside that span. Click any highlighted word afterward to remove it.
+4. Confirm **Captured text** contains the complete intended value before saving the label.
+5. Review, add, edit, or delete labels. Do not approve a document until its labels are complete.
+6. The editor autosaves changes to the current browser profile.
+7. Before switching computers or handing work to another person, click **Export full review backup**.
+8. Send the exported JSON to the project owner or commit it to this folder as the next checkpoint.
 
 Browser autosave is not a shared database. Another reviewer cannot see edits until an export is incorporated into GitHub.
+
+Endpoint-gap repair audit files are stored beside the full-review backups under each document type's `exports` folder. Each audit records the document, label ID, field, page, and exact before/after text.
 
 ## Updating a checkpoint
 

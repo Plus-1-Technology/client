@@ -41,6 +41,23 @@
       : [...selected, wordIndex];
   }
 
+  function wordRangeSelection(words, anchorIndex, targetIndex) {
+    const pageWords = Array.isArray(words) ? words : [];
+    if (!Number.isInteger(anchorIndex) || !Number.isInteger(targetIndex)) return [];
+    const anchor = pageWords[anchorIndex];
+    const target = pageWords[targetIndex];
+    if (!anchor || !target || !Array.isArray(anchor.rect) || !Array.isArray(target.rect)) return [];
+    const rect = [
+      Math.min(anchor.rect[0], target.rect[0]),
+      Math.min(anchor.rect[1], target.rect[1]),
+      Math.max(anchor.rect[2], target.rect[2]),
+      Math.max(anchor.rect[3], target.rect[3]),
+    ];
+    return wordsInRect(pageWords, rect)
+      .map(word => pageWords.indexOf(word))
+      .filter(index => index >= 0);
+  }
+
   function createReviewerField(fields, name, level) {
     const current = Array.isArray(fields) ? [...fields] : [];
     const trimmed = String(name || '').trim();
@@ -281,6 +298,7 @@
     readingOrder,
     toggleWordSelection,
     validateLabel,
+    wordRangeSelection,
     wordsInRect,
   };
 });

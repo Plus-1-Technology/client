@@ -15261,7 +15261,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Special It variance.",
+          "text": "Special Part Instructions: This item is NON-STOCK and is NON-CANCELLABLE & NON-RETURNABLE. It may also be subject to a +/- 10% quantity variance.",
           "rect": [
             0.050611764705882356,
             0.7997090909090908,
@@ -15278,7 +15278,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Certificate the Manager",
+          "text": "Certificate of Conformance: This is to certify that the above items were supplied in accordance with the description and as illustrated in the catalog Je Juno Joe E. Lenart Operations Manager",
           "rect": [
             0.5603058823529412,
             0.7985,
@@ -18893,7 +18893,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "99 AVENUE STATES",
+          "text": "99 NORTH 11TH AVENUE COATESVILLE PA 19320 UNITED STATES",
           "rect": [
             0.6191882352941176,
             0.3280363636363636,
@@ -22450,7 +22450,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "LABELMASTER® SOFTWARE SERVICES",
+          "text": "LABELMASTER® SOFTWARE PRODUCTS SERVICES",
           "rect": [
             0.13895294117647058,
             0.1003,
@@ -25791,7 +25791,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Delivered 3/11/26 Estilo",
+          "text": "Delivered 3/11/26 Lou Estilo",
           "rect": [
             0.314,
             0.43834545454545454,
@@ -29865,7 +29865,7 @@
           "level": "Line",
           "item_index": 1,
           "page": 1,
-          "text": "O KIT",
+          "text": "O RING KIT",
           "rect": [
             0.04008235294117647,
             0.46430909090909095,
@@ -33390,7 +33390,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "UPS #181804 ROY@ARKON.COM",
+          "text": "UPS GROUND #181804 TRACK: ROY@ARKON.COM",
           "rect": [
             0.07541176470588236,
             0.5658,
@@ -35043,7 +35043,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "TRACK: ROY@ARKON.COM BRACELIN",
+          "text": "TRACK: ROY@ARKON.COM ATTN: BLAINE BRACELIN",
           "rect": [
             0.06711764705882353,
             0.6032545454545454,
@@ -45564,7 +45564,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Received Keehn Service Corporation",
+          "text": "Received In Good Order By Keehn Service Corporation",
           "rect": [
             0.4158235294117647,
             0.9168545454545455,
@@ -45581,7 +45581,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "AS Packing LLC",
+          "text": "AS Packing Clerk's Initials BenCo Technology, LLC",
           "rect": [
             0.05617647058823529,
             0.8945272727272727,
@@ -47079,7 +47079,7 @@
           "level": "Line",
           "item_index": 0,
           "page": 1,
-          "text": "3003 DIA PLT in",
+          "text": "3003 DIA PLT 0.19 in",
           "rect": [
             0.7095529411764706,
             0.4300818181818182,
@@ -60921,7 +60921,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Special Instructions Ship Date:",
+          "text": "Special Instructions Cert Enclosed Partial Ship Complete Ship Goods Received in Good Condition By: Date:",
           "rect": [
             0.6766235294117646,
             0.040372727272727275,
@@ -63060,7 +63060,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Special Ship Date:",
+          "text": "Special Instructions Cert Enclosed Partial Ship Complete Ship Goods Received In Good Condition By: Date:",
           "rect": [
             0.6772823529411764,
             0.0395,
@@ -63111,7 +63111,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Mark Shipment: FREIGHT",
+          "text": "Mark Shipment: Attn: Comments: FREE FREIGHT",
           "rect": [
             0.03561176470588236,
             0.3190545454545454,
@@ -65760,7 +65760,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "Prepay Add",
+          "text": "Prepay & Add",
           "rect": [
             0.35256470588235295,
             0.3351181818181818,
@@ -65794,7 +65794,7 @@
           "level": "Document",
           "item_index": null,
           "page": 1,
-          "text": "LTL Add NOTES",
+          "text": "LTL FREIGHT/PARCEL (PORTAL):Freight Carrier: UPS FRT-Truck-Ground | Freight Terms: Prepay & Add CUSTOMER NOTES",
           "rect": [
             0.03972941176470588,
             0.3634545454545455,
@@ -443221,5 +443221,11 @@
     "checkpoint_sha256": "f27fd6945912813a6e73bb4ad6cc79bb755d3ef6a13fd292c1fa3010cde9eb95",
     "approved_documents_overlaid": 27,
     "updated_at": "2026-07-16T12:48:49.323782+00:00"
+  },
+  "endpoint_gap_repair": {
+    "repaired_at": "2026-07-16T15:01:28.195Z",
+    "method": "reviewer endpoint subsequence expanded from overlapping OCR words",
+    "repaired_labels": 16,
+    "repaired_approved_documents": 12
   }
 }
