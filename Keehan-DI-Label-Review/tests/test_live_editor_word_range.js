@@ -40,8 +40,10 @@ for (const folder of ['packing-slip', 'purchase-order', 'vendor-invoice']) {
   assert(app.includes("$('prev-page').addEventListener('click'"), `${folder}: previous-page control must be wired`);
   assert(app.includes("$('next-page').addEventListener('click'"), `${folder}: next-page control must be wired`);
   const css = require('fs').readFileSync(path.resolve(__dirname, '..', 'shared', 'selection_layer_order.css'), 'utf8');
-  assert(/#label-layer\s*{\s*z-index:\s*2/.test(css), `${folder}: saved labels must remain visible below selectable OCR words`);
-  assert(/#word-layer\s*{\s*z-index:\s*3/.test(css), `${folder}: OCR words must receive drag gestures above saved labels`);
+  assert(/#word-layer\s*{\s*z-index:\s*2/.test(css), `${folder}: OCR words must remain selectable below the label-tag controls`);
+  assert(/#label-layer\s*{\s*z-index:\s*3/.test(css), `${folder}: saved-label tags must receive clicks above OCR words`);
+  assert(/#label-layer\s+\.label-box\s*{\s*pointer-events:\s*none/.test(css), `${folder}: saved-label rectangles must not block OCR word selection`);
+  assert(/#label-layer\s+\.box-tag\s*{\s*pointer-events:\s*auto/.test(css), `${folder}: clicking a saved-label tag must reopen that exact label`);
 }
 
 for (const htmlPath of [

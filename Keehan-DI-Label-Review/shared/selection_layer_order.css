@@ -1,4 +1,11 @@
 #suggestion-layer { z-index: 1; }
-#label-layer { z-index: 2; }
-#word-layer { z-index: 3; }
+#word-layer { z-index: 2; }
+#label-layer { z-index: 3; }
 #selection-layer { z-index: 4; }
+
+/*
+ * Keep the saved-label outline visible without letting the large rectangle
+ * steal OCR word gestures. Only the small field-name tag is an edit control.
+ */
+#label-layer .label-box { pointer-events: none; }
+#label-layer .box-tag { pointer-events: auto; cursor: pointer; }
