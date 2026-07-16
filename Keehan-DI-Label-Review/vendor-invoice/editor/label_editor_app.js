@@ -176,8 +176,16 @@
         openDraftPanel('WORD SELECTION', false);
       });
     });
-    $('label-layer').querySelectorAll('[data-label-id]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); openExisting(button.dataset.labelId); }));
-    $('suggestion-layer').querySelectorAll('[data-suggestion-id]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); openSuggestion(button.dataset.suggestionId); }));
+    $('label-layer').querySelectorAll('[data-label-id]').forEach(button => button.addEventListener('click', event => {
+      if (mode === 'area') return;
+      event.stopPropagation();
+      openExisting(button.dataset.labelId);
+    }));
+    $('suggestion-layer').querySelectorAll('[data-suggestion-id]').forEach(button => button.addEventListener('click', event => {
+      if (mode === 'area') return;
+      event.stopPropagation();
+      openSuggestion(button.dataset.suggestionId);
+    }));
   }
 
   function draftFromWords() {

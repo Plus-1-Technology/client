@@ -33,6 +33,10 @@ for (const folder of ['packing-slip', 'purchase-order', 'vendor-invoice']) {
   const app = require('fs').readFileSync(path.resolve(__dirname, '..', folder, 'editor', 'label_editor_app.js'), 'utf8');
   assert(app.includes("button.addEventListener('pointerdown'"), `${folder}: word gestures must record their starting word`);
   assert(app.includes('core.completeWordSelection(currentPage().words, selectedWords, wordGestureAnchor, index)'), `${folder}: word gestures must capture their full range`);
+  assert(app.includes("if (mode === 'area') return;"), `${folder}: area selection must not reopen a covered label`);
+  const css = require('fs').readFileSync(path.resolve(__dirname, '..', 'shared', 'selection_layer_order.css'), 'utf8');
+  assert(/#label-layer\s*{\s*z-index:\s*2/.test(css), `${folder}: saved labels must remain visible below selectable OCR words`);
+  assert(/#word-layer\s*{\s*z-index:\s*3/.test(css), `${folder}: OCR words must receive drag gestures above saved labels`);
 }
 
 console.log('live_editor_word_range: all assertions passed');
