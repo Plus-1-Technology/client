@@ -42,6 +42,7 @@ for (const folder of ['packing-slip', 'purchase-order', 'vendor-invoice']) {
   assert(app.includes("$('save-github').addEventListener('click', saveToGitHub)"), `${folder}: save button must be wired`);
   assert(!app.includes('promptForKey'), `${folder}: team members must not be prompted for a key`);
   assert(!app.includes('sessionStorage'), `${folder}: no browser credential storage is allowed`);
+  assert(app.includes('GitHub save failed: ${detail}'), `${folder}: the persistent status must show the exact save error`);
 }
 
 let sentRequest = null;

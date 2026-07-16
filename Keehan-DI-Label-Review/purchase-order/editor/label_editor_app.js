@@ -572,8 +572,9 @@
       $('save-status').textContent = `Saved to private GitHub ${savedTime}${shortSha ? ` · ${shortSha}` : ''}`;
       toast('Private GitHub checkpoint saved.');
     } catch (error) {
-      $('save-status').textContent = 'Saved locally - GitHub save failed';
-      toast(error.message || 'GitHub save failed. Local work is still safe.');
+      const detail = error.message || 'Unknown save error';
+      $('save-status').textContent = `GitHub save failed: ${detail}`;
+      toast(`${detail} Local work is still safe.`);
     } finally {
       button.disabled = false;
       button.textContent = originalText;
