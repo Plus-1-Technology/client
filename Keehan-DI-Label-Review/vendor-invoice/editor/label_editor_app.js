@@ -9,6 +9,7 @@
   let mode = 'word';
   let zoom = 1;
   let selectedWords = [];
+  let wordGestureAnchor = null;
   let draft = null;
   let activeLabelId = null;
   let editing = false;
@@ -156,17 +157,25 @@
   }
 
   function bindPageEvents() {
-    $('word-layer').querySelectorAll('[data-word-index]').forEach(button => button.addEventListener('pointerup', event => {
-      if (mode !== 'word') return;
-      event.stopPropagation();
-      const index = Number(button.dataset.wordIndex);
-      selectedWords = selectedWords.length === 1 && !selectedWords.includes(index)
-        ? core.wordRangeSelection(currentPage().words, selectedWords[0], index)
-        : core.toggleWordSelection(selectedWords, index);
-      draftFromWords();
-      renderPage();
-      openDraftPanel('WORD SELECTION', false);
-    }));
+    $('word-layer').querySelectorAll('[data-word-index]').forEach(button => {
+      button.addEventListener('pointerdown', event => {
+        if (mode !== 'word') return;
+        event.preventDefault();
+        event.stopPropagation();
+        wordGestureAnchor = Number(button.dataset.wordIndex);
+      });
+      button.addEventListener('pointerup', event => {
+        if (mode !== 'word' || !Number.isInteger(wordGestureAnchor)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const index = Number(button.dataset.wordIndex);
+        selectedWords = core.completeWordSelection(currentPage().words, selectedWords, wordGestureAnchor, index);
+        wordGestureAnchor = null;
+        draftFromWords();
+        renderPage();
+        openDraftPanel('WORD SELECTION', false);
+      });
+    });
     $('label-layer').querySelectorAll('[data-label-id]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); openExisting(button.dataset.labelId); }));
     $('suggestion-layer').querySelectorAll('[data-suggestion-id]').forEach(button => button.addEventListener('click', event => { event.stopPropagation(); openSuggestion(button.dataset.suggestionId); }));
   }
@@ -498,7 +507,7 @@
   }
 
   function clearSelection() {
-    selectedWords = []; draft = null; activeLabelId = null; editing = false; drawStart = null; drawGhost = null;
+    selectedWords = []; wordGestureAnchor = null; draft = null; activeLabelId = null; editing = false; drawStart = null; drawGhost = null;
     $('label-panel').hidden = true;
     enablePanelFields(true);
   }

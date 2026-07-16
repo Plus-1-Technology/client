@@ -58,6 +58,18 @@
       .filter(index => index >= 0);
   }
 
+  function completeWordSelection(words, selectedWords, anchorIndex, targetIndex) {
+    const selected = Array.isArray(selectedWords) ? [...selectedWords] : [];
+    if (!Number.isInteger(targetIndex)) return selected;
+    if (Number.isInteger(anchorIndex) && anchorIndex !== targetIndex) {
+      return wordRangeSelection(words, anchorIndex, targetIndex);
+    }
+    if (selected.length === 1 && !selected.includes(targetIndex)) {
+      return wordRangeSelection(words, selected[0], targetIndex);
+    }
+    return toggleWordSelection(selected, targetIndex);
+  }
+
   function createReviewerField(fields, name, level) {
     const current = Array.isArray(fields) ? [...fields] : [];
     const trimmed = String(name || '').trim();
@@ -291,6 +303,7 @@
     buildExport,
     buildTrainingExport,
     canonicalizeQuantityFields,
+    completeWordSelection,
     createReviewerField,
     fieldFromToken,
     fieldToken,
