@@ -1,0 +1,26 @@
+.viewer-page-nav {
+  position: sticky;
+  top: -18px;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: -18px -18px 16px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #afc2d3;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 4px 12px rgba(18, 59, 91, .12);
+  backdrop-filter: blur(6px);
+}
+
+.viewer-page-nav strong {
+  min-width: 92px;
+  text-align: center;
+  color: #123b5b;
+}
+
+.viewer-page-nav button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}

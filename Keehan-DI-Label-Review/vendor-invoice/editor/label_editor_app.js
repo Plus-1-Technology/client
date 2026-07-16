@@ -133,6 +133,9 @@
     $('page-position').textContent = `Page ${pageIndex + 1} of ${doc.pages.length}`;
     $('prev-page').disabled = pageIndex === 0;
     $('next-page').disabled = pageIndex >= doc.pages.length - 1;
+    $('page-position-viewer').textContent = `Page ${pageIndex + 1} of ${doc.pages.length}`;
+    $('prev-page-viewer').disabled = pageIndex === 0;
+    $('next-page-viewer').disabled = pageIndex >= doc.pages.length - 1;
   }
 
   function turnPage(direction) {
@@ -409,7 +412,11 @@
   }
 
   function enablePanelFields(enabled) {
-    $('captured-text').disabled = !enabled;
+    const field = fieldForName($('field-search').value);
+    const selectionMark = Boolean(field && field.field_type === 'selectionMark');
+    $('captured-text').disabled = !enabled || selectionMark;
+    $('captured-text').placeholder = selectionMark ? 'No text required for a selection mark.' : '';
+    if (selectionMark) $('captured-text').value = '';
     $('field-search').disabled = !enabled;
     $('line-index').disabled = !enabled;
   }
@@ -422,7 +429,7 @@
       level: field.level,
       item_index: itemIndex,
       page: draft.page,
-      text: $('captured-text').value.trim(),
+      text: core.labelTextForField(field.field_type, $('captured-text').value),
       rect: [...draft.rect],
       source: existing ? 'reviewer-modified' : 'reviewer-added',
       original_label: existing ? (existing.original_label || existing.id) : null,
@@ -613,6 +620,8 @@
     $('next-doc').addEventListener('click', () => openDocument(documentIndex+1));
     $('prev-page').addEventListener('click', () => turnPage(-1));
     $('next-page').addEventListener('click', () => turnPage(1));
+    $('prev-page-viewer').addEventListener('click', () => turnPage(-1));
+    $('next-page-viewer').addEventListener('click', () => turnPage(1));
     $('mode-word').addEventListener('click', () => {mode='word';clearSelection();render();});
     $('mode-area').addEventListener('click', () => {mode='area';clearSelection();render();});
     $('toggle-azure').addEventListener('change', event => {layerState.azure=event.target.checked;renderPage();});
@@ -624,7 +633,7 @@
     $('field-inventory-level').addEventListener('change', event => {fieldInventoryLevel=event.target.value;renderLabelsList();});
     $('zoom-in').addEventListener('click', () => {zoom=Math.min(2.5,zoom+.15);renderPage();});
     $('zoom-out').addEventListener('click', () => {zoom=Math.max(.5,zoom-.15);renderPage();});
-    $('field-search').addEventListener('input', event => {$('label-validation').textContent='';showFieldDetails(event.target.value, $('field-level').dataset.level);});
+    $('field-search').addEventListener('input', event => {$('label-validation').textContent='';showFieldDetails(event.target.value, $('field-level').dataset.level);enablePanelFields(editing);});
     $('line-index').addEventListener('input', () => {$('label-validation').textContent='';});
     $('save-label').addEventListener('click', saveLabel);
     $('add-new-label').addEventListener('click', openNewFieldCreator);

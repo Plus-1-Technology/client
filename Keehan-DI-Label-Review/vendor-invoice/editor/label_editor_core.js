@@ -76,6 +76,10 @@
     return Math.min(lastIndex, Math.max(0, nextIndex));
   }
 
+  function labelTextForField(fieldType, text) {
+    return fieldType === 'selectionMark' ? '' : String(text || '').trim();
+  }
+
   function createReviewerField(fields, name, level) {
     const current = Array.isArray(fields) ? [...fields] : [];
     const trimmed = String(name || '').trim();
@@ -313,6 +317,7 @@
     createReviewerField,
     fieldFromToken,
     fieldToken,
+    labelTextForField,
     mergeAutosave,
     pageIndexAfterTurn,
     readingOrder,

@@ -33,12 +33,17 @@ for (const folder of ['packing-slip', 'purchase-order', 'vendor-invoice']) {
   assert.strictEqual(core.pageIndexAfterTurn(0, 3, -1), 0, `${folder}: previous page must clamp at page one`);
   assert.strictEqual(core.pageIndexAfterTurn(0, 3, 1), 1, `${folder}: next page must advance one page`);
   assert.strictEqual(core.pageIndexAfterTurn(2, 3, 1), 2, `${folder}: next page must clamp at the final page`);
+  assert.strictEqual(core.labelTextForField('selectionMark', '105L'), '', `${folder}: selection marks must never persist captured text`);
+  assert.strictEqual(core.labelTextForField('string', '  ABC  '), 'ABC', `${folder}: text fields must preserve trimmed captured text`);
   const app = require('fs').readFileSync(path.resolve(__dirname, '..', folder, 'editor', 'label_editor_app.js'), 'utf8');
   assert(app.includes("button.addEventListener('pointerdown'"), `${folder}: word gestures must record their starting word`);
   assert(app.includes('core.completeWordSelection(currentPage().words, selectedWords, wordGestureAnchor, index)'), `${folder}: word gestures must capture their full range`);
   assert(app.includes("if (mode === 'area') return;"), `${folder}: area selection must not reopen a covered label`);
   assert(app.includes("$('prev-page').addEventListener('click'"), `${folder}: previous-page control must be wired`);
   assert(app.includes("$('next-page').addEventListener('click'"), `${folder}: next-page control must be wired`);
+  assert(app.includes("$('prev-page-viewer').addEventListener('click'"), `${folder}: sticky previous-page control must be wired`);
+  assert(app.includes("$('next-page-viewer').addEventListener('click'"), `${folder}: sticky next-page control must be wired`);
+  assert(app.includes("core.labelTextForField(field.field_type"), `${folder}: saved labels must normalize text by field type`);
   const css = require('fs').readFileSync(path.resolve(__dirname, '..', 'shared', 'selection_layer_order.css'), 'utf8');
   assert(/#word-layer\s*{\s*z-index:\s*2/.test(css), `${folder}: OCR words must remain selectable below the label-tag controls`);
   assert(/#label-layer\s*{\s*z-index:\s*3/.test(css), `${folder}: saved-label tags must receive clicks above OCR words`);
@@ -56,6 +61,9 @@ for (const htmlPath of [
   assert(html.includes('id="prev-page"'), `${htmlPath.join('/')}: previous-page button is required`);
   assert(html.includes('id="page-position"'), `${htmlPath.join('/')}: current page indicator is required`);
   assert(html.includes('id="next-page"'), `${htmlPath.join('/')}: next-page button is required`);
+  assert(html.includes('id="prev-page-viewer"'), `${htmlPath.join('/')}: sticky previous-page button is required`);
+  assert(html.includes('id="page-position-viewer"'), `${htmlPath.join('/')}: sticky page indicator is required`);
+  assert(html.includes('id="next-page-viewer"'), `${htmlPath.join('/')}: sticky next-page button is required`);
 }
 
 console.log('live_editor_word_range: all assertions passed');

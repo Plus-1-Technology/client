@@ -6,6 +6,7 @@
   <title>Purchase Order ReceivedStatus Checkmark Review</title>
   <link rel="stylesheet" href="editor/label_editor.css">
   <link rel="stylesheet" href="../shared/selection_layer_order.css">
+  <link rel="stylesheet" href="../shared/viewer_page_nav.css">
 </head>
 <body>
   <header class="topbar">
@@ -75,6 +76,12 @@
 
       <section class="page-and-labels">
         <div id="page-scroll" class="page-scroll">
+          <div class="viewer-page-nav" role="group" aria-label="Visible page navigation">
+            <button id="prev-page-viewer" class="secondary" aria-label="Previous document page">&#8592; Previous page</button>
+            <strong id="page-position-viewer">Page 1 of 1</strong>
+            <button id="next-page-viewer" class="secondary" aria-label="Next document page">Next page &#8594;</button>
+          </div>
+
           <div id="page-stage" class="page-stage" aria-label="Document page">
             <img id="page-image" alt="Current document page">
             <div id="word-layer" class="overlay-layer"></div>
