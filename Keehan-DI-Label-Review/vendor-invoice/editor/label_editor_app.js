@@ -128,6 +128,16 @@
     const doc = currentDocument();
     $('page-tabs').innerHTML = doc.pages.map((page,index) => `<button class="page-tab ${index===pageIndex?'active':''}" data-page-index="${index}">Page ${page.number}</button>`).join('');
     $('page-tabs').querySelectorAll('[data-page-index]').forEach(button => button.addEventListener('click', () => { pageIndex = Number(button.dataset.pageIndex); clearSelection(); render(); }));
+    $('page-position').textContent = `Page ${pageIndex + 1} of ${doc.pages.length}`;
+    $('prev-page').disabled = pageIndex === 0;
+    $('next-page').disabled = pageIndex >= doc.pages.length - 1;
+  }
+
+  function turnPage(direction) {
+    pageIndex = core.pageIndexAfterTurn(pageIndex, currentDocument().pages.length, direction);
+    clearSelection();
+    render();
+    $('page-scroll').scrollTop = 0;
   }
 
   function renderPage() {
@@ -571,6 +581,8 @@
     $('document-search').addEventListener('input', renderDocumentList);
     $('prev-doc').addEventListener('click', () => openDocument(documentIndex-1));
     $('next-doc').addEventListener('click', () => openDocument(documentIndex+1));
+    $('prev-page').addEventListener('click', () => turnPage(-1));
+    $('next-page').addEventListener('click', () => turnPage(1));
     $('mode-word').addEventListener('click', () => {mode='word';clearSelection();render();});
     $('mode-area').addEventListener('click', () => {mode='area';clearSelection();render();});
     $('toggle-azure').addEventListener('change', event => {layerState.azure=event.target.checked;renderPage();});

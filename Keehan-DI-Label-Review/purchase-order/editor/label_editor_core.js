@@ -70,6 +70,12 @@
     return toggleWordSelection(selected, targetIndex);
   }
 
+  function pageIndexAfterTurn(currentIndex, pageCount, direction) {
+    const lastIndex = Math.max(0, Number(pageCount || 0) - 1);
+    const nextIndex = Number(currentIndex || 0) + (Number(direction) < 0 ? -1 : 1);
+    return Math.min(lastIndex, Math.max(0, nextIndex));
+  }
+
   function createReviewerField(fields, name, level) {
     const current = Array.isArray(fields) ? [...fields] : [];
     const trimmed = String(name || '').trim();
@@ -308,6 +314,7 @@
     fieldFromToken,
     fieldToken,
     mergeAutosave,
+    pageIndexAfterTurn,
     readingOrder,
     toggleWordSelection,
     validateLabel,
