@@ -565,8 +565,6 @@
         endpoint: checkpointEndpoint,
         model: state.model,
         autosave,
-        storage: sessionStorage,
-        promptForKey: message => window.prompt(message),
         fetchImpl: window.fetch.bind(window),
       });
       const savedTime = result.saved_at ? new Date(result.saved_at).toLocaleTimeString() : 'now';

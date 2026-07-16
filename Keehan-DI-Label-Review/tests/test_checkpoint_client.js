@@ -40,14 +40,10 @@ for (const htmlPath of [
 for (const folder of ['packing-slip', 'purchase-order', 'vendor-invoice']) {
   const app = require('fs').readFileSync(path.resolve(__dirname, '..', folder, 'editor', 'label_editor_app.js'), 'utf8');
   assert(app.includes("$('save-github').addEventListener('click', saveToGitHub)"), `${folder}: save button must be wired`);
+  assert(!app.includes('promptForKey'), `${folder}: team members must not be prompted for a key`);
+  assert(!app.includes('sessionStorage'), `${folder}: no browser credential storage is allowed`);
 }
 
-const values = new Map();
-const storage = {
-  getItem: key => values.get(key) || null,
-  setItem: (key, value) => values.set(key, value),
-  removeItem: key => values.delete(key),
-};
 let sentRequest = null;
 const fetchImpl = async (url, options) => {
   sentRequest = {url, options};
@@ -63,26 +59,11 @@ const fetchImpl = async (url, options) => {
     endpoint: 'https://example.test/api/label-review-checkpoint',
     model: 'purchase_order',
     autosave,
-    storage,
-    promptForKey: () => 'function-key',
     fetchImpl,
   });
   assert.strictEqual(result.status, 'saved');
-  assert.strictEqual(storage.getItem(client.ACCESS_KEY_STORAGE_KEY), 'function-key');
-  assert.strictEqual(sentRequest.options.headers['x-functions-key'], 'function-key');
+  assert.strictEqual(Object.prototype.hasOwnProperty.call(sentRequest.options.headers, 'x-functions-key'), false);
   assert.strictEqual(JSON.parse(sentRequest.options.body).snapshot_id, autosave.snapshot_id);
-
-  await assert.rejects(
-    client.saveCheckpoint({
-      endpoint: 'https://example.test/api/label-review-checkpoint',
-      model: 'purchase_order',
-      autosave,
-      storage: {getItem: () => null, setItem: () => {}, removeItem: () => {}},
-      promptForKey: () => '',
-      fetchImpl,
-    }),
-    error => error && error.code === 'access_key_required'
-  );
 
   console.log('checkpoint_client: all assertions passed');
 })().catch(error => {
