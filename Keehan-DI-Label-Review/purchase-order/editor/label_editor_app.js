@@ -1,6 +1,8 @@
 (function () {
   'use strict';
   const core = window.KeehnLabelCore;
+  const checkpointClient = window.KeehnCheckpointClient;
+  const checkpointEndpoint = 'https://func-ksc-di-prod.azurewebsites.net/api/label-review-checkpoint';
   const baseline = JSON.parse(JSON.stringify(window.KEEHN_LABEL_DATA));
   const key = core.autosaveKey(baseline.model, baseline.snapshot_id);
   let state = restore();
@@ -551,6 +553,35 @@
     link.click(); URL.revokeObjectURL(link.href); toast('Complete review backup created');
   }
 
+  async function saveToGitHub() {
+    const button = $('save-github');
+    const originalText = button.textContent;
+    saveLocal();
+    const autosave = JSON.parse(localStorage.getItem(key) || 'null');
+    button.disabled = true;
+    button.textContent = 'Saving...';
+    try {
+      const result = await checkpointClient.saveCheckpoint({
+        endpoint: checkpointEndpoint,
+        model: state.model,
+        autosave,
+        storage: sessionStorage,
+        promptForKey: message => window.prompt(message),
+        fetchImpl: window.fetch.bind(window),
+      });
+      const savedTime = result.saved_at ? new Date(result.saved_at).toLocaleTimeString() : 'now';
+      const shortSha = String(result.commit_sha || '').slice(0, 7);
+      $('save-status').textContent = `Saved to private GitHub ${savedTime}${shortSha ? ` · ${shortSha}` : ''}`;
+      toast('Private GitHub checkpoint saved.');
+    } catch (error) {
+      $('save-status').textContent = 'Saved locally - GitHub save failed';
+      toast(error.message || 'GitHub save failed. Local work is still safe.');
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+
   function exportTraining() {
     const output = core.buildTrainingExport(state);
     if (!output.documents.length) {
@@ -615,6 +646,7 @@
     $('reset-doc').addEventListener('click', resetDocument);
     $('export-all').addEventListener('click', exportAll);
     $('export-training').addEventListener('click', exportTraining);
+    $('save-github').addEventListener('click', saveToGitHub);
     $('page-stage').addEventListener('pointerdown', beginArea);
     $('page-stage').addEventListener('pointermove', moveArea);
     $('page-stage').addEventListener('pointerup', endArea);
